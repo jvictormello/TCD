@@ -46,68 +46,79 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 	 */
 	private ModeloLigacao modeloLigacao;
 	private CalculoModeloLigacao calculoModeloLigacao;
-	private Boolean m, IncSim1, IncSim2;
+	private Boolean m;
+	private Boolean incSim1;
+	private Boolean incSim2;
+	private ClsDataHora objDataHora = new ClsDataHora();
 
 	public TelaPrego() {
-		initComponents();
-		initVariables();
+		try {
+			initComponents();
+			initVariables();
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
 	}
 
 	private void initVariables() {
-		m = false;
-		IncSim1 = false;
-		IncSim2 = true;
+		try {
+			m = false;
+			incSim1 = false;
+			incSim2 = true;
 
-		ImagemTipoArruela.setVisible(false);
-		CalculoForca01.setVisible(true);
-		CalculoForca02.setVisible(true);
-		CalculoForca901.setVisible(false);
-		CalculoForca902.setVisible(false);
-		CalculoForcaAlfa1.setVisible(false);
-		CalculoForcaAlfa2.setVisible(false);
-		Inclinado2.setVisible(false);
-		Inclinado2.setVisible(false);
+			imagemTipoArruela.setVisible(false);
+			calculoForca01.setVisible(true);
+			calculoForca02.setVisible(true);
+			calculoForca901.setVisible(false);
+			calculoForca902.setVisible(false);
+			calculoForcaAlfa1.setVisible(false);
+			calculoForcaAlfa2.setVisible(false);
+			inclinado2.setVisible(false);
+			inclinado2.setVisible(false);
 
-		MadeiraFigura.setVisible(true);
+			madeiraFigura.setVisible(true);
 
-		RelatorioRd13.setVisible(true);
-		RelatorioRd14.setVisible(true);
-		RelatorioRd3.setVisible(true);
-		RelatorioRd4.setVisible(true);
-		jLabel60.setVisible(true);
-		jLabel62.setVisible(true);
+			relatorioRd13.setVisible(true);
+			relatorioRd14.setVisible(true);
+			relatorioRd3.setVisible(true);
+			relatorioRd4.setVisible(true);
+			jLabel60.setVisible(true);
+			jLabel62.setVisible(true);
 
-		jTabbedPane1.setEnabledAt(1, false);
-		jTabbedPane1.setEnabledAt(2, false);
-		jTabbedPane1.setEnabledAt(3, false);
-		jTabbedPane1.setEnabledAt(4, false);
-		jTabbedPane1.setEnabledAt(5, false);
-		Next.setEnabled(false);
-		Next2.setEnabled(false);
-		Next3.setEnabled(false);
-		ButtonCalcular.setEnabled(false);
-		SerradaButton.setEnabled(false);
-		RecompostaButton.setEnabled(false);
-		btn1SecaoCorte.setEnabled(false);
-		jToggleButton1.setEnabled(false);
-		jToggleButton2.setEnabled(false);
-		ConiferasButton.setEnabled(false);
-		FolhosasButton.setEnabled(false);
-		ComboKmod1.setEnabled(false);
-		ComboKmod2.setEnabled(false);
-		ComboKmod3.setEnabled(false);
+			jTabbedPane1.setEnabledAt(1, false);
+			jTabbedPane1.setEnabledAt(2, false);
+			jTabbedPane1.setEnabledAt(3, false);
+			jTabbedPane1.setEnabledAt(4, false);
+			jTabbedPane1.setEnabledAt(5, false);
+			next.setEnabled(false);
+			next2.setEnabled(false);
+			next3.setEnabled(false);
+			buttonCalcular.setEnabled(false);
+			serradaButton.setEnabled(false);
+			recompostaButton.setEnabled(false);
+			btn1SecaoCorte.setEnabled(false);
+			jToggleButton1.setEnabled(false);
+			jToggleButton2.setEnabled(false);
+			coniferasButton.setEnabled(false);
+			folhosasButton.setEnabled(false);
+			comboKmod1.setEnabled(false);
+			comboKmod2.setEnabled(false);
+			comboKmod3.setEnabled(false);
 
-		Espessura1.setInputVerifier(new VerificadoresPrego.VerificadorEspessura1(this.jProgressBarPrego, this));
-		ValorAngulo.setInputVerifier(new VerificadoresPrego.VerificadorValorAngulo(this.jProgressBarPrego, this));
-		Espessura2.setInputVerifier(new VerificadoresPrego.VerificadorEspessura2(this.jProgressBarPrego, this));
-		ComboElem1ClasseMadeira.setInputVerifier(new VerificadoresPrego.VerificadorComboClasseElem1(this.jProgressBarPrego, this));
-		ComboElem2ClasseMadeira.setInputVerifier(new VerificadoresPrego.VerificadorComboClasseElem2(this.jProgressBarPrego, this));
-		ComboKmod1.setInputVerifier(new VerificadoresPrego.VerificadorKmod1(this.jProgressBarPrego, this));
-		ComboKmod2.setInputVerifier(new VerificadoresPrego.VerificadorKmod2(this.jProgressBarPrego, this));
-		ComboKmod3.setInputVerifier(new VerificadoresPrego.VerificadorKmod3(this.jProgressBarPrego, this));
-		ComboQuantPregos.setInputVerifier(new VerificadoresPrego.VerificadorComboQuantPrego(this.jProgressBarPrego, this));
-		ComboTipoPrego.setInputVerifier(new VerificadoresPrego.VerificadorComboTipoPrego(this.jProgressBarPrego, this));
-		ComboAco.setInputVerifier(new VerificadoresPrego.VerificadorComboAcoPrego(this.jProgressBarPrego, this));
+			espessura1.setInputVerifier(new VerificadoresPrego.VerificadorEspessura1(this.jProgressBarPrego, this));
+			valorAngulo.setInputVerifier(new VerificadoresPrego.VerificadorValorAngulo(this.jProgressBarPrego, this));
+			espessura2.setInputVerifier(new VerificadoresPrego.VerificadorEspessura2(this.jProgressBarPrego, this));
+			comboElem1ClasseMadeira.setInputVerifier(new VerificadoresPrego.VerificadorComboClasseElem1(this.jProgressBarPrego, this));
+			comboElem2ClasseMadeira.setInputVerifier(new VerificadoresPrego.VerificadorComboClasseElem2(this.jProgressBarPrego, this));
+			comboKmod1.setInputVerifier(new VerificadoresPrego.VerificadorKmod1(this.jProgressBarPrego, this));
+			comboKmod2.setInputVerifier(new VerificadoresPrego.VerificadorKmod2(this.jProgressBarPrego, this));
+			comboKmod3.setInputVerifier(new VerificadoresPrego.VerificadorKmod3(this.jProgressBarPrego, this));
+			comboQuantPregos.setInputVerifier(new VerificadoresPrego.VerificadorComboQuantPrego(this.jProgressBarPrego, this));
+			comboTipoPrego.setInputVerifier(new VerificadoresPrego.VerificadorComboTipoPrego(this.jProgressBarPrego, this));
+			comboAco.setInputVerifier(new VerificadoresPrego.VerificadorComboAcoPrego(this.jProgressBarPrego, this));
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
 	}
 
 	/**
@@ -118,2966 +129,3151 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 	// <editor-fold defaultstate="collapsed" desc="Generated
 	// Code">//GEN-BEGIN:initComponents
 	private void initComponents() {
-
-		GroupSecoesCorte = new javax.swing.ButtonGroup();
-		GroupTesteParafuso = new javax.swing.ButtonGroup();
-		GroupInclinacaoSim = new javax.swing.ButtonGroup();
-		jTabbedPane1 = new javax.swing.JTabbedPane();
-		Inicio = new javax.swing.JPanel();
-		LogoPrograma = new javax.swing.JLabel();
-		jLabel97 = new javax.swing.JLabel();
-		Voltar = new javax.swing.JButton();
-		jLabel40 = new javax.swing.JLabel();
-		jButton4 = new javax.swing.JButton();
-		SecoesCorte = new javax.swing.JPanel();
-		btn1SecaoCorte = new javax.swing.JToggleButton();
-		jToggleButton1 = new javax.swing.JToggleButton();
-		jToggleButton2 = new javax.swing.JToggleButton();
-		Next = new javax.swing.JButton();
-		PainelTipoMadeira = new javax.swing.JPanel();
-		SerradaButton = new javax.swing.JToggleButton();
-		RecompostaButton = new javax.swing.JToggleButton();
-		PainelEspecieMadeira = new javax.swing.JPanel();
-		ConiferasButton = new javax.swing.JToggleButton();
-		FolhosasButton = new javax.swing.JToggleButton();
-		ElementosMadeira = new javax.swing.JPanel();
-		jPanel7 = new javax.swing.JPanel();
-		ComboElem1ClasseMadeira = new javax.swing.JComboBox<ClasseMadeira>();
-		jLabel_classe_madeira_1 = new javax.swing.JLabel();
-		jLabel_elemento1 = new javax.swing.JLabel();
-		jLabel3 = new javax.swing.JLabel();
-		ValorAngulo = new javax.swing.JTextField();
-		Espessura1 = new javax.swing.JTextField();
-		jLabelUnEspessura = new javax.swing.JLabel();
-		Fcok1 = new javax.swing.JLabel();
-		UnFcok1 = new javax.swing.JLabel();
-		ValorFc01 = new javax.swing.JLabel();
-		Densidade1 = new javax.swing.JLabel();
-		ValorDensidade1 = new javax.swing.JLabel();
-		UnDensidade1 = new javax.swing.JLabel();
-		ValorFvok1 = new javax.swing.JLabel();
-		UnFv0k1 = new javax.swing.JLabel();
-		Fv0k1 = new javax.swing.JLabel();
-		Ec0m1 = new javax.swing.JLabel();
-		UnEc0m1 = new javax.swing.JLabel();
-		ValorEc0m1 = new javax.swing.JLabel();
-		jSeparator1 = new javax.swing.JSeparator();
-		PossuiInclinacao1 = new javax.swing.JLabel();
-		InclinacaoSim1 = new javax.swing.JRadioButton();
-		PossuiInclinacao11 = new javax.swing.JLabel();
-		jLabel5 = new javax.swing.JLabel();
-		jLabel39 = new javax.swing.JLabel();
-		jPanel13 = new javax.swing.JPanel();
-		ComboElem2ClasseMadeira = new javax.swing.JComboBox<ClasseMadeira>();
-		jLabel_classe_madeira_2 = new javax.swing.JLabel();
-		jLabel_elemento2 = new javax.swing.JLabel();
-		jLabel4 = new javax.swing.JLabel();
-		Espessura2 = new javax.swing.JTextField();
-		jLabelUnEspessura1 = new javax.swing.JLabel();
-		Fcok2 = new javax.swing.JLabel();
-		UnFcok2 = new javax.swing.JLabel();
-		ValorFc2 = new javax.swing.JLabel();
-		Densidade2 = new javax.swing.JLabel();
-		ValorDensidade2 = new javax.swing.JLabel();
-		UnDensidade2 = new javax.swing.JLabel();
-		ValorFvok2 = new javax.swing.JLabel();
-		UnFv0k2 = new javax.swing.JLabel();
-		Fv0k2 = new javax.swing.JLabel();
-		Ec0m2 = new javax.swing.JLabel();
-		UnEc0m2 = new javax.swing.JLabel();
-		jSeparator2 = new javax.swing.JSeparator();
-		ValorEc0m2 = new javax.swing.JLabel();
-		InclinacaoSim2 = new javax.swing.JRadioButton();
-		PossuiInclinacao3 = new javax.swing.JLabel();
-		jLabel68 = new javax.swing.JLabel();
-		MadeiraFigura = new javax.swing.JButton();
-		jPanel12 = new javax.swing.JPanel();
-		jLabel101 = new javax.swing.JLabel();
-		jLabel102 = new javax.swing.JLabel();
-		jLabel103 = new javax.swing.JLabel();
-		jLabel104 = new javax.swing.JLabel();
-		ComboKmod1 = new javax.swing.JComboBox<Kmod1>();
-		ComboKmod3 = new javax.swing.JComboBox<Kmod3>();
-		ComboKmod2 = new javax.swing.JComboBox<Kmod2>();
-		Textkmod3 = new javax.swing.JLabel();
-		Textkmod1 = new javax.swing.JLabel();
-		Textkmod2 = new javax.swing.JLabel();
-		Next2 = new javax.swing.JButton();
-		ElementosMetalicos = new javax.swing.JPanel();
-		jPanel10 = new javax.swing.JPanel();
-		jLabel1 = new javax.swing.JLabel();
-		TamanhoParafuso = new javax.swing.JLabel();
-		ComboTipoPrego = new javax.swing.JComboBox<TipoPrego>();
-		Diametro = new javax.swing.JLabel();
-		ValorDiametro = new javax.swing.JLabel();
-		AreaParafuso = new javax.swing.JLabel();
-		ValorComprimento = new javax.swing.JLabel();
-		NumeroParafusos = new javax.swing.JLabel();
-		ClasseAco = new javax.swing.JLabel();
-		ComboAco = new javax.swing.JComboBox<ClasseAcoPrego>();
-		Fyk = new javax.swing.JLabel();
-		fuk = new javax.swing.JLabel();
-		ValorFyk = new javax.swing.JLabel();
-		ValorFuk = new javax.swing.JLabel();
-		UnFyk = new javax.swing.JLabel();
-		UnFuk = new javax.swing.JLabel();
-		TesteParafuso = new javax.swing.JLabel();
-		TesteParafusoSim = new javax.swing.JRadioButton();
-		TesteParafusoNao = new javax.swing.JRadioButton();
-		ComboQuantPregos = new javax.swing.JComboBox<ClasseQuantidadePregos>();
-		jLabel6 = new javax.swing.JLabel();
-		jLabel10 = new javax.swing.JLabel();
-		jLabel11 = new javax.swing.JLabel();
-		jLabel41 = new javax.swing.JLabel();
-		ButtonCalcular = new javax.swing.JButton();
-		FiguraTipoParafuso = new javax.swing.JButton();
-		ImagemTipoArruela = new javax.swing.JLabel();
-		Resultado = new javax.swing.JPanel();
-		LabelModeloFalha = new javax.swing.JLabel();
-		LabelResultadoModeloFalha = new javax.swing.JLabel();
-		LabelResistenciaLigacao = new javax.swing.JLabel();
-		ResultadoFvk = new javax.swing.JLabel();
-		FiguraResultadoModoFalha = new javax.swing.JButton();
-		jLabel74 = new javax.swing.JLabel();
-		jLabel85 = new javax.swing.JLabel();
-		jLabel86 = new javax.swing.JLabel();
-		jLabel89 = new javax.swing.JLabel();
-		jLabel96 = new javax.swing.JLabel();
-		ResultadoRk = new javax.swing.JLabel();
-		ResultadoRd = new javax.swing.JLabel();
-		jLabel98 = new javax.swing.JLabel();
-		jLabel99 = new javax.swing.JLabel();
-		jLabel100 = new javax.swing.JLabel();
-		Next3 = new javax.swing.JButton();
-		Relatorio = new javax.swing.JPanel();
-		jScrollPane1 = new javax.swing.JScrollPane();
-		RelatorioFinal = new javax.swing.JPanel();
-		jLabel12 = new javax.swing.JLabel();
-		jLabel13 = new javax.swing.JLabel();
-		RelatorioSecaoCorte = new javax.swing.JLabel();
-		RelatorioAngulacao = new javax.swing.JLabel();
-		Relatoriofcok4 = new javax.swing.JLabel();
-		RelatorioElem1 = new javax.swing.JPanel();
-		jLabel14 = new javax.swing.JLabel();
-		jLabel2 = new javax.swing.JLabel();
-		jLabel16 = new javax.swing.JLabel();
-		jLabel18 = new javax.swing.JLabel();
-		jLabel19 = new javax.swing.JLabel();
-		RelatorioDensidade1 = new javax.swing.JLabel();
-		RelatorioEc0m1 = new javax.swing.JLabel();
-		Relatoriofv0k1 = new javax.swing.JLabel();
-		Relatoriofcok1 = new javax.swing.JLabel();
-		jLabel20 = new javax.swing.JLabel();
-		jLabel21 = new javax.swing.JLabel();
-		jLabel22 = new javax.swing.JLabel();
-		jLabel23 = new javax.swing.JLabel();
-		RelatorioClasseElem1 = new javax.swing.JLabel();
-		jLabel51 = new javax.swing.JLabel();
-		RelatorioEspessura1 = new javax.swing.JLabel();
-		jLabel69 = new javax.swing.JLabel();
-		Inclinado1 = new javax.swing.JScrollPane();
-		jTextArea2 = new javax.swing.JTextArea();
-		RelatorioElem2 = new javax.swing.JPanel();
-		jLabel30 = new javax.swing.JLabel();
-		jLabel29 = new javax.swing.JLabel();
-		jLabel32 = new javax.swing.JLabel();
-		jLabel31 = new javax.swing.JLabel();
-		RelatorioEc0m2 = new javax.swing.JLabel();
-		RelatorioDensidade2 = new javax.swing.JLabel();
-		Relatoriofcok2 = new javax.swing.JLabel();
-		Relatoriofv0k2 = new javax.swing.JLabel();
-		jLabel27 = new javax.swing.JLabel();
-		jLabel26 = new javax.swing.JLabel();
-		jLabel28 = new javax.swing.JLabel();
-		jLabel24 = new javax.swing.JLabel();
-		jLabel25 = new javax.swing.JLabel();
-		RelatorioClasseElem2 = new javax.swing.JLabel();
-		RelatorioEspessura2 = new javax.swing.JLabel();
-		jLabel52 = new javax.swing.JLabel();
-		jLabel70 = new javax.swing.JLabel();
-		Inclinado2 = new javax.swing.JScrollPane();
-		jTextArea1 = new javax.swing.JTextArea();
-		RelatorioCoeficientes = new javax.swing.JPanel();
-		jLabel88 = new javax.swing.JLabel();
-		Relatoriokmod3 = new javax.swing.JLabel();
-		RelatorioAngulo = new javax.swing.JLabel();
-		RelatorioKmod1 = new javax.swing.JLabel();
-		Relatoriokmod2 = new javax.swing.JLabel();
-		jLabel90 = new javax.swing.JLabel();
-		jLabel91 = new javax.swing.JLabel();
-		jLabel92 = new javax.swing.JLabel();
-		jLabel93 = new javax.swing.JLabel();
-		jLabel94 = new javax.swing.JLabel();
-		jLabel35 = new javax.swing.JLabel();
-		jLabel81 = new javax.swing.JLabel();
-		jLabel17 = new javax.swing.JLabel();
-		RelatorioParafuso = new javax.swing.JPanel();
-		jLabel33 = new javax.swing.JLabel();
-		jLabel34 = new javax.swing.JLabel();
-		RelatorioTipoParafuso = new javax.swing.JLabel();
-		jLabel36 = new javax.swing.JLabel();
-		RelatorioDiametro = new javax.swing.JLabel();
-		jLabel37 = new javax.swing.JLabel();
-		RelatorioNParafusos = new javax.swing.JLabel();
-		jLabel43 = new javax.swing.JLabel();
-		RelatorioClasseAco = new javax.swing.JLabel();
-		jLabel38 = new javax.swing.JLabel();
-		Relatoriofaxrk = new javax.swing.JLabel();
-		jLabel45 = new javax.swing.JLabel();
-		Relatoriofyk = new javax.swing.JLabel();
-		jLabel46 = new javax.swing.JLabel();
-		Relatoriofuk = new javax.swing.JLabel();
-		FiguraParafuso = new javax.swing.JLabel();
-		jLabel71 = new javax.swing.JLabel();
-		jLabel72 = new javax.swing.JLabel();
-		jLabel73 = new javax.swing.JLabel();
-		jSeparator8 = new javax.swing.JSeparator();
-		jSeparator11 = new javax.swing.JSeparator();
-		jLabel7 = new javax.swing.JLabel();
-		RelatorioComprimento = new javax.swing.JLabel();
-		jLabel9 = new javax.swing.JLabel();
-		RelatorioFibras = new javax.swing.JLabel();
-		jLabel44 = new javax.swing.JLabel();
-		jPanel2 = new javax.swing.JPanel();
-		jLabel53 = new javax.swing.JLabel();
-		CalculoForca01 = new javax.swing.JLabel();
-		CalculoForca02 = new javax.swing.JLabel();
-		jLabel58 = new javax.swing.JLabel();
-		RelatorioFc0d1 = new javax.swing.JLabel();
-		RelatorioFc0d2 = new javax.swing.JLabel();
-		RelatorioFaxrk = new javax.swing.JLabel();
-		jLabel77 = new javax.swing.JLabel();
-		jLabel78 = new javax.swing.JLabel();
-		jLabel79 = new javax.swing.JLabel();
-		CalculoForcaAlfa1 = new javax.swing.JLabel();
-		CalculoForca901 = new javax.swing.JLabel();
-		CalculoForcaAlfa2 = new javax.swing.JLabel();
-		CalculoForca902 = new javax.swing.JLabel();
-		jPanel3 = new javax.swing.JPanel();
-		jLabel59 = new javax.swing.JLabel();
-		RelatorioRd11 = new javax.swing.JLabel();
-		RelatorioRd12 = new javax.swing.JLabel();
-		RelatorioRd13 = new javax.swing.JLabel();
-		RelatorioRd1 = new javax.swing.JLabel();
-		RelatorioRd14 = new javax.swing.JLabel();
-		RelatorioRd2 = new javax.swing.JLabel();
-		RelatorioRd4 = new javax.swing.JLabel();
-		RelatorioRd3 = new javax.swing.JLabel();
-		RelatorioRd15 = new javax.swing.JLabel();
-		RelatorioRd16 = new javax.swing.JLabel();
-		RelatorioRd6 = new javax.swing.JLabel();
-		RelatorioRd5 = new javax.swing.JLabel();
-		jLabel56 = new javax.swing.JLabel();
-		RelatorioMyd = new javax.swing.JLabel();
-		jLabel57 = new javax.swing.JLabel();
-		RelatorioBeta = new javax.swing.JLabel();
-		jSeparator4 = new javax.swing.JSeparator();
-		jSeparator5 = new javax.swing.JSeparator();
-		RelatorioRd23 = new javax.swing.JLabel();
-		jLabel54 = new javax.swing.JLabel();
-		jLabel55 = new javax.swing.JLabel();
-		jLabel60 = new javax.swing.JLabel();
-		jLabel61 = new javax.swing.JLabel();
-		jLabel62 = new javax.swing.JLabel();
-		jLabel63 = new javax.swing.JLabel();
-		RelatorioRd24 = new javax.swing.JLabel();
-		jLabel64 = new javax.swing.JLabel();
-		jLabel67 = new javax.swing.JLabel();
-		ModoFalha = new javax.swing.JLabel();
-		jLabel87 = new javax.swing.JLabel();
-		jLabel95 = new javax.swing.JLabel();
-		RelatorioRk = new javax.swing.JLabel();
-		jSeparator6 = new javax.swing.JSeparator();
-		jSeparator7 = new javax.swing.JSeparator();
-		FiguraSecoes = new javax.swing.JLabel();
-		jSeparator9 = new javax.swing.JSeparator();
-		Data = new javax.swing.JLabel();
-		jScrollPane2 = new javax.swing.JScrollPane();
-		Consideracao1 = new javax.swing.JTextArea();
-		jScrollPane3 = new javax.swing.JScrollPane();
-		teste = new javax.swing.JTextArea();
-		Hora = new javax.swing.JLabel();
-		RLogo = new javax.swing.JLabel();
-		jLabel66 = new javax.swing.JLabel();
-		RelatorioFvk = new javax.swing.JLabel();
-		jLabel80 = new javax.swing.JLabel();
-		RelatorioRd = new javax.swing.JLabel();
-		jLabel82 = new javax.swing.JLabel();
-		jLabel83 = new javax.swing.JLabel();
-		jLabel84 = new javax.swing.JLabel();
-		jButton1 = new javax.swing.JButton();
-		jButton2 = new javax.swing.JButton();
-		jButton3 = new javax.swing.JButton();
-		jProgressBarPrego = new javax.swing.JProgressBar(0, 4);
-		jProgressBarPrego.setValue(0);
-
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		setTitle("TCD - Timber Connections Design");
-		setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-		setIconImages(null);
-		setMaximumSize(new java.awt.Dimension(900, 800));
-		setMinimumSize(new java.awt.Dimension(820, 730));
-		setName(""); // NOI18N
-		setPreferredSize(new java.awt.Dimension(796, 680));
-		addWindowListener(new java.awt.event.WindowAdapter(){
-			public void windowActivated(java.awt.event.WindowEvent evt) {
-				formWindowActivated(evt);
-			}
-		});
-
-		jTabbedPane1.setToolTipText("");
-		jTabbedPane1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-		jTabbedPane1.setMaximumSize(new java.awt.Dimension(900, 700));
-		jTabbedPane1.setMinimumSize(new java.awt.Dimension(700, 600));
-		jTabbedPane1.setOpaque(true);
-		jTabbedPane1.setPreferredSize(new java.awt.Dimension(795, 660));
-		jTabbedPane1.setRequestFocusEnabled(false);
-		jTabbedPane1.addFocusListener(new java.awt.event.FocusAdapter(){
-			public void focusGained(java.awt.event.FocusEvent evt) {
-				jTabbedPane1FocusGained(evt);
-			}
-		});
-
-		Inicio.setBackground(new java.awt.Color(204, 204, 204));
-		Inicio.setPreferredSize(new java.awt.Dimension(647, 625));
-
-		LogoPrograma.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/Logo/logosket.png"))); // NOI18N
-
-		jLabel97.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-		jLabel97.setText("TCD - Timber Connections Design");
-
-		Voltar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-		Voltar.setText("Voltar");
-		Voltar.setToolTipText("Escolha esta opção para retornar a tela inicial.");
-		Voltar.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				VoltarActionPerformed(evt);
-			}
-		});
-
-		jLabel40.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel40.setText("Cálculo de ligações pregadas entre elementos de madeira.");
-
-		jButton4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-		jButton4.setText("Iniciar Cálculo");
-		jButton4.setToolTipText("Escolha esta opção para iniciar o dimensionamento de sua ligação.");
-		jButton4.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton4ActionPerformed(evt);
-			}
-		});
-
-		javax.swing.GroupLayout InicioLayout = new javax.swing.GroupLayout(Inicio);
-		Inicio.setLayout(InicioLayout);
-		InicioLayout
-		        .setHorizontalGroup(InicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-		                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InicioLayout.createSequentialGroup().addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-		                        .addGroup(InicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-		                                .addGroup(InicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-		                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InicioLayout.createSequentialGroup().addComponent(jLabel97).addGap(228, 228, 228))
-		                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InicioLayout.createSequentialGroup()
-		                                                .addComponent(LogoPrograma, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE).addGap(198, 198, 198)))
-		                                .addGroup(InicioLayout.createSequentialGroup().addGap(10, 10, 10).addComponent(jLabel40).addContainerGap(270, Short.MAX_VALUE))))
-		                .addGroup(InicioLayout.createSequentialGroup().addGap(162, 162, 162).addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-		                        .addGap(105, 105, 105).addComponent(Voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE).addGap(0, 140, Short.MAX_VALUE)));
-		InicioLayout.setVerticalGroup(InicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-		        .addGroup(InicioLayout.createSequentialGroup().addGap(99, 99, 99).addComponent(LogoPrograma, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-		                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(jLabel97).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-		                .addComponent(jLabel40).addGap(82, 82, 82)
-		                .addGroup(InicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-		                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-		                        .addComponent(Voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-		                .addContainerGap(135, Short.MAX_VALUE)));
-
-		jTabbedPane1.addTab("Inicio", Inicio);
-
-		SecoesCorte.setBackground(new java.awt.Color(204, 204, 204));
-		SecoesCorte.setBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")));
-		SecoesCorte.setMaximumSize(new java.awt.Dimension(40000, 40000));
-		SecoesCorte.setPreferredSize(new java.awt.Dimension(770, 625));
-
-		GroupSecoesCorte.add(btn1SecaoCorte);
-		btn1SecaoCorte.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-		btn1SecaoCorte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/BotaoPregoSimples.png"))); // NOI18N
-		btn1SecaoCorte.setText("Corte Simples ");
-		btn1SecaoCorte.setToolTipText("Escolha esta opção se a ligação apresentar apenas uma seção de corte no prego.");
-		btn1SecaoCorte.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		btn1SecaoCorte.setInheritsPopupMenu(true);
-		btn1SecaoCorte.setName(""); // NOI18N
-		btn1SecaoCorte.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		btn1SecaoCorte.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				btn1SecaoCorteActionPerformed(evt);
-			}
-		});
-
-		GroupSecoesCorte.add(jToggleButton1);
-		jToggleButton1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-		jToggleButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/BotaoPregoSimples2.png"))); // NOI18N
-		jToggleButton1.setText("Corte Simples");
-		jToggleButton1.setToolTipText("Escolha esta opção se a ligação apresentar apenas uma seção de corte no prego.");
-		jToggleButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jToggleButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jToggleButton1.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jToggleButton1ActionPerformed(evt);
-			}
-		});
-
-		GroupSecoesCorte.add(jToggleButton2);
-		jToggleButton2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-		jToggleButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/Duplo.png"))); // NOI18N
-		jToggleButton2.setText("Corte Duplo");
-		jToggleButton2.setToolTipText("Escolha esta opção se a ligação apresentar apenas duas seções de corte no prego.");
-		jToggleButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jToggleButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jToggleButton2.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jToggleButton2ActionPerformed(evt);
-			}
-		});
-
-		Next.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/Next.png"))); // NOI18N
-		Next.setToolTipText("Clique para avançar.");
-		Next.setEnabled(false);
-		Next.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				NextActionPerformed(evt);
-			}
-		});
-
-		PainelTipoMadeira.setBackground(new java.awt.Color(204, 204, 204));
-		PainelTipoMadeira
-		        .setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true), "Tipo da Madeira",
-		                                                                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Arial", 0, 12))); // NOI18N
-		PainelTipoMadeira.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-
-		SerradaButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-		SerradaButton.setText("Serrada/Roliça/MLC/Compensado");
-		SerradaButton.setToolTipText("");
-		SerradaButton.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				SerradaButtonActionPerformed(evt);
-			}
-		});
-
-		RecompostaButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-		RecompostaButton.setText("Recomposta");
-		RecompostaButton.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				RecompostaButtonActionPerformed(evt);
-			}
-		});
-
-		javax.swing.GroupLayout PainelTipoMadeiraLayout = new javax.swing.GroupLayout(PainelTipoMadeira);
-		PainelTipoMadeira.setLayout(PainelTipoMadeiraLayout);
-		PainelTipoMadeiraLayout.setHorizontalGroup(PainelTipoMadeiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-		        .addGroup(PainelTipoMadeiraLayout.createSequentialGroup().addContainerGap(83, Short.MAX_VALUE)
-		                .addGroup(PainelTipoMadeiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-		                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-		                                  PainelTipoMadeiraLayout.createSequentialGroup().addComponent(RecompostaButton).addGap(135, 135, 135))
-		                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelTipoMadeiraLayout.createSequentialGroup().addComponent(SerradaButton).addGap(74, 74, 74)))));
-		PainelTipoMadeiraLayout.setVerticalGroup(PainelTipoMadeiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(PainelTipoMadeiraLayout.createSequentialGroup()
-		        .addGap(45, 45, 45).addComponent(SerradaButton).addGap(58, 58, 58).addComponent(RecompostaButton).addContainerGap(49, Short.MAX_VALUE)));
-
-		PainelEspecieMadeira.setBackground(new java.awt.Color(204, 204, 204));
-		PainelEspecieMadeira
-		        .setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true), "Espécie da Madeira",
-		                                                                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Arial", 0, 12))); // NOI18N
-		PainelEspecieMadeira.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-		PainelEspecieMadeira.setName(""); // NOI18N
-
-		ConiferasButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-		ConiferasButton.setText("Coníferas");
-		ConiferasButton.setToolTipText("Alguns exemplos: Pinho-Bravo, Pinho-do-Paraná, Pinus (em geral).");
-		ConiferasButton.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConiferasButtonActionPerformed(evt);
-			}
-		});
-
-		FolhosasButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-		FolhosasButton.setText("Folhosas");
-		FolhosasButton.setToolTipText("Alguns exemplos: Peroba-Rosa, Angico, Imbuia, Jatobá, Mogno, Cerejeira, Cedro, Freijó, Aroeira, Ipê, Pau-Marfim.");
-		FolhosasButton.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				FolhosasButtonActionPerformed(evt);
-			}
-		});
-
-		javax.swing.GroupLayout PainelEspecieMadeiraLayout = new javax.swing.GroupLayout(PainelEspecieMadeira);
-		PainelEspecieMadeira.setLayout(PainelEspecieMadeiraLayout);
-		PainelEspecieMadeiraLayout.setHorizontalGroup(PainelEspecieMadeiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-		        .addGroup(PainelEspecieMadeiraLayout.createSequentialGroup().addGap(127, 127, 127)
-		                .addGroup(PainelEspecieMadeiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(FolhosasButton).addComponent(ConiferasButton))
-		                .addContainerGap(142, Short.MAX_VALUE)));
-		PainelEspecieMadeiraLayout.setVerticalGroup(PainelEspecieMadeiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-		        .addGroup(PainelEspecieMadeiraLayout.createSequentialGroup().addGap(44, 44, 44).addComponent(ConiferasButton)
-		                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(FolhosasButton).addGap(50, 50, 50)));
-
-		javax.swing.GroupLayout SecoesCorteLayout = new javax.swing.GroupLayout(SecoesCorte);
-		SecoesCorte.setLayout(SecoesCorteLayout);
-		SecoesCorteLayout.setHorizontalGroup(SecoesCorteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(SecoesCorteLayout.createSequentialGroup().addGap(6, 6, 6)
-		        .addComponent(btn1SecaoCorte, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-		        .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-		        .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-		        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		        .addGroup(SecoesCorteLayout.createSequentialGroup().addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-		                .addComponent(PainelEspecieMadeira, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-		                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-		                .addComponent(PainelTipoMadeira, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-		                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SecoesCorteLayout.createSequentialGroup().addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-		                .addComponent(Next, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE).addContainerGap()));
-		SecoesCorteLayout.setVerticalGroup(SecoesCorteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-		        .addGroup(SecoesCorteLayout.createSequentialGroup().addGap(18, 18, 18)
-		                .addGroup(SecoesCorteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-		                        .addComponent(btn1SecaoCorte, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-		                        .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-		                        .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-		                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-		                .addGroup(SecoesCorteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-		                        .addComponent(PainelTipoMadeira, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-		                        .addComponent(PainelEspecieMadeira, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(Next).addContainerGap(41, Short.MAX_VALUE)));
-
-		jTabbedPane1.addTab("Modelos de Ligação", SecoesCorte);
-
-		ElementosMadeira.setBackground(new java.awt.Color(204, 204, 204));
-		ElementosMadeira.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-		jPanel7.setBackground(new java.awt.Color(153, 153, 153));
-		jPanel7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jPanel7.setPreferredSize(new java.awt.Dimension(385, 225));
-		jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-		ComboElem1ClasseMadeira.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		ComboElem1ClasseMadeira.setModel(new javax.swing.DefaultComboBoxModel<ClasseMadeira>(ClasseMadeira.values()));
-		ComboElem1ClasseMadeira.setToolTipText("Defina a classe de madeira do elemento 1, baseado nas tabelas 2 e 3 da revisão da norma ABNT NBR 7190 (2011).");
-		ComboElem1ClasseMadeira.addFocusListener(new java.awt.event.FocusAdapter(){
-			public void focusLost(java.awt.event.FocusEvent evt) {
-				ComboElem1ClasseMadeiraFocusLost(evt);
-			}
-		});
-		jPanel7.add(ComboElem1ClasseMadeira, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 35, 211, 29));
-
-		jLabel_classe_madeira_1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel_classe_madeira_1.setText("Classe da Madeira:");
-		jPanel7.add(jLabel_classe_madeira_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 45, -1, -1));
-
-		jLabel_elemento1.setFont(new java.awt.Font("Arial Black", 1, 11)); // NOI18N
-		jLabel_elemento1.setText("Elemento 1");
-		jLabel_elemento1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jPanel7.add(jLabel_elemento1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 5, 88, 22));
-
-		jLabel3.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel3.setText("Espessura (t1):");
-		jPanel7.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 145, -1, -1));
-
-		jLabelUnEspessura.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabelUnEspessura.setText("(mm)");
-		jPanel7.add(jLabelUnEspessura, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 147, -1, -1));
-
-		Fcok1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Fcok1.setText("fc0,k:");
-		jPanel7.add(Fcok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
-
-		UnFcok1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		UnFcok1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-		UnFcok1.setText("(MPa)");
-		jPanel7.add(UnFcok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, -1, -1));
-		UnFcok1.getAccessibleContext().setAccessibleDescription("");
-
-		ValorFc01.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		ValorFc01.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		ValorFc01.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jPanel7.add(ValorFc01, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 80, 40, 20));
-
-		Densidade1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Densidade1.setText("Densidade:");
-		jPanel7.add(Densidade1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, -1, -1));
-
-		ValorDensidade1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		ValorDensidade1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		ValorDensidade1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jPanel7.add(ValorDensidade1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 40, 20));
-
-		UnDensidade1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		UnDensidade1.setText("(kg/m³)");
-		jPanel7.add(UnDensidade1, new org.netbeans.lib.awtextra.AbsoluteConstraints(325, 80, -1, -1));
-
-		ValorFvok1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		ValorFvok1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		ValorFvok1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jPanel7.add(ValorFvok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 110, 40, 20));
-
-		UnFv0k1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		UnFv0k1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-		UnFv0k1.setText("(MPa)");
-		jPanel7.add(UnFv0k1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, -1, -1));
-
-		Fv0k1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Fv0k1.setText("fv0,k:");
-		jPanel7.add(Fv0k1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
-
-		Ec0m1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Ec0m1.setText("Ec0,m:");
-		jPanel7.add(Ec0m1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 110, -1, -1));
-
-		UnEc0m1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		UnEc0m1.setText("(MPa)");
-		jPanel7.add(UnEc0m1, new org.netbeans.lib.awtextra.AbsoluteConstraints(325, 110, -1, -1));
-
-		ValorEc0m1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		ValorEc0m1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		ValorEc0m1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		ValorEc0m1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jPanel7.add(ValorEc0m1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 110, 50, 20));
-
-		jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-		jPanel7.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 69, 10, 65));
-
-		PossuiInclinacao1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		PossuiInclinacao1.setText("A força indicada na figura é paralela");
-		jPanel7.add(PossuiInclinacao1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 195, -1, -1));
-
-		GroupInclinacaoSim.add(InclinacaoSim1);
-		InclinacaoSim1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		InclinacaoSim1.setText("Sim");
-		InclinacaoSim1.setToolTipText("Se existir inclinação, indique qual elemento está inclinado. ");
-		InclinacaoSim1.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				InclinacaoSim1ActionPerformed(evt);
-			}
-		});
-		jPanel7.add(InclinacaoSim1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 200, -1, -1));
-
-		PossuiInclinacao11.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		PossuiInclinacao11.setText("às fibras do elemento 1?");
-		jPanel7.add(PossuiInclinacao11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, -1, -1));
-
-		jLabel5.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel5.setText("Ângulo entre as peças:");
-		jPanel7.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 175, 150, -1));
-
-		Espessura1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Espessura1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-		Espessura1.setText("Digite a espessura");
-		Espessura1.setToolTipText("Insira a espessura do elemento 1. O elemento 1 está indicado na imagem.");
-		Espessura1.addFocusListener(new java.awt.event.FocusAdapter(){
-			public void focusGained(java.awt.event.FocusEvent evt) {
-				LimparExpessura(evt);
-			}
-		});
-		Espessura1.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				Espessura1ActionPerformed(evt);
-			}
-		});
-		Espessura1.addKeyListener(new java.awt.event.KeyAdapter(){
-			public void keyTyped(java.awt.event.KeyEvent evt) {
-				Espessura1KeyTyped(evt);
-			}
-		});
-		jPanel7.add(Espessura1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 143, 130, -1));
-
-		ValorAngulo.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		ValorAngulo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-		ValorAngulo.setText("0");
-		ValorAngulo.setToolTipText("Insira o ângulo entre os elementos 1 e 2 de madeira.");
-		ValorAngulo.addFocusListener(new java.awt.event.FocusAdapter(){
-			public void focusGained(java.awt.event.FocusEvent evt) {
-				ValorAngulo(evt);
-			}
-
-			public void focusLost(java.awt.event.FocusEvent evt) {
-				ValorAnguloFocusLost(evt);
-			}
-		});
-		ValorAngulo.addMouseListener(new java.awt.event.MouseAdapter(){
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				ValorAnguloMouseClicked(evt);
-			}
-		});
-		ValorAngulo.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ValorAnguloActionPerformed(evt);
-			}
-		});
-		ValorAngulo.addKeyListener(new java.awt.event.KeyAdapter(){
-			public void keyTyped(java.awt.event.KeyEvent evt) {
-				ValorAnguloKeyTyped(evt);
-			}
-		});
-		jPanel7.add(ValorAngulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 70, -1));
-
-		jLabel39.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel39.setText("(°)");
-		jPanel7.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 170, 20, 20));
-
-		ElementosMadeira.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 5, -1, 230));
-
-		jPanel13.setBackground(new java.awt.Color(153, 153, 153));
-		jPanel13.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jPanel13.setPreferredSize(new java.awt.Dimension(385, 225));
-		jPanel13.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-		ComboElem2ClasseMadeira.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		ComboElem2ClasseMadeira.setModel(new javax.swing.DefaultComboBoxModel<ClasseMadeira>(ClasseMadeira.values()));
-		ComboElem2ClasseMadeira.setToolTipText("Defina a classe de madeira do elemento 2, baseado nas tabelas 2 e 3 da revisão da norma ABNT NBR 7190 (2011).");
-		ComboElem2ClasseMadeira.addFocusListener(new java.awt.event.FocusAdapter(){
-			public void focusLost(java.awt.event.FocusEvent evt) {
-				ComboElem2ClasseMadeiraFocusLost(evt);
-			}
-		});
-		jPanel13.add(ComboElem2ClasseMadeira, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 30, 211, 29));
-
-		jLabel_classe_madeira_2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel_classe_madeira_2.setText("Classe da Madeira:");
-		jPanel13.add(jLabel_classe_madeira_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
-
-		jLabel_elemento2.setFont(new java.awt.Font("Arial Black", 1, 11)); // NOI18N
-		jLabel_elemento2.setText("Elemento 2");
-		jPanel13.add(jLabel_elemento2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 5, 88, 22));
-
-		jLabel4.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel4.setText("Espessura (t2):");
-		jPanel13.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
-
-		Espessura2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Espessura2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-		Espessura2.setText("Digite a espessura");
-		Espessura2.setToolTipText("Insira a espessura do elemento 2. O elemento 2 está indicado na imagem.");
-		Espessura2.addFocusListener(new java.awt.event.FocusAdapter(){
-			public void focusGained(java.awt.event.FocusEvent evt) {
-				LimparExpessura2(evt);
-			}
-
-			public void focusLost(java.awt.event.FocusEvent evt) {
-				Espessura2FocusLost(evt);
-			}
-		});
-		Espessura2.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				Espessura2ActionPerformed(evt);
-			}
-		});
-		Espessura2.addKeyListener(new java.awt.event.KeyAdapter(){
-			public void keyTyped(java.awt.event.KeyEvent evt) {
-				Espessura2KeyTyped(evt);
-			}
-		});
-		jPanel13.add(Espessura2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 138, 126, -1));
-
-		jLabelUnEspessura1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabelUnEspessura1.setText("(mm)");
-		jPanel13.add(jLabelUnEspessura1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 142, -1, -1));
-
-		Fcok2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Fcok2.setText("fc0,k:");
-		jPanel13.add(Fcok2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 75, -1, -1));
-
-		UnFcok2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		UnFcok2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-		UnFcok2.setText("(MPa)");
-		jPanel13.add(UnFcok2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 75, -1, -1));
-
-		ValorFc2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		ValorFc2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		ValorFc2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jPanel13.add(ValorFc2, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 75, 40, 20));
-
-		Densidade2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Densidade2.setText("Densidade:");
-		jPanel13.add(Densidade2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 75, -1, -1));
-
-		ValorDensidade2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		ValorDensidade2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		ValorDensidade2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jPanel13.add(ValorDensidade2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 75, 40, 20));
-
-		UnDensidade2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		UnDensidade2.setText("(kg/m³)");
-		jPanel13.add(UnDensidade2, new org.netbeans.lib.awtextra.AbsoluteConstraints(325, 75, -1, -1));
-
-		ValorFvok2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		ValorFvok2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		ValorFvok2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jPanel13.add(ValorFvok2, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 105, 40, 20));
-
-		UnFv0k2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		UnFv0k2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-		UnFv0k2.setText("(MPa)");
-		jPanel13.add(UnFv0k2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 105, -1, -1));
-
-		Fv0k2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Fv0k2.setText("fv0,k:");
-		jPanel13.add(Fv0k2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 105, -1, -1));
-
-		Ec0m2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Ec0m2.setText("Ec0,m:");
-		jPanel13.add(Ec0m2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 105, -1, -1));
-
-		UnEc0m2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		UnEc0m2.setText("(MPa)");
-		jPanel13.add(UnEc0m2, new org.netbeans.lib.awtextra.AbsoluteConstraints(325, 105, -1, -1));
-
-		jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
-		jPanel13.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 66, 10, 65));
-
-		ValorEc0m2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		ValorEc0m2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		ValorEc0m2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jPanel13.add(ValorEc0m2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 105, 50, 20));
-
-		GroupInclinacaoSim.add(InclinacaoSim2);
-		InclinacaoSim2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		InclinacaoSim2.setSelected(true);
-		InclinacaoSim2.setText("Sim");
-		InclinacaoSim2.setToolTipText("Se existir inclinação, indique qual elemento está inclinado.");
-		InclinacaoSim2.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				InclinacaoSim2ActionPerformed(evt);
-			}
-		});
-		jPanel13.add(InclinacaoSim2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 175, -1, -1));
-
-		PossuiInclinacao3.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		PossuiInclinacao3.setText("A força indicada na figura é paralela");
-		jPanel13.add(PossuiInclinacao3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, -1, -1));
-
-		jLabel68.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel68.setText("às fibras do elemento 2?");
-		jPanel13.add(jLabel68, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 185, -1, -1));
-
-		ElementosMadeira.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 240, -1, 205));
-
-		MadeiraFigura.setToolTipText("Esta imagem caracteriza os elementos de madeira.");
-		MadeiraFigura.setContentAreaFilled(false);
-		ElementosMadeira.add(MadeiraFigura, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 80, 350, 280));
-
-		jPanel12.setBackground(new java.awt.Color(153, 153, 153));
-		jPanel12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-		jLabel101.setFont(new java.awt.Font("Arial Black", 1, 11)); // NOI18N
-		jLabel101.setText("Coeficientes");
-		jPanel12.add(jLabel101, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, -1, -1));
-
-		jLabel102.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel102.setText("Classes de Carregamento (kmod1):");
-		jPanel12.add(jLabel102, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 210, -1));
-
-		jLabel103.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel103.setText("Classe de Umidade (kmod2):");
-		jPanel12.add(jLabel103, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 200, -1));
-
-		jLabel104.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel104.setText("Qualidade da Madeira (kmod3):");
-		jPanel12.add(jLabel104, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 200, -1));
-
-		ComboKmod1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		ComboKmod1.setModel(new javax.swing.DefaultComboBoxModel<Kmod1>(Kmod1.values()));
-		ComboKmod1.setToolTipText("Insira o valor do Kmod 1, o qual é definido pela tabela 4 da revisão da norma ABNT NBR 7190 (2011).");
-		ComboKmod1.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ComboKmod1ActionPerformed(evt);
-			}
-		});
-		jPanel12.add(ComboKmod1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 40, 340, 30));
-
-		ComboKmod3.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		ComboKmod3.setModel(new javax.swing.DefaultComboBoxModel<Kmod3>(Kmod3.values()));
-		ComboKmod3.setToolTipText("Insira o valor do Kmod 3, o qual é definido pelas tabelas 6 e 7 da revisão da norma ABNT NBR 7190 (2011).");
-		ComboKmod3.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ComboKmod3ActionPerformed(evt);
-			}
-		});
-		jPanel12.add(ComboKmod3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, 340, 30));
-
-		ComboKmod2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		ComboKmod2.setModel(new javax.swing.DefaultComboBoxModel<Kmod2>(Kmod2.values()));
-		ComboKmod2.setToolTipText("Insira o valor do Kmod 2, o qual é definido pela tabela 5 da revisão da norma ABNT NBR 7190 (2011).");
-		ComboKmod2.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ComboKmod2ActionPerformed(evt);
-			}
-		});
-		jPanel12.add(ComboKmod2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 80, 340, 30));
-
-		Textkmod3.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Textkmod3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		Textkmod3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jPanel12.add(Textkmod3, new org.netbeans.lib.awtextra.AbsoluteConstraints(615, 125, 40, 20));
-
-		Textkmod1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Textkmod1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		Textkmod1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jPanel12.add(Textkmod1, new org.netbeans.lib.awtextra.AbsoluteConstraints(615, 45, 40, 20));
-
-		Textkmod2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Textkmod2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		Textkmod2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jPanel12.add(Textkmod2, new org.netbeans.lib.awtextra.AbsoluteConstraints(615, 85, 40, 20));
-
-		ElementosMadeira.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 450, 710, 160));
-
-		Next2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/Next.png"))); // NOI18N
-		Next2.setToolTipText("Clique para avançar.");
-		Next2.setEnabled(false);
-		Next2.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				Next2ActionPerformed(evt);
-			}
-		});
-		ElementosMadeira.add(Next2, new org.netbeans.lib.awtextra.AbsoluteConstraints(745, 570, 40, -1));
-
-		jTabbedPane1.addTab("Elementos da Ligação", ElementosMadeira);
-
-		ElementosMetalicos.setBackground(new java.awt.Color(204, 204, 204));
-		ElementosMetalicos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-		jPanel10.setBackground(new java.awt.Color(153, 153, 153));
-		jPanel10.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-		jLabel1.setFont(new java.awt.Font("Arial Black", 1, 11)); // NOI18N
-		jLabel1.setText("PREGO LISO COM CABEÇA");
-		jPanel10.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, -1, -1));
-
-		TamanhoParafuso.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		TamanhoParafuso.setText("Dimensões:");
-		jPanel10.add(TamanhoParafuso, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
-
-		ComboTipoPrego.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		ComboTipoPrego.setModel(new javax.swing.DefaultComboBoxModel<TipoPrego>(TipoPrego.values()));
-		ComboTipoPrego.setToolTipText("Escolha o tipo de parafuso utilizado, baseado na norma ISO 4016 (2001).");
-		ComboTipoPrego.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-		ComboTipoPrego.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ComboTipoPregoActionPerformed(evt);
-			}
-		});
-		jPanel10.add(ComboTipoPrego, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 40, 610, -1));
-
-		Diametro.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Diametro.setText("Diâmetro:");
-		jPanel10.add(Diametro, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, -1, -1));
-
-		ValorDiametro.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		ValorDiametro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		ValorDiametro.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jPanel10.add(ValorDiametro, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, 40, 20));
-
-		AreaParafuso.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		AreaParafuso.setText("Comprimento:");
-		jPanel10.add(AreaParafuso, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 90, -1, -1));
-
-		ValorComprimento.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		ValorComprimento.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		ValorComprimento.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jPanel10.add(ValorComprimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 90, 40, 20));
-
-		NumeroParafusos.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		NumeroParafusos.setText("Número de Pregos:");
-		jPanel10.add(NumeroParafusos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, -1));
-
-		ClasseAco.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		ClasseAco.setText("Classe do Aço:");
-		jPanel10.add(ClasseAco, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 130, -1, -1));
-
-		ComboAco.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		ComboAco.setModel(new javax.swing.DefaultComboBoxModel<ClasseAcoPrego>(ClasseAcoPrego.values()));
-		ComboAco.setToolTipText("Defina a classe do aço do parafuso, baseado revisão da norma ABNT NBR 7190 (2011).");
-		ComboAco.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ComboAcoActionPerformed(evt);
-			}
-		});
-		jPanel10.add(ComboAco, new org.netbeans.lib.awtextra.AbsoluteConstraints(505, 130, 221, -1));
-
-		Fyk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Fyk.setText("fy,k:");
-		jPanel10.add(Fyk, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 165, -1, -1));
-
-		fuk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		fuk.setText("fu,k:");
-		jPanel10.add(fuk, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 165, -1, -1));
-
-		ValorFyk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		ValorFyk.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		ValorFyk.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jPanel10.add(ValorFyk, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 165, 40, 20));
-
-		ValorFuk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		ValorFuk.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		ValorFuk.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jPanel10.add(ValorFuk, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 165, 40, 20));
-
-		UnFyk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		UnFyk.setText("(MPa)");
-		jPanel10.add(UnFyk, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 165, -1, -1));
-
-		UnFuk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		UnFuk.setText("(MPa)");
-		jPanel10.add(UnFuk, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 165, -1, -1));
-
-		TesteParafuso.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		TesteParafuso.setText("Foram realizados ensaios na ligação em estudo que comprovem que o");
-		TesteParafuso.setToolTipText("Considera-se ou não a força de arrancamento causada pelo parafuso na madeira. EUROCODE 5 (2004);");
-		jPanel10.add(TesteParafuso, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, -1, -1));
-
-		GroupTesteParafuso.add(TesteParafusoSim);
-		TesteParafusoSim.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		TesteParafusoSim.setText("Sim");
-		TesteParafusoSim.setToolTipText("Escolha se a ligação considera ou não a força de arrancamento causada pelo parafuso na madeira.");
-		TesteParafusoSim.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				TesteParafusoSimActionPerformed(evt);
-			}
-		});
-		jPanel10.add(TesteParafusoSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 215, 50, -1));
-
-		GroupTesteParafuso.add(TesteParafusoNao);
-		TesteParafusoNao.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		TesteParafusoNao.setText("Não");
-		TesteParafusoNao.setToolTipText("Escolha se a ligação considera ou não a força de arrancamento causada pelo parafuso na madeira.\n");
-		TesteParafusoNao.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				TesteParafusoNaoActionPerformed(evt);
-			}
-		});
-		jPanel10.add(TesteParafusoNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(675, 215, 50, -1));
-
-		ComboQuantPregos.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		ComboQuantPregos.setModel(new javax.swing.DefaultComboBoxModel<ClasseQuantidadePregos>(ClasseQuantidadePregos.values()));
-		ComboQuantPregos.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ComboQuantPregosActionPerformed(evt);
-			}
-		});
-		jPanel10.add(ComboQuantPregos, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 230, -1));
-
-		jLabel6.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel6.setText("(mm)");
-		jPanel10.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 90, -1, -1));
-
-		jLabel10.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel10.setText("(mm)");
-		jPanel10.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 90, -1, -1));
-
-		jLabel11.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel11.setText("(*) - Pregos mais utilizados.");
-		jPanel10.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 65, -1, -1));
-
-		jLabel41.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel41.setText("efeito de confinamento possa ser utilizado?");
-		jPanel10.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 225, -1, -1));
-
-		ElementosMetalicos.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 780, 250));
-
-		ButtonCalcular.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
-		ButtonCalcular.setText("CALCULAR LIGAÇÃO");
-		ButtonCalcular.setToolTipText("Clique aqui para calcular sua ligação. Fique atento! Caso haja informações faltantes ou inconsistentes, o cálculo não será realizado e aparecerá uma mensagem.");
-		ButtonCalcular.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ButtonCalcularActionPerformed(evt);
-			}
-		});
-		ElementosMetalicos.add(ButtonCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 480, 210, 41));
-
-		FiguraTipoParafuso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/Imagens/Prego.png"))); // NOI18N
-		FiguraTipoParafuso.setContentAreaFilled(false);
-		ElementosMetalicos.add(FiguraTipoParafuso, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 340, 160));
-		ElementosMetalicos.add(ImagemTipoArruela, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 300, 150));
-
-		jTabbedPane1.addTab("Conectores", ElementosMetalicos);
-
-		Resultado.setBackground(new java.awt.Color(204, 204, 204));
-		Resultado.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-		LabelModeloFalha.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-		LabelModeloFalha.setText("Modelo de falha:");
-		Resultado.add(LabelModeloFalha, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 110, 20));
-
-		LabelResultadoModeloFalha.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Resultado.add(LabelResultadoModeloFalha, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 320, 660, 20));
-
-		LabelResistenciaLigacao.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		LabelResistenciaLigacao.setText("Fv,Rk:");
-		Resultado.add(LabelResistenciaLigacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 60, 20));
-
-		ResultadoFvk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		ResultadoFvk.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		Resultado.add(ResultadoFvk, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 360, 80, 20));
-
-		FiguraResultadoModoFalha.setContentAreaFilled(false);
-		FiguraResultadoModoFalha.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				FiguraResultadoModoFalhaActionPerformed(evt);
-			}
-		});
-		Resultado.add(FiguraResultadoModoFalha, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, 335, 245));
-
-		jLabel74.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel74.setText("(N)");
-		Resultado.add(jLabel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 420, 60, 20));
-
-		jLabel85.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel85.setText("Rk:");
-		Resultado.add(jLabel85, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, -1, 20));
-
-		jLabel86.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel86.setText("(N)");
-		Resultado.add(jLabel86, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 360, 60, 20));
-
-		jLabel89.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel89.setText("Rd:");
-		Resultado.add(jLabel89, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, -1, 20));
-
-		jLabel96.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel96.setText("(N)");
-		Resultado.add(jLabel96, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 390, 60, 20));
-
-		ResultadoRk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		ResultadoRk.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		Resultado.add(ResultadoRk, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 390, 80, 20));
-
-		ResultadoRd.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		ResultadoRd.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		Resultado.add(ResultadoRd, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 420, 80, 20));
-
-		jLabel98.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel98.setText("*Fv,Rk = resistência característica de uma seção de corte por prego.");
-		Resultado.add(jLabel98, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 450, -1));
-
-		jLabel99.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel99.setText("*Rk = resistência característica da ligação considerando as quantidades de seções de corte e pregos. ");
-		Resultado.add(jLabel99, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, 670, -1));
-
-		jLabel100.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel100.setText("*Rd = resistência de cálculo da ligação.");
-		Resultado.add(jLabel100, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, 670, -1));
-
-		Next3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/Next.png"))); // NOI18N
-		Next3.setToolTipText("Clique para avançar.");
-		Next3.setEnabled(false);
-		Next3.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				Next3ActionPerformed(evt);
-			}
-		});
-		Resultado.add(Next3, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 480, 40, -1));
-
-		jTabbedPane1.addTab("Resultado", Resultado);
-
-		Relatorio.setBackground(new java.awt.Color(204, 204, 204));
-		Relatorio.setEnabled(false);
-
-		RelatorioFinal.setBackground(new java.awt.Color(255, 255, 255));
-		RelatorioFinal.setPreferredSize(new java.awt.Dimension(760, 1000));
-		RelatorioFinal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-		jLabel12.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-		jLabel12.setText("ELEMENTOS DE MADEIRA");
-		RelatorioFinal.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, -1));
-
-		jLabel13.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-		jLabel13.setText("RELATÓRIO DE RESISTÊNCIA DA LIGAÇÃO ");
-		RelatorioFinal.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 39, -1, -1));
-
-		RelatorioSecaoCorte.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioSecaoCorte.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-		RelatorioFinal.add(RelatorioSecaoCorte, new org.netbeans.lib.awtextra.AbsoluteConstraints(315, 80, 190, 14));
-
-		RelatorioAngulacao.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioAngulacao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-		RelatorioFinal.add(RelatorioAngulacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(315, 100, 180, 20));
-		RelatorioFinal.add(Relatoriofcok4, new org.netbeans.lib.awtextra.AbsoluteConstraints(339, 658, -1, -1));
-
-		RelatorioElem1.setBackground(new java.awt.Color(255, 255, 255));
-		RelatorioElem1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-		RelatorioElem1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-		jLabel14.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-		jLabel14.setText("Elemento 1:");
-		RelatorioElem1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 5, 80, -1));
-
-		jLabel2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel2.setText("fc0,k:");
-		RelatorioElem1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 25, -1, -1));
-
-		jLabel16.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel16.setText("fv0,k:");
-		RelatorioElem1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 45, -1, -1));
-
-		jLabel18.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel18.setText("Ec0,m:");
-		RelatorioElem1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 65, -1, -1));
-
-		jLabel19.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel19.setText("Densidade:");
-		RelatorioElem1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 85, 70, -1));
-
-		RelatorioDensidade1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioDensidade1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		RelatorioDensidade1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-		RelatorioElem1.add(RelatorioDensidade1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 85, 35, 14));
-
-		RelatorioEc0m1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioEc0m1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		RelatorioEc0m1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-		RelatorioElem1.add(RelatorioEc0m1, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 65, 50, 14));
-
-		Relatoriofv0k1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Relatoriofv0k1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		Relatoriofv0k1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-		RelatorioElem1.add(Relatoriofv0k1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 45, 35, 14));
-
-		Relatoriofcok1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Relatoriofcok1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		Relatoriofcok1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-		RelatorioElem1.add(Relatoriofcok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 25, 35, 14));
-
-		jLabel20.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel20.setText("(MPa)");
-		RelatorioElem1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 25, 40, -1));
-
-		jLabel21.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel21.setText("(MPa)");
-		RelatorioElem1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 45, 40, -1));
-
-		jLabel22.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel22.setText("(MPa)");
-		RelatorioElem1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 65, 40, -1));
-
-		jLabel23.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel23.setText("(kg/m³)");
-		RelatorioElem1.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 85, 40, -1));
-		RelatorioElem1.add(RelatorioClasseElem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 5, 40, 14));
-
-		jLabel51.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel51.setText("Espessura:");
-		RelatorioElem1.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 105, -1, -1));
-
-		RelatorioEspessura1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioEspessura1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		RelatorioElem1.add(RelatorioEspessura1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 105, 35, 14));
-
-		jLabel69.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel69.setText("(mm)");
-		RelatorioElem1.add(jLabel69, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 105, 40, -1));
-
-		Inclinado1.setBorder(null);
-		Inclinado1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		Inclinado1.setToolTipText("");
-		Inclinado1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		Inclinado1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-
-		jTextArea2.setEditable(false);
-		jTextArea2.setColumns(20);
-		jTextArea2.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
-		jTextArea2.setLineWrap(true);
-		jTextArea2.setRows(5);
-		jTextArea2.setText("Força paralela às fibras deste\nelemento.");
-		Inclinado1.setViewportView(jTextArea2);
-
-		RelatorioElem1.add(Inclinado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 122, 170, 30));
-
-		RelatorioFinal.add(RelatorioElem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 175, 180, 155));
-
-		RelatorioElem2.setBackground(new java.awt.Color(255, 255, 255));
-		RelatorioElem2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-		RelatorioElem2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-		jLabel30.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel30.setText("(MPa)");
-		RelatorioElem2.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 45, -1, -1));
-
-		jLabel29.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel29.setText("(MPa)");
-		RelatorioElem2.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 25, -1, -1));
-
-		jLabel32.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel32.setText("(kg/m³)");
-		RelatorioElem2.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 85, -1, -1));
-
-		jLabel31.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel31.setText("(MPa)");
-		RelatorioElem2.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 65, -1, -1));
-
-		RelatorioEc0m2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioEc0m2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		RelatorioElem2.add(RelatorioEc0m2, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 65, 50, 14));
-
-		RelatorioDensidade2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioDensidade2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		RelatorioElem2.add(RelatorioDensidade2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 85, 35, 14));
-
-		Relatoriofcok2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Relatoriofcok2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		RelatorioElem2.add(Relatoriofcok2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 25, 35, 14));
-
-		Relatoriofv0k2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Relatoriofv0k2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		RelatorioElem2.add(Relatoriofv0k2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 45, 35, 14));
-
-		jLabel27.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel27.setText("Ec0,m:");
-		RelatorioElem2.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 65, -1, -1));
-
-		jLabel26.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel26.setText("fv0,k:");
-		RelatorioElem2.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 45, -1, -1));
-
-		jLabel28.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel28.setText("Densidade:");
-		RelatorioElem2.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 85, 70, -1));
-
-		jLabel24.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-		jLabel24.setText("Elemento 2:");
-		RelatorioElem2.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 5, -1, -1));
-
-		jLabel25.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel25.setText("fc0,k:");
-		RelatorioElem2.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 25, -1, -1));
-		RelatorioElem2.add(RelatorioClasseElem2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 5, 40, 14));
-
-		RelatorioEspessura2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioEspessura2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		RelatorioElem2.add(RelatorioEspessura2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 105, 35, 14));
-
-		jLabel52.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel52.setText("Espessura:");
-		RelatorioElem2.add(jLabel52, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 105, -1, -1));
-
-		jLabel70.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel70.setText("(mm)");
-		RelatorioElem2.add(jLabel70, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 105, -1, -1));
-
-		Inclinado2.setBorder(null);
-		Inclinado2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		Inclinado2.setToolTipText("");
-		Inclinado2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		Inclinado2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-
-		jTextArea1.setEditable(false);
-		jTextArea1.setColumns(20);
-		jTextArea1.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
-		jTextArea1.setLineWrap(true);
-		jTextArea1.setRows(5);
-		jTextArea1.setText("Força paralela às fibras deste\nelemento.");
-		Inclinado2.setViewportView(jTextArea1);
-
-		RelatorioElem2.add(Inclinado2, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 122, 170, 30));
-
-		RelatorioFinal.add(RelatorioElem2, new org.netbeans.lib.awtextra.AbsoluteConstraints(225, 175, 180, 155));
-
-		RelatorioCoeficientes.setBackground(new java.awt.Color(255, 255, 255));
-		RelatorioCoeficientes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-		RelatorioCoeficientes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-		jLabel88.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel88.setText("(°)");
-		RelatorioCoeficientes.add(jLabel88, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, -1, 20));
-
-		Relatoriokmod3.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Relatoriokmod3.setText("Densidade:");
-		RelatorioCoeficientes.add(Relatoriokmod3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 75, 35, 14));
-
-		RelatorioAngulo.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioAngulo.setText("De");
-		RelatorioCoeficientes.add(RelatorioAngulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, 25, 20));
-
-		RelatorioKmod1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioKmod1.setText("jLabel20");
-		RelatorioCoeficientes.add(RelatorioKmod1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 25, 35, 14));
-
-		Relatoriokmod2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Relatoriokmod2.setText("Densidade:");
-		RelatorioCoeficientes.add(Relatoriokmod2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 35, 14));
-
-		jLabel90.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel90.setText("kmod 3:");
-		RelatorioCoeficientes.add(jLabel90, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 75, 50, -1));
-
-		jLabel91.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel91.setText("kmod 2:");
-		RelatorioCoeficientes.add(jLabel91, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 50, 50, -1));
-
-		jLabel92.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel92.setText("Ângulo:");
-		RelatorioCoeficientes.add(jLabel92, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 100, 50, 20));
-
-		jLabel93.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-		jLabel93.setText("Coeficientes");
-		RelatorioCoeficientes.add(jLabel93, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 5, -1, -1));
-
-		jLabel94.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel94.setText("kmod 1:");
-		RelatorioCoeficientes.add(jLabel94, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 25, 50, -1));
-
-		jLabel35.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel35.setText("γm,ligação:");
-		RelatorioCoeficientes.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 125, -1, -1));
-
-		jLabel81.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel81.setText("1,4");
-		RelatorioCoeficientes.add(jLabel81, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 125, -1, -1));
-
-		RelatorioFinal.add(RelatorioCoeficientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 175, 180, 150));
-
-		jLabel17.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-		jLabel17.setText("ELEMENTOS METÁLICOS");
-		RelatorioFinal.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 333, -1, -1));
-
-		RelatorioParafuso.setBackground(new java.awt.Color(255, 255, 255));
-		RelatorioParafuso.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-		RelatorioParafuso.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-		jLabel33.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-		jLabel33.setText("Prego Liso com Cabeça");
-		RelatorioParafuso.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 5, -1, -1));
-
-		jLabel34.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel34.setText("Dimensões do Prego:");
-		RelatorioParafuso.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 110, 14));
-
-		RelatorioTipoParafuso.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioTipoParafuso.setText("");
-		RelatorioParafuso.add(RelatorioTipoParafuso, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, 230, -1));
-
-		jLabel36.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel36.setText("d:");
-		RelatorioParafuso.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 20, 14));
-
-		RelatorioDiametro.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioDiametro.setText("jLabel37");
-		RelatorioParafuso.add(RelatorioDiametro, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 52, 35, 14));
-
-		jLabel37.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel37.setText("Número de Pregos:");
-		RelatorioParafuso.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, 100, -1));
-
-		RelatorioNParafusos.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioParafuso.add(RelatorioNParafusos, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 45, 25, 20));
-
-		jLabel43.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel43.setText("Classe de Aço:");
-		RelatorioParafuso.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 80, -1));
-
-		RelatorioClasseAco.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioClasseAco.setText("jLabel44");
-		RelatorioParafuso.add(RelatorioClasseAco, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 250, -1));
-
-		jLabel38.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel38.setText("Consideração da Força de Arrancamento:");
-		RelatorioParafuso.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 110, 210, -1));
-
-		Relatoriofaxrk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Relatoriofaxrk.setText("jLabel44");
-		RelatorioParafuso.add(Relatoriofaxrk, new org.netbeans.lib.awtextra.AbsoluteConstraints(225, 110, 35, 14));
-
-		jLabel45.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel45.setText("fy,k:");
-		RelatorioParafuso.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 30, 14));
-
-		Relatoriofyk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Relatoriofyk.setText("jLabel46");
-		RelatorioParafuso.add(Relatoriofyk, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 90, 35, 14));
-
-		jLabel46.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel46.setText("fu,k:");
-		RelatorioParafuso.add(jLabel46, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, 30, 14));
-
-		Relatoriofuk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Relatoriofuk.setText("jLabel47");
-		RelatorioParafuso.add(Relatoriofuk, new org.netbeans.lib.awtextra.AbsoluteConstraints(205, 90, 35, 14));
-
-		FiguraParafuso.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		FiguraParafuso.setText("jLabel35");
-		RelatorioParafuso.add(FiguraParafuso, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 110, 30));
-
-		jLabel71.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel71.setText("(mm)");
-		RelatorioParafuso.add(jLabel71, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 50, 40, 14));
-
-		jLabel72.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel72.setText("(MPa)");
-		RelatorioParafuso.add(jLabel72, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 90, 40, -1));
-
-		jLabel73.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel73.setText("(MPa)");
-		RelatorioParafuso.add(jLabel73, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 90, 40, 14));
-
-		jSeparator8.setOrientation(javax.swing.SwingConstants.VERTICAL);
-		RelatorioParafuso.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 90, 5, 14));
-
-		jSeparator11.setOrientation(javax.swing.SwingConstants.VERTICAL);
-		RelatorioParafuso.add(jSeparator11, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, 10, 14));
-
-		jLabel7.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel7.setText("c:");
-		RelatorioParafuso.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 20, -1));
-
-		RelatorioComprimento.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioComprimento.setText("jLabel8");
-		RelatorioParafuso.add(RelatorioComprimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 50, -1, 10));
-
-		jLabel9.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel9.setText("(mm)");
-		RelatorioParafuso.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 48, 30, -1));
-
-		RelatorioFinal.add(RelatorioParafuso, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 355, 600, 135));
-		RelatorioFinal.add(RelatorioFibras, new org.netbeans.lib.awtextra.AbsoluteConstraints(595, 313, -1, -1));
-
-		jLabel44.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-		jLabel44.setText("VALORES   CALCULADOS");
-		RelatorioFinal.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 508, -1, -1));
-
-		jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-		jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-		jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-		jLabel53.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-		jLabel53.setText("Cálculos Preliminares");
-		jPanel2.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 12, -1, -1));
-
-		CalculoForca01.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		CalculoForca01.setText("fe0,k1:");
-		jPanel2.add(CalculoForca01, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 35, 40, -1));
-
-		CalculoForca02.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		CalculoForca02.setText("fe0,k2:");
-		jPanel2.add(CalculoForca02, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 60, 40, -1));
-
-		jLabel58.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel58.setText("Fax,rk:");
-		jPanel2.add(jLabel58, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 85, 40, -1));
-
-		RelatorioFc0d1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioFc0d1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		RelatorioFc0d1.setText("jLabel59");
-		jPanel2.add(RelatorioFc0d1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 35, 40, -1));
-
-		RelatorioFc0d2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioFc0d2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		RelatorioFc0d2.setText("jLabel59");
-		jPanel2.add(RelatorioFc0d2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 40, -1));
-
-		RelatorioFaxrk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioFaxrk.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		RelatorioFaxrk.setText("jLabel59");
-		jPanel2.add(RelatorioFaxrk, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 85, 50, -1));
-
-		jLabel77.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel77.setText("(N)");
-		jPanel2.add(jLabel77, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 85, 30, -1));
-
-		jLabel78.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel78.setText("(MPa)");
-		jPanel2.add(jLabel78, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 35, 40, -1));
-
-		jLabel79.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel79.setText("(MPa)");
-		jPanel2.add(jLabel79, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 60, 40, -1));
-
-		CalculoForcaAlfa1.setText("feα,k1:");
-		jPanel2.add(CalculoForcaAlfa1, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 35, 40, -1));
-
-		CalculoForca901.setText("fe90,k1:");
-		jPanel2.add(CalculoForca901, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 35, 50, -1));
-
-		CalculoForcaAlfa2.setText("feα,k2:");
-		jPanel2.add(CalculoForcaAlfa2, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 60, 40, -1));
-
-		CalculoForca902.setText("fe90,k2:");
-		jPanel2.add(CalculoForca902, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 60, 50, -1));
-
-		RelatorioFinal.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 530, 160, 110));
-
-		jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-		jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-		jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-		jLabel59.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-		jLabel59.setText("Cálculo do Eurocode 5");
-		jPanel3.add(jLabel59, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, -1, -1));
-
-		RelatorioRd11.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioRd11.setText("Fv,k1:");
-		jPanel3.add(RelatorioRd11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 40, -1));
-
-		RelatorioRd12.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioRd12.setText("Fv,k2:");
-		jPanel3.add(RelatorioRd12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 40, -1));
-
-		RelatorioRd13.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioRd13.setText("Fv,k3:");
-		jPanel3.add(RelatorioRd13, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 60, 40, -1));
-
-		RelatorioRd1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioRd1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		RelatorioRd1.setText("jLabel63");
-		jPanel3.add(RelatorioRd1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 50, -1));
-
-		RelatorioRd14.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioRd14.setText("Fv,k4:");
-		jPanel3.add(RelatorioRd14, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 80, 40, -1));
-
-		RelatorioRd2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioRd2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		RelatorioRd2.setText("jLabel64");
-		jPanel3.add(RelatorioRd2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 50, -1));
-
-		RelatorioRd4.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioRd4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		RelatorioRd4.setText("jLabel64");
-		jPanel3.add(RelatorioRd4, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 80, 50, -1));
-
-		RelatorioRd3.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioRd3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		RelatorioRd3.setText("jLabel63");
-		jPanel3.add(RelatorioRd3, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 60, 50, -1));
-
-		RelatorioRd15.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioRd15.setText("Fv,k5:");
-		jPanel3.add(RelatorioRd15, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 60, 40, -1));
-
-		RelatorioRd16.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioRd16.setText("Fv,k6:");
-		jPanel3.add(RelatorioRd16, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 40, -1));
-
-		RelatorioRd6.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioRd6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		RelatorioRd6.setText("jLabel64");
-		jPanel3.add(RelatorioRd6, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, 50, -1));
-
-		RelatorioRd5.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioRd5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		RelatorioRd5.setText("jLabel63");
-		jPanel3.add(RelatorioRd5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 60, 50, -1));
-
-		jLabel56.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel56.setText("Myk:");
-		jPanel3.add(jLabel56, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 30, -1));
-
-		RelatorioMyd.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioMyd.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		RelatorioMyd.setText("jLabel59");
-		jPanel3.add(RelatorioMyd, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 30, 70, -1));
-
-		jLabel57.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel57.setText("β:");
-		jPanel3.add(jLabel57, new org.netbeans.lib.awtextra.AbsoluteConstraints(275, 30, 15, -1));
-
-		RelatorioBeta.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioBeta.setText("jLabel59");
-		jPanel3.add(RelatorioBeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(295, 30, -1, -1));
-		jPanel3.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 360, 10));
-		jPanel3.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 350, 10));
-
-		RelatorioRd23.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioRd23.setText("Fv,k3:");
-		jPanel3.add(RelatorioRd23, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 60, 40, -1));
-
-		jLabel54.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel54.setText("(N)");
-		jPanel3.add(jLabel54, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 80, 30, -1));
-
-		jLabel55.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel55.setText("(N)");
-		jPanel3.add(jLabel55, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 60, 30, -1));
-
-		jLabel60.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel60.setText("(N)");
-		jPanel3.add(jLabel60, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 30, -1));
-
-		jLabel61.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel61.setText("(N)");
-		jPanel3.add(jLabel61, new org.netbeans.lib.awtextra.AbsoluteConstraints(355, 80, -1, -1));
-
-		jLabel62.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel62.setText("(N)");
-		jPanel3.add(jLabel62, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, 30, -1));
-
-		jLabel63.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel63.setText("(N)");
-		jPanel3.add(jLabel63, new org.netbeans.lib.awtextra.AbsoluteConstraints(355, 60, -1, -1));
-
-		RelatorioRd24.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioRd24.setText("Fv,k4:");
-		jPanel3.add(RelatorioRd24, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 40, -1));
-
-		jLabel64.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel64.setText("(N.mm)");
-		jPanel3.add(jLabel64, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 30, 40, -1));
-
-		RelatorioFinal.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 530, 400, 110));
-
-		jLabel67.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-		jLabel67.setText("RESULTADO:");
-		RelatorioFinal.add(jLabel67, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 655, -1, -1));
-
-		ModoFalha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		RelatorioFinal.add(ModoFalha, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 680, 170, 120));
-
-		jLabel87.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel87.setText("Tipo de ruptura:");
-		RelatorioFinal.add(jLabel87, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 665, -1, -1));
-
-		jLabel95.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel95.setText("Rk:");
-		RelatorioFinal.add(jLabel95, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 740, 70, -1));
-
-		RelatorioRk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioRk.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		RelatorioFinal.add(RelatorioRk, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 740, 70, 15));
-		RelatorioFinal.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 650, 600, 10));
-		RelatorioFinal.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 135, 600, 10));
-
-		FiguraSecoes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		RelatorioFinal.add(FiguraSecoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 60, 80, 70));
-		RelatorioFinal.add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, 600, 10));
-
-		Data.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Data.setText("jLabel35");
-		RelatorioFinal.add(Data, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 870, 80, -1));
-
-		jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		jScrollPane2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-
-		Consideracao1.setEditable(false);
-		Consideracao1.setColumns(20);
-		Consideracao1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Consideracao1.setLineWrap(true);
-		Consideracao1.setRows(5);
-		Consideracao1
-		        .setText("*Fv,Rk = resistência característica de uma seção de corte por prego.\n*Rk = resistência característica da ligação considerando as quantidades de seções de corte e pregos.\n*Rd = resistência de cálculo da ligação.");
-		Consideracao1.setWrapStyleWord(true);
-		Consideracao1.setBorder(null);
-		jScrollPane2.setViewportView(Consideracao1);
-
-		RelatorioFinal.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 810, 570, 50));
-
-		jScrollPane3.setBorder(null);
-		jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-
-		teste.setEditable(false);
-		teste.setColumns(20);
-		teste.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		teste.setLineWrap(true);
-		teste.setRows(5);
-		teste.setWrapStyleWord(true);
-		teste.setAutoscrolls(false);
-		jScrollPane3.setViewportView(teste);
-
-		RelatorioFinal.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 660, 310, 30));
-
-		Hora.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Hora.setText("");
-		RelatorioFinal.add(Hora, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 870, -1, -1));
-		RelatorioFinal.add(RLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 120, 80));
-
-		jLabel66.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel66.setText("Fv,Rk:");
-		RelatorioFinal.add(jLabel66, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 720, 50, -1));
-
-		RelatorioFvk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioFvk.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		RelatorioFvk.setText("jLabel67");
-		RelatorioFinal.add(RelatorioFvk, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 720, 70, -1));
-
-		jLabel80.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel80.setText("Rd:");
-		RelatorioFinal.add(jLabel80, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 760, 50, -1));
-
-		RelatorioRd.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioRd.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		RelatorioRd.setText("jLabel81");
-		RelatorioFinal.add(RelatorioRd, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 760, 70, -1));
-
-		jLabel82.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel82.setText("(N)");
-		RelatorioFinal.add(jLabel82, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 760, -1, -1));
-
-		jLabel83.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel83.setText("(N)");
-		RelatorioFinal.add(jLabel83, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 720, -1, -1));
-
-		jLabel84.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel84.setText("(N)");
-		RelatorioFinal.add(jLabel84, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 740, -1, -1));
-
-		jScrollPane1.setViewportView(RelatorioFinal);
-
-		jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-		jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/Print.png"))); // NOI18N
-		jButton1.setToolTipText("Clique para imprimir o relatório.");
-		jButton1.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton1ActionPerformed(evt);
-			}
-		});
-
-		jButton2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-		jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/New.png"))); // NOI18N
-		jButton2.setToolTipText("Clique para realizar novo cálculo.");
-		jButton2.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton2ActionPerformed(evt);
-			}
-		});
-
-		jButton3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-		jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/Return.png"))); // NOI18N
-		jButton3.setToolTipText("Clique para retornar a tela inicial.");
-		jButton3.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton3ActionPerformed(evt);
-			}
-		});
-
-		javax.swing.GroupLayout RelatorioLayout = new javax.swing.GroupLayout(Relatorio);
-		Relatorio.setLayout(RelatorioLayout);
-		RelatorioLayout.setHorizontalGroup(RelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(RelatorioLayout.createSequentialGroup().addGroup(RelatorioLayout
-		        .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-		        .addGroup(RelatorioLayout.createSequentialGroup().addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-		                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-		                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-		                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-		        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 790, javax.swing.GroupLayout.PREFERRED_SIZE)).addGap(0, 0, Short.MAX_VALUE)));
-		RelatorioLayout.setVerticalGroup(RelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-		        .addGroup(RelatorioLayout.createSequentialGroup().addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-		                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-		                .addGroup(RelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-		                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-		                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-		                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-		                .addContainerGap(107, Short.MAX_VALUE)));
-
-		jTabbedPane1.addTab("Relatório", Relatorio);
-
-		jTabbedPane1.setSelectedComponent(Inicio);
-		Relatorio.setVisible(false);
-
-		getContentPane().add(jTabbedPane1, java.awt.BorderLayout.PAGE_START);
-
-		jProgressBarPrego.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-//		jProgressBarPrego.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		jProgressBarPrego.setString("Clique em \"Iniciar Cálculo\" para começar o dimensionamento.");
-		jProgressBarPrego.setBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")));
-		jProgressBarPrego.setPreferredSize(new java.awt.Dimension(34, 30));
-		jProgressBarPrego.setStringPainted(true);
-		getContentPane().add(jProgressBarPrego, java.awt.BorderLayout.PAGE_END);
-		
-		getAccessibleContext().setAccessibleName("ProgramaMarcos");
-
-		pack();
+		try {
+
+			groupSecoesCorte = new javax.swing.ButtonGroup();
+			grouptesteParafuso = new javax.swing.ButtonGroup();
+			groupInclinacaoSim = new javax.swing.ButtonGroup();
+			jTabbedPane1 = new javax.swing.JTabbedPane();
+			inicio = new javax.swing.JPanel();
+			logoPrograma = new javax.swing.JLabel();
+			jLabel97 = new javax.swing.JLabel();
+			voltar = new javax.swing.JButton();
+			jLabel40 = new javax.swing.JLabel();
+			jButton4 = new javax.swing.JButton();
+			secoesCorte = new javax.swing.JPanel();
+			btn1SecaoCorte = new javax.swing.JToggleButton();
+			jToggleButton1 = new javax.swing.JToggleButton();
+			jToggleButton2 = new javax.swing.JToggleButton();
+			next = new javax.swing.JButton();
+			painelTipoMadeira = new javax.swing.JPanel();
+			serradaButton = new javax.swing.JToggleButton();
+			recompostaButton = new javax.swing.JToggleButton();
+			painelEspecieMadeira = new javax.swing.JPanel();
+			coniferasButton = new javax.swing.JToggleButton();
+			folhosasButton = new javax.swing.JToggleButton();
+			elementosMadeira = new javax.swing.JPanel();
+			jPanel7 = new javax.swing.JPanel();
+			comboElem1ClasseMadeira = new javax.swing.JComboBox<ClasseMadeira>();
+			jLabel_classe_madeira_1 = new javax.swing.JLabel();
+			jLabel_elemento1 = new javax.swing.JLabel();
+			jLabel3 = new javax.swing.JLabel();
+			valorAngulo = new javax.swing.JTextField();
+			espessura1 = new javax.swing.JTextField();
+			jLabelUnEspessura = new javax.swing.JLabel();
+			fcok1 = new javax.swing.JLabel();
+			unFcok1 = new javax.swing.JLabel();
+			valorFc01 = new javax.swing.JLabel();
+			densidade1 = new javax.swing.JLabel();
+			valorDensidade1 = new javax.swing.JLabel();
+			unDensidade1 = new javax.swing.JLabel();
+			valorFvok1 = new javax.swing.JLabel();
+			unFv0k1 = new javax.swing.JLabel();
+			fv0k1 = new javax.swing.JLabel();
+			ec0m1 = new javax.swing.JLabel();
+			unEc0m1 = new javax.swing.JLabel();
+			valorEc0m1 = new javax.swing.JLabel();
+			jSeparator1 = new javax.swing.JSeparator();
+			possuiInclinacao1 = new javax.swing.JLabel();
+			inclinacaoSim1 = new javax.swing.JRadioButton();
+			possuiInclinacao11 = new javax.swing.JLabel();
+			jLabel5 = new javax.swing.JLabel();
+			jLabel39 = new javax.swing.JLabel();
+			jPanel13 = new javax.swing.JPanel();
+			comboElem2ClasseMadeira = new javax.swing.JComboBox<ClasseMadeira>();
+			jLabel_classe_madeira_2 = new javax.swing.JLabel();
+			jLabel_elemento2 = new javax.swing.JLabel();
+			jLabel4 = new javax.swing.JLabel();
+			espessura2 = new javax.swing.JTextField();
+			jLabelUnEspessura1 = new javax.swing.JLabel();
+			fcok2 = new javax.swing.JLabel();
+			unFcok2 = new javax.swing.JLabel();
+			valorFc2 = new javax.swing.JLabel();
+			densidade2 = new javax.swing.JLabel();
+			valorDensidade2 = new javax.swing.JLabel();
+			unDensidade2 = new javax.swing.JLabel();
+			valorFvok2 = new javax.swing.JLabel();
+			unFv0k2 = new javax.swing.JLabel();
+			fv0k2 = new javax.swing.JLabel();
+			ec0m2 = new javax.swing.JLabel();
+			unEc0m2 = new javax.swing.JLabel();
+			jSeparator2 = new javax.swing.JSeparator();
+			valorEc0m2 = new javax.swing.JLabel();
+			inclinacaoSim2 = new javax.swing.JRadioButton();
+			possuiInclinacao3 = new javax.swing.JLabel();
+			jLabel68 = new javax.swing.JLabel();
+			madeiraFigura = new javax.swing.JButton();
+			jPanel12 = new javax.swing.JPanel();
+			jLabel101 = new javax.swing.JLabel();
+			jLabel102 = new javax.swing.JLabel();
+			jLabel103 = new javax.swing.JLabel();
+			jLabel104 = new javax.swing.JLabel();
+			comboKmod1 = new javax.swing.JComboBox<Kmod1>();
+			comboKmod3 = new javax.swing.JComboBox<Kmod3>();
+			comboKmod2 = new javax.swing.JComboBox<Kmod2>();
+			textkmod3 = new javax.swing.JLabel();
+			textkmod1 = new javax.swing.JLabel();
+			textkmod2 = new javax.swing.JLabel();
+			next2 = new javax.swing.JButton();
+			elementosMetalicos = new javax.swing.JPanel();
+			jPanel10 = new javax.swing.JPanel();
+			jLabel1 = new javax.swing.JLabel();
+			tamanhoParafuso = new javax.swing.JLabel();
+			comboTipoPrego = new javax.swing.JComboBox<TipoPrego>();
+			diametro = new javax.swing.JLabel();
+			valorDiametro = new javax.swing.JLabel();
+			areaParafuso = new javax.swing.JLabel();
+			valorComprimento = new javax.swing.JLabel();
+			numeroParafusos = new javax.swing.JLabel();
+			classeAco = new javax.swing.JLabel();
+			comboAco = new javax.swing.JComboBox<ClasseAcoPrego>();
+			fyk = new javax.swing.JLabel();
+			fuk = new javax.swing.JLabel();
+			valorFyk = new javax.swing.JLabel();
+			valorFuk = new javax.swing.JLabel();
+			unFyk = new javax.swing.JLabel();
+			unFuk = new javax.swing.JLabel();
+			testeParafuso = new javax.swing.JLabel();
+			testeParafusoSim = new javax.swing.JRadioButton();
+			testeParafusoNao = new javax.swing.JRadioButton();
+			comboQuantPregos = new javax.swing.JComboBox<ClasseQuantidadePregos>();
+			jLabel6 = new javax.swing.JLabel();
+			jLabel10 = new javax.swing.JLabel();
+			jLabel11 = new javax.swing.JLabel();
+			jLabel41 = new javax.swing.JLabel();
+			buttonCalcular = new javax.swing.JButton();
+			figuraTipoParafuso = new javax.swing.JButton();
+			imagemTipoArruela = new javax.swing.JLabel();
+			resultado = new javax.swing.JPanel();
+			labelModeloFalha = new javax.swing.JLabel();
+			labelresultadoModeloFalha = new javax.swing.JLabel();
+			labelResistenciaLigacao = new javax.swing.JLabel();
+			resultadoFvk = new javax.swing.JLabel();
+			figuraresultadoModoFalha = new javax.swing.JButton();
+			jLabel74 = new javax.swing.JLabel();
+			jLabel85 = new javax.swing.JLabel();
+			jLabel86 = new javax.swing.JLabel();
+			jLabel89 = new javax.swing.JLabel();
+			jLabel96 = new javax.swing.JLabel();
+			resultadoRk = new javax.swing.JLabel();
+			resultadoRd = new javax.swing.JLabel();
+			jLabel98 = new javax.swing.JLabel();
+			jLabel99 = new javax.swing.JLabel();
+			jLabel100 = new javax.swing.JLabel();
+			next3 = new javax.swing.JButton();
+			relatorio = new javax.swing.JPanel();
+			jScrollPane1 = new javax.swing.JScrollPane();
+			relatorioFinal = new javax.swing.JPanel();
+			jLabel12 = new javax.swing.JLabel();
+			jLabel13 = new javax.swing.JLabel();
+			relatorioSecaoCorte = new javax.swing.JLabel();
+			relatorioAngulacao = new javax.swing.JLabel();
+			relatoriofcok4 = new javax.swing.JLabel();
+			relatorioElem1 = new javax.swing.JPanel();
+			jLabel14 = new javax.swing.JLabel();
+			jLabel2 = new javax.swing.JLabel();
+			jLabel16 = new javax.swing.JLabel();
+			jLabel18 = new javax.swing.JLabel();
+			jLabel19 = new javax.swing.JLabel();
+			relatorioDensidade1 = new javax.swing.JLabel();
+			relatorioEc0m1 = new javax.swing.JLabel();
+			relatoriofv0k1 = new javax.swing.JLabel();
+			relatoriofcok1 = new javax.swing.JLabel();
+			jLabel20 = new javax.swing.JLabel();
+			jLabel21 = new javax.swing.JLabel();
+			jLabel22 = new javax.swing.JLabel();
+			jLabel23 = new javax.swing.JLabel();
+			relatorioClasseElem1 = new javax.swing.JLabel();
+			jLabel51 = new javax.swing.JLabel();
+			relatorioEspessura1 = new javax.swing.JLabel();
+			jLabel69 = new javax.swing.JLabel();
+			inclinado1 = new javax.swing.JScrollPane();
+			jTextArea2 = new javax.swing.JTextArea();
+			relatorioElem2 = new javax.swing.JPanel();
+			jLabel30 = new javax.swing.JLabel();
+			jLabel29 = new javax.swing.JLabel();
+			jLabel32 = new javax.swing.JLabel();
+			jLabel31 = new javax.swing.JLabel();
+			relatorioEc0m2 = new javax.swing.JLabel();
+			relatorioDensidade2 = new javax.swing.JLabel();
+			relatoriofcok2 = new javax.swing.JLabel();
+			relatoriofv0k2 = new javax.swing.JLabel();
+			jLabel27 = new javax.swing.JLabel();
+			jLabel26 = new javax.swing.JLabel();
+			jLabel28 = new javax.swing.JLabel();
+			jLabel24 = new javax.swing.JLabel();
+			jLabel25 = new javax.swing.JLabel();
+			relatorioClasseElem2 = new javax.swing.JLabel();
+			relatorioEspessura2 = new javax.swing.JLabel();
+			jLabel52 = new javax.swing.JLabel();
+			jLabel70 = new javax.swing.JLabel();
+			inclinado2 = new javax.swing.JScrollPane();
+			jTextArea1 = new javax.swing.JTextArea();
+			relatorioCoeficientes = new javax.swing.JPanel();
+			jLabel88 = new javax.swing.JLabel();
+			relatoriokmod3 = new javax.swing.JLabel();
+			relatorioAngulo = new javax.swing.JLabel();
+			relatorioKmod1 = new javax.swing.JLabel();
+			relatoriokmod2 = new javax.swing.JLabel();
+			jLabel90 = new javax.swing.JLabel();
+			jLabel91 = new javax.swing.JLabel();
+			jLabel92 = new javax.swing.JLabel();
+			jLabel93 = new javax.swing.JLabel();
+			jLabel94 = new javax.swing.JLabel();
+			jLabel35 = new javax.swing.JLabel();
+			jLabel81 = new javax.swing.JLabel();
+			jLabel17 = new javax.swing.JLabel();
+			relatorioParafuso = new javax.swing.JPanel();
+			jLabel33 = new javax.swing.JLabel();
+			jLabel34 = new javax.swing.JLabel();
+			relatorioTipoParafuso = new javax.swing.JLabel();
+			jLabel36 = new javax.swing.JLabel();
+			relatorioDiametro = new javax.swing.JLabel();
+			jLabel37 = new javax.swing.JLabel();
+			relatorioNParafusos = new javax.swing.JLabel();
+			jLabel43 = new javax.swing.JLabel();
+			relatorioClasseAco = new javax.swing.JLabel();
+			jLabel38 = new javax.swing.JLabel();
+			relatoriofaxrk = new javax.swing.JLabel();
+			jLabel45 = new javax.swing.JLabel();
+			relatoriofyk = new javax.swing.JLabel();
+			jLabel46 = new javax.swing.JLabel();
+			relatoriofuk = new javax.swing.JLabel();
+			figuraParafuso = new javax.swing.JLabel();
+			jLabel71 = new javax.swing.JLabel();
+			jLabel72 = new javax.swing.JLabel();
+			jLabel73 = new javax.swing.JLabel();
+			jSeparator8 = new javax.swing.JSeparator();
+			jSeparator11 = new javax.swing.JSeparator();
+			jLabel7 = new javax.swing.JLabel();
+			relatorioComprimento = new javax.swing.JLabel();
+			jLabel9 = new javax.swing.JLabel();
+			relatorioFibras = new javax.swing.JLabel();
+			jLabel44 = new javax.swing.JLabel();
+			jPanel2 = new javax.swing.JPanel();
+			jLabel53 = new javax.swing.JLabel();
+			calculoForca01 = new javax.swing.JLabel();
+			calculoForca02 = new javax.swing.JLabel();
+			jLabel58 = new javax.swing.JLabel();
+			relatorioFc0d1 = new javax.swing.JLabel();
+			relatorioFc0d2 = new javax.swing.JLabel();
+			relatorioFaxrk = new javax.swing.JLabel();
+			jLabel77 = new javax.swing.JLabel();
+			jLabel78 = new javax.swing.JLabel();
+			jLabel79 = new javax.swing.JLabel();
+			calculoForcaAlfa1 = new javax.swing.JLabel();
+			calculoForca901 = new javax.swing.JLabel();
+			calculoForcaAlfa2 = new javax.swing.JLabel();
+			calculoForca902 = new javax.swing.JLabel();
+			jPanel3 = new javax.swing.JPanel();
+			jLabel59 = new javax.swing.JLabel();
+			relatorioRd11 = new javax.swing.JLabel();
+			relatorioRd12 = new javax.swing.JLabel();
+			relatorioRd13 = new javax.swing.JLabel();
+			relatorioRd1 = new javax.swing.JLabel();
+			relatorioRd14 = new javax.swing.JLabel();
+			relatorioRd2 = new javax.swing.JLabel();
+			relatorioRd4 = new javax.swing.JLabel();
+			relatorioRd3 = new javax.swing.JLabel();
+			relatorioRd15 = new javax.swing.JLabel();
+			relatorioRd16 = new javax.swing.JLabel();
+			relatorioRd6 = new javax.swing.JLabel();
+			relatorioRd5 = new javax.swing.JLabel();
+			jLabel56 = new javax.swing.JLabel();
+			relatorioMyd = new javax.swing.JLabel();
+			jLabel57 = new javax.swing.JLabel();
+			relatorioBeta = new javax.swing.JLabel();
+			jSeparator4 = new javax.swing.JSeparator();
+			jSeparator5 = new javax.swing.JSeparator();
+			relatorioRd23 = new javax.swing.JLabel();
+			jLabel54 = new javax.swing.JLabel();
+			jLabel55 = new javax.swing.JLabel();
+			jLabel60 = new javax.swing.JLabel();
+			jLabel61 = new javax.swing.JLabel();
+			jLabel62 = new javax.swing.JLabel();
+			jLabel63 = new javax.swing.JLabel();
+			relatorioRd24 = new javax.swing.JLabel();
+			jLabel64 = new javax.swing.JLabel();
+			jLabel67 = new javax.swing.JLabel();
+			modoFalha = new javax.swing.JLabel();
+			jLabel87 = new javax.swing.JLabel();
+			jLabel95 = new javax.swing.JLabel();
+			relatorioRk = new javax.swing.JLabel();
+			jSeparator6 = new javax.swing.JSeparator();
+			jSeparator7 = new javax.swing.JSeparator();
+			figuraSecoes = new javax.swing.JLabel();
+			jSeparator9 = new javax.swing.JSeparator();
+			data = new javax.swing.JLabel();
+			jScrollPane2 = new javax.swing.JScrollPane();
+			consideracao1 = new javax.swing.JTextArea();
+			jScrollPane3 = new javax.swing.JScrollPane();
+			teste = new javax.swing.JTextArea();
+			hora = new javax.swing.JLabel();
+			rLogo = new javax.swing.JLabel();
+			jLabel66 = new javax.swing.JLabel();
+			relatorioFvk = new javax.swing.JLabel();
+			jLabel80 = new javax.swing.JLabel();
+			relatorioRd = new javax.swing.JLabel();
+			jLabel82 = new javax.swing.JLabel();
+			jLabel83 = new javax.swing.JLabel();
+			jLabel84 = new javax.swing.JLabel();
+			jButton1 = new javax.swing.JButton();
+			jButton2 = new javax.swing.JButton();
+			jButton3 = new javax.swing.JButton();
+			jProgressBarPrego = new javax.swing.JProgressBar(0, 4);
+			jProgressBarPrego.setValue(0);
+
+			setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+			setTitle("TCD - Timber Connections Design");
+			setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+			setIconImages(null);
+			setMaximumSize(new java.awt.Dimension(900, 800));
+			setMinimumSize(new java.awt.Dimension(820, 730));
+			setName(""); // NOI18N
+			setPreferredSize(new java.awt.Dimension(796, 680));
+			addWindowListener(new java.awt.event.WindowAdapter(){
+				public void windowActivated(java.awt.event.WindowEvent evt) {
+					formWindowActivated(evt);
+				}
+			});
+
+			jTabbedPane1.setToolTipText("");
+			jTabbedPane1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+			jTabbedPane1.setMaximumSize(new java.awt.Dimension(900, 700));
+			jTabbedPane1.setMinimumSize(new java.awt.Dimension(700, 600));
+			jTabbedPane1.setOpaque(true);
+			jTabbedPane1.setPreferredSize(new java.awt.Dimension(795, 660));
+			jTabbedPane1.setRequestFocusEnabled(false);
+			jTabbedPane1.addFocusListener(new java.awt.event.FocusAdapter(){
+				public void focusGained(java.awt.event.FocusEvent evt) {
+					jTabbedPane1FocusGained(evt);
+				}
+			});
+
+			inicio.setBackground(new java.awt.Color(204, 204, 204));
+			inicio.setPreferredSize(new java.awt.Dimension(647, 625));
+
+			logoPrograma.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/Logo/logosket.png"))); // NOI18N
+
+			jLabel97.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+			jLabel97.setText("TCD - Timber Connections Design");
+
+			voltar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+			voltar.setText("Voltar");
+			voltar.setToolTipText("Escolha esta opção para retornar a tela inicial.");
+			voltar.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					voltarActionPerformed(evt);
+				}
+			});
+
+			jLabel40.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel40.setText("Cálculo de ligações pregadas entre elementos de madeira.");
+
+			jButton4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+			jButton4.setText("Iniciar Cálculo");
+			jButton4.setToolTipText("Escolha esta opção para iniciar o dimensionamento de sua ligação.");
+			jButton4.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					jButton4ActionPerformed(evt);
+				}
+			});
+
+			javax.swing.GroupLayout InicioLayout = new javax.swing.GroupLayout(inicio);
+			inicio.setLayout(InicioLayout);
+			InicioLayout.setHorizontalGroup(InicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+			        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+			                  InicioLayout.createSequentialGroup().addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+			                          .addGroup(InicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+			                                  .addGroup(InicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+			                                          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InicioLayout.createSequentialGroup().addComponent(jLabel97).addGap(228, 228, 228))
+			                                          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InicioLayout.createSequentialGroup()
+			                                                  .addComponent(logoPrograma, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE).addGap(198, 198, 198)))
+			                                  .addGroup(InicioLayout.createSequentialGroup().addGap(10, 10, 10).addComponent(jLabel40).addContainerGap(270, Short.MAX_VALUE))))
+			        .addGroup(InicioLayout.createSequentialGroup().addGap(162, 162, 162).addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+			                .addGap(105, 105, 105).addComponent(voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE).addGap(0, 140, Short.MAX_VALUE)));
+			InicioLayout.setVerticalGroup(InicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+			        .addGroup(InicioLayout.createSequentialGroup().addGap(99, 99, 99).addComponent(logoPrograma, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+			                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(jLabel97).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+			                .addComponent(jLabel40).addGap(82, 82, 82)
+			                .addGroup(InicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+			                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+			                        .addComponent(voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+			                .addContainerGap(135, Short.MAX_VALUE)));
+
+			jTabbedPane1.addTab("Inicio", inicio);
+
+			secoesCorte.setBackground(new java.awt.Color(204, 204, 204));
+			secoesCorte.setBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")));
+			secoesCorte.setMaximumSize(new java.awt.Dimension(40000, 40000));
+			secoesCorte.setPreferredSize(new java.awt.Dimension(770, 625));
+
+			groupSecoesCorte.add(btn1SecaoCorte);
+			btn1SecaoCorte.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+			btn1SecaoCorte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/BotaoPregoSimples.png"))); // NOI18N
+			btn1SecaoCorte.setText("Corte Simples ");
+			btn1SecaoCorte.setToolTipText("Escolha esta opção se a ligação apresentar apenas uma seção de corte no prego.");
+			btn1SecaoCorte.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+			btn1SecaoCorte.setInheritsPopupMenu(true);
+			btn1SecaoCorte.setName(""); // NOI18N
+			btn1SecaoCorte.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+			btn1SecaoCorte.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					btn1SecaoCorteActionPerformed(evt);
+				}
+			});
+
+			groupSecoesCorte.add(jToggleButton1);
+			jToggleButton1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+			jToggleButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/BotaoPregoSimples2.png"))); // NOI18N
+			jToggleButton1.setText("Corte Simples");
+			jToggleButton1.setToolTipText("Escolha esta opção se a ligação apresentar apenas uma seção de corte no prego.");
+			jToggleButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+			jToggleButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+			jToggleButton1.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					jToggleButton1ActionPerformed(evt);
+				}
+			});
+
+			groupSecoesCorte.add(jToggleButton2);
+			jToggleButton2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+			jToggleButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/Duplo.png"))); // NOI18N
+			jToggleButton2.setText("Corte Duplo");
+			jToggleButton2.setToolTipText("Escolha esta opção se a ligação apresentar apenas duas seções de corte no prego.");
+			jToggleButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+			jToggleButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+			jToggleButton2.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					jToggleButton2ActionPerformed(evt);
+				}
+			});
+
+			next.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/next.png"))); // NOI18N
+			next.setToolTipText("Clique para avançar.");
+			next.setEnabled(false);
+			next.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					nextActionPerformed(evt);
+				}
+			});
+
+			painelTipoMadeira.setBackground(new java.awt.Color(204, 204, 204));
+			painelTipoMadeira.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true), "Tipo da Madeira",
+			                                                                         javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP,
+			                                                                         new java.awt.Font("Arial", 0, 12))); // NOI18N
+			painelTipoMadeira.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+
+			serradaButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+			serradaButton.setText("Serrada/Roliça/MLC/Compensado");
+			serradaButton.setToolTipText("");
+			serradaButton.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					serradaButtonActionPerformed(evt);
+				}
+			});
+
+			recompostaButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+			recompostaButton.setText("Recomposta");
+			recompostaButton.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					recompostaButtonActionPerformed(evt);
+				}
+			});
+
+			javax.swing.GroupLayout PainelTipoMadeiraLayout = new javax.swing.GroupLayout(painelTipoMadeira);
+			painelTipoMadeira.setLayout(PainelTipoMadeiraLayout);
+			PainelTipoMadeiraLayout.setHorizontalGroup(PainelTipoMadeiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+			        .addGroup(PainelTipoMadeiraLayout.createSequentialGroup().addContainerGap(83, Short.MAX_VALUE)
+			                .addGroup(PainelTipoMadeiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+			                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelTipoMadeiraLayout.createSequentialGroup().addComponent(recompostaButton)
+			                                .addGap(135, 135, 135))
+			                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelTipoMadeiraLayout.createSequentialGroup().addComponent(serradaButton).addGap(74, 74, 74)))));
+			PainelTipoMadeiraLayout.setVerticalGroup(PainelTipoMadeiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(PainelTipoMadeiraLayout.createSequentialGroup()
+			        .addGap(45, 45, 45).addComponent(serradaButton).addGap(58, 58, 58).addComponent(recompostaButton).addContainerGap(49, Short.MAX_VALUE)));
+
+			painelEspecieMadeira.setBackground(new java.awt.Color(204, 204, 204));
+			painelEspecieMadeira.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true), "Espécie da Madeira",
+			                                                                            javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP,
+			                                                                            new java.awt.Font("Arial", 0, 12))); // NOI18N
+			painelEspecieMadeira.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+			painelEspecieMadeira.setName(""); // NOI18N
+
+			coniferasButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+			coniferasButton.setText("Coníferas");
+			coniferasButton.setToolTipText("Alguns exemplos: Pinho-Bravo, Pinho-do-Paraná, Pinus (em geral).");
+			coniferasButton.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					coniferasButtonActionPerformed(evt);
+				}
+			});
+
+			folhosasButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+			folhosasButton.setText("Folhosas");
+			folhosasButton.setToolTipText("Alguns exemplos: Peroba-Rosa, Angico, Imbuia, Jatobá, Mogno, Cerejeira, Cedro, Freijó, Aroeira, Ipê, Pau-Marfim.");
+			folhosasButton.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					folhosasButtonActionPerformed(evt);
+				}
+			});
+
+			javax.swing.GroupLayout PainelEspecieMadeiraLayout = new javax.swing.GroupLayout(painelEspecieMadeira);
+			painelEspecieMadeira.setLayout(PainelEspecieMadeiraLayout);
+			PainelEspecieMadeiraLayout.setHorizontalGroup(PainelEspecieMadeiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+			        .addGroup(PainelEspecieMadeiraLayout.createSequentialGroup().addGap(127, 127, 127)
+			                .addGroup(PainelEspecieMadeiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(folhosasButton).addComponent(coniferasButton))
+			                .addContainerGap(142, Short.MAX_VALUE)));
+			PainelEspecieMadeiraLayout.setVerticalGroup(PainelEspecieMadeiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+			        .addGroup(PainelEspecieMadeiraLayout.createSequentialGroup().addGap(44, 44, 44).addComponent(coniferasButton)
+			                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(folhosasButton).addGap(50, 50,
+			                                                                                                                                                                                50)));
+
+			javax.swing.GroupLayout SecoesCorteLayout = new javax.swing.GroupLayout(secoesCorte);
+			secoesCorte.setLayout(SecoesCorteLayout);
+			SecoesCorteLayout.setHorizontalGroup(SecoesCorteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+			        .addGroup(SecoesCorteLayout.createSequentialGroup().addGap(6, 6, 6)
+			                .addComponent(btn1SecaoCorte, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+			                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+			                .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+			                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+			                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+			                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+			        .addGroup(SecoesCorteLayout.createSequentialGroup().addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+			                .addComponent(painelEspecieMadeira, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+			                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+			                .addComponent(painelTipoMadeira, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+			                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+			        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SecoesCorteLayout.createSequentialGroup().addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+			                .addComponent(next, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE).addContainerGap()));
+			SecoesCorteLayout.setVerticalGroup(SecoesCorteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+			        .addGroup(SecoesCorteLayout.createSequentialGroup().addGap(18, 18, 18)
+			                .addGroup(SecoesCorteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+			                        .addComponent(btn1SecaoCorte, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+			                        .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+			                        .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+			                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+			                .addGroup(SecoesCorteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+			                        .addComponent(painelTipoMadeira, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(painelEspecieMadeira,
+			                                                                                                                                                                   javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+			                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(next).addContainerGap(41, Short.MAX_VALUE)));
+
+			jTabbedPane1.addTab("Modelos de Ligação", secoesCorte);
+
+			elementosMadeira.setBackground(new java.awt.Color(204, 204, 204));
+			elementosMadeira.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+			jPanel7.setBackground(new java.awt.Color(153, 153, 153));
+			jPanel7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+			jPanel7.setPreferredSize(new java.awt.Dimension(385, 225));
+			jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+			comboElem1ClasseMadeira.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			comboElem1ClasseMadeira.setModel(new javax.swing.DefaultComboBoxModel<ClasseMadeira>(ClasseMadeira.values()));
+			comboElem1ClasseMadeira.setToolTipText("Defina a classe de madeira do elemento 1, baseado nas tabelas 2 e 3 da revisão da norma ABNT NBR 7190 (2011).");
+			comboElem1ClasseMadeira.addFocusListener(new java.awt.event.FocusAdapter(){
+				public void focusLost(java.awt.event.FocusEvent evt) {
+					comboElem1ClasseMadeiraFocusLost(evt);
+				}
+			});
+			jPanel7.add(comboElem1ClasseMadeira, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 35, 211, 29));
+
+			jLabel_classe_madeira_1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel_classe_madeira_1.setText("Classe da Madeira:");
+			jPanel7.add(jLabel_classe_madeira_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 45, -1, -1));
+
+			jLabel_elemento1.setFont(new java.awt.Font("Arial Black", 1, 11)); // NOI18N
+			jLabel_elemento1.setText("Elemento 1");
+			jLabel_elemento1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+			jPanel7.add(jLabel_elemento1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 5, 88, 22));
+
+			jLabel3.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel3.setText("Espessura (t1):");
+			jPanel7.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 145, -1, -1));
+
+			jLabelUnEspessura.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabelUnEspessura.setText("(mm)");
+			jPanel7.add(jLabelUnEspessura, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 147, -1, -1));
+
+			fcok1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			fcok1.setText("fc0,k:");
+			jPanel7.add(fcok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
+
+			unFcok1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			unFcok1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+			unFcok1.setText("(MPa)");
+			jPanel7.add(unFcok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, -1, -1));
+			unFcok1.getAccessibleContext().setAccessibleDescription("");
+
+			valorFc01.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			valorFc01.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+			valorFc01.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+			jPanel7.add(valorFc01, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 80, 40, 20));
+
+			densidade1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			densidade1.setText("Densidade:");
+			jPanel7.add(densidade1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, -1, -1));
+
+			valorDensidade1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			valorDensidade1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+			valorDensidade1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+			jPanel7.add(valorDensidade1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 40, 20));
+
+			unDensidade1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			unDensidade1.setText("(kg/m³)");
+			jPanel7.add(unDensidade1, new org.netbeans.lib.awtextra.AbsoluteConstraints(325, 80, -1, -1));
+
+			valorFvok1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			valorFvok1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+			valorFvok1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+			jPanel7.add(valorFvok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 110, 40, 20));
+
+			unFv0k1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			unFv0k1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+			unFv0k1.setText("(MPa)");
+			jPanel7.add(unFv0k1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, -1, -1));
+
+			fv0k1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			fv0k1.setText("fv0,k:");
+			jPanel7.add(fv0k1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
+
+			ec0m1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			ec0m1.setText("Ec0,m:");
+			jPanel7.add(ec0m1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 110, -1, -1));
+
+			unEc0m1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			unEc0m1.setText("(MPa)");
+			jPanel7.add(unEc0m1, new org.netbeans.lib.awtextra.AbsoluteConstraints(325, 110, -1, -1));
+
+			valorEc0m1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			valorEc0m1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+			valorEc0m1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+			valorEc0m1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+			jPanel7.add(valorEc0m1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 110, 50, 20));
+
+			jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+			jPanel7.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 69, 10, 65));
+
+			possuiInclinacao1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			possuiInclinacao1.setText("A força indicada na figura é paralela");
+			jPanel7.add(possuiInclinacao1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 195, -1, -1));
+
+			groupInclinacaoSim.add(inclinacaoSim1);
+			inclinacaoSim1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			inclinacaoSim1.setText("Sim");
+			inclinacaoSim1.setToolTipText("Se existir inclinação, indique qual elemento está inclinado. ");
+			inclinacaoSim1.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					inclinacaoSim1ActionPerformed(evt);
+				}
+			});
+			jPanel7.add(inclinacaoSim1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 200, -1, -1));
+
+			possuiInclinacao11.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			possuiInclinacao11.setText("às fibras do elemento 1?");
+			jPanel7.add(possuiInclinacao11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, -1, -1));
+
+			jLabel5.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel5.setText("Ângulo entre as peças:");
+			jPanel7.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 175, 150, -1));
+
+			espessura1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			espessura1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+			espessura1.setText("Digite a espessura");
+			espessura1.setToolTipText("Insira a espessura do elemento 1. O elemento 1 está indicado na imagem.");
+			espessura1.addFocusListener(new java.awt.event.FocusAdapter(){
+				public void focusGained(java.awt.event.FocusEvent evt) {
+					limparExpessura(evt);
+				}
+			});
+			espessura1.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					espessura1ActionPerformed(evt);
+				}
+			});
+			espessura1.addKeyListener(new java.awt.event.KeyAdapter(){
+				public void keyTyped(java.awt.event.KeyEvent evt) {
+					espessura1KeyTyped(evt);
+				}
+			});
+			jPanel7.add(espessura1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 143, 130, -1));
+
+			valorAngulo.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			valorAngulo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+			valorAngulo.setText("0");
+			valorAngulo.setToolTipText("Insira o ângulo entre os elementos 1 e 2 de madeira.");
+			valorAngulo.addFocusListener(new java.awt.event.FocusAdapter(){
+				public void focusGained(java.awt.event.FocusEvent evt) {
+					valorAngulo(evt);
+				}
+
+				public void focusLost(java.awt.event.FocusEvent evt) {
+					valorAnguloFocusLost(evt);
+				}
+			});
+			valorAngulo.addMouseListener(new java.awt.event.MouseAdapter(){
+				public void mouseClicked(java.awt.event.MouseEvent evt) {
+					valorAnguloMouseClicked(evt);
+				}
+			});
+			valorAngulo.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					valorAnguloActionPerformed(evt);
+				}
+			});
+			valorAngulo.addKeyListener(new java.awt.event.KeyAdapter(){
+				public void keyTyped(java.awt.event.KeyEvent evt) {
+					valorAnguloKeyTyped(evt);
+				}
+			});
+			jPanel7.add(valorAngulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 70, -1));
+
+			jLabel39.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel39.setText("(°)");
+			jPanel7.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 170, 20, 20));
+
+			elementosMadeira.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 5, -1, 230));
+
+			jPanel13.setBackground(new java.awt.Color(153, 153, 153));
+			jPanel13.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+			jPanel13.setPreferredSize(new java.awt.Dimension(385, 225));
+			jPanel13.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+			comboElem2ClasseMadeira.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			comboElem2ClasseMadeira.setModel(new javax.swing.DefaultComboBoxModel<ClasseMadeira>(ClasseMadeira.values()));
+			comboElem2ClasseMadeira.setToolTipText("Defina a classe de madeira do elemento 2, baseado nas tabelas 2 e 3 da revisão da norma ABNT NBR 7190 (2011).");
+			comboElem2ClasseMadeira.addFocusListener(new java.awt.event.FocusAdapter(){
+				public void focusLost(java.awt.event.FocusEvent evt) {
+					comboElem2ClasseMadeiraFocusLost(evt);
+				}
+			});
+			jPanel13.add(comboElem2ClasseMadeira, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 30, 211, 29));
+
+			jLabel_classe_madeira_2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel_classe_madeira_2.setText("Classe da Madeira:");
+			jPanel13.add(jLabel_classe_madeira_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
+
+			jLabel_elemento2.setFont(new java.awt.Font("Arial Black", 1, 11)); // NOI18N
+			jLabel_elemento2.setText("Elemento 2");
+			jPanel13.add(jLabel_elemento2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 5, 88, 22));
+
+			jLabel4.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel4.setText("Espessura (t2):");
+			jPanel13.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+
+			espessura2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			espessura2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+			espessura2.setText("Digite a espessura");
+			espessura2.setToolTipText("Insira a espessura do elemento 2. O elemento 2 está indicado na imagem.");
+			espessura2.addFocusListener(new java.awt.event.FocusAdapter(){
+				public void focusGained(java.awt.event.FocusEvent evt) {
+					limparExpessura2(evt);
+				}
+
+				public void focusLost(java.awt.event.FocusEvent evt) {
+					espessura2FocusLost(evt);
+				}
+			});
+			espessura2.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					espessura2ActionPerformed(evt);
+				}
+			});
+			espessura2.addKeyListener(new java.awt.event.KeyAdapter(){
+				public void keyTyped(java.awt.event.KeyEvent evt) {
+					espessura2KeyTyped(evt);
+				}
+			});
+			jPanel13.add(espessura2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 138, 126, -1));
+
+			jLabelUnEspessura1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabelUnEspessura1.setText("(mm)");
+			jPanel13.add(jLabelUnEspessura1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 142, -1, -1));
+
+			fcok2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			fcok2.setText("fc0,k:");
+			jPanel13.add(fcok2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 75, -1, -1));
+
+			unFcok2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			unFcok2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+			unFcok2.setText("(MPa)");
+			jPanel13.add(unFcok2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 75, -1, -1));
+
+			valorFc2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			valorFc2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+			valorFc2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+			jPanel13.add(valorFc2, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 75, 40, 20));
+
+			densidade2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			densidade2.setText("Densidade:");
+			jPanel13.add(densidade2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 75, -1, -1));
+
+			valorDensidade2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			valorDensidade2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+			valorDensidade2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+			jPanel13.add(valorDensidade2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 75, 40, 20));
+
+			unDensidade2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			unDensidade2.setText("(kg/m³)");
+			jPanel13.add(unDensidade2, new org.netbeans.lib.awtextra.AbsoluteConstraints(325, 75, -1, -1));
+
+			valorFvok2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			valorFvok2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+			valorFvok2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+			jPanel13.add(valorFvok2, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 105, 40, 20));
+
+			unFv0k2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			unFv0k2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+			unFv0k2.setText("(MPa)");
+			jPanel13.add(unFv0k2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 105, -1, -1));
+
+			fv0k2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			fv0k2.setText("fv0,k:");
+			jPanel13.add(fv0k2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 105, -1, -1));
+
+			ec0m2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			ec0m2.setText("Ec0,m:");
+			jPanel13.add(ec0m2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 105, -1, -1));
+
+			unEc0m2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			unEc0m2.setText("(MPa)");
+			jPanel13.add(unEc0m2, new org.netbeans.lib.awtextra.AbsoluteConstraints(325, 105, -1, -1));
+
+			jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
+			jPanel13.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 66, 10, 65));
+
+			valorEc0m2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			valorEc0m2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+			valorEc0m2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+			jPanel13.add(valorEc0m2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 105, 50, 20));
+
+			groupInclinacaoSim.add(inclinacaoSim2);
+			inclinacaoSim2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			inclinacaoSim2.setSelected(true);
+			inclinacaoSim2.setText("Sim");
+			inclinacaoSim2.setToolTipText("Se existir inclinação, indique qual elemento está inclinado.");
+			inclinacaoSim2.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					inclinacaoSim2ActionPerformed(evt);
+				}
+			});
+			jPanel13.add(inclinacaoSim2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 175, -1, -1));
+
+			possuiInclinacao3.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			possuiInclinacao3.setText("A força indicada na figura é paralela");
+			jPanel13.add(possuiInclinacao3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, -1, -1));
+
+			jLabel68.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel68.setText("às fibras do elemento 2?");
+			jPanel13.add(jLabel68, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 185, -1, -1));
+
+			elementosMadeira.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 240, -1, 205));
+
+			madeiraFigura.setToolTipText("Esta imagem caracteriza os elementos de madeira.");
+			madeiraFigura.setContentAreaFilled(false);
+			elementosMadeira.add(madeiraFigura, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 80, 350, 280));
+
+			jPanel12.setBackground(new java.awt.Color(153, 153, 153));
+			jPanel12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+			jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+			jLabel101.setFont(new java.awt.Font("Arial Black", 1, 11)); // NOI18N
+			jLabel101.setText("Coeficientes");
+			jPanel12.add(jLabel101, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, -1, -1));
+
+			jLabel102.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel102.setText("Classes de Carregamento (kmod1):");
+			jPanel12.add(jLabel102, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 210, -1));
+
+			jLabel103.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel103.setText("Classe de Umidade (kmod2):");
+			jPanel12.add(jLabel103, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 200, -1));
+
+			jLabel104.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel104.setText("Qualidade da Madeira (kmod3):");
+			jPanel12.add(jLabel104, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 200, -1));
+
+			comboKmod1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			comboKmod1.setModel(new javax.swing.DefaultComboBoxModel<Kmod1>(Kmod1.values()));
+			comboKmod1.setToolTipText("Insira o valor do Kmod 1, o qual é definido pela tabela 4 da revisão da norma ABNT NBR 7190 (2011).");
+			comboKmod1.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					comboKmod1ActionPerformed(evt);
+				}
+			});
+			jPanel12.add(comboKmod1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 40, 340, 30));
+
+			comboKmod3.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			comboKmod3.setModel(new javax.swing.DefaultComboBoxModel<Kmod3>(Kmod3.values()));
+			comboKmod3.setToolTipText("Insira o valor do Kmod 3, o qual é definido pelas tabelas 6 e 7 da revisão da norma ABNT NBR 7190 (2011).");
+			comboKmod3.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					comboKmod3ActionPerformed(evt);
+				}
+			});
+			jPanel12.add(comboKmod3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, 340, 30));
+
+			comboKmod2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			comboKmod2.setModel(new javax.swing.DefaultComboBoxModel<Kmod2>(Kmod2.values()));
+			comboKmod2.setToolTipText("Insira o valor do Kmod 2, o qual é definido pela tabela 5 da revisão da norma ABNT NBR 7190 (2011).");
+			comboKmod2.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					comboKmod2ActionPerformed(evt);
+				}
+			});
+			jPanel12.add(comboKmod2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 80, 340, 30));
+
+			textkmod3.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			textkmod3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+			textkmod3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+			jPanel12.add(textkmod3, new org.netbeans.lib.awtextra.AbsoluteConstraints(615, 125, 40, 20));
+
+			textkmod1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			textkmod1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+			textkmod1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+			jPanel12.add(textkmod1, new org.netbeans.lib.awtextra.AbsoluteConstraints(615, 45, 40, 20));
+
+			textkmod2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			textkmod2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+			textkmod2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+			jPanel12.add(textkmod2, new org.netbeans.lib.awtextra.AbsoluteConstraints(615, 85, 40, 20));
+
+			elementosMadeira.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 450, 710, 160));
+
+			next2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/next.png"))); // NOI18N
+			next2.setToolTipText("Clique para avançar.");
+			next2.setEnabled(false);
+			next2.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					next2ActionPerformed(evt);
+				}
+			});
+			elementosMadeira.add(next2, new org.netbeans.lib.awtextra.AbsoluteConstraints(745, 570, 40, -1));
+
+			jTabbedPane1.addTab("Elementos da Ligação", elementosMadeira);
+
+			elementosMetalicos.setBackground(new java.awt.Color(204, 204, 204));
+			elementosMetalicos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+			jPanel10.setBackground(new java.awt.Color(153, 153, 153));
+			jPanel10.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+			jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+			jLabel1.setFont(new java.awt.Font("Arial Black", 1, 11)); // NOI18N
+			jLabel1.setText("PREGO LISO COM CABEÇA");
+			jPanel10.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, -1, -1));
+
+			tamanhoParafuso.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			tamanhoParafuso.setText("Dimensões:");
+			jPanel10.add(tamanhoParafuso, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
+
+			comboTipoPrego.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			comboTipoPrego.setModel(new javax.swing.DefaultComboBoxModel<TipoPrego>(TipoPrego.values()));
+			comboTipoPrego.setToolTipText("Escolha o tipo de parafuso utilizado, baseado na norma ISO 4016 (2001).");
+			comboTipoPrego.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+			comboTipoPrego.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					comboTipoPregoActionPerformed(evt);
+				}
+			});
+			jPanel10.add(comboTipoPrego, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 40, 610, -1));
+
+			diametro.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			diametro.setText("Diâmetro:");
+			jPanel10.add(diametro, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, -1, -1));
+
+			valorDiametro.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			valorDiametro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+			valorDiametro.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+			jPanel10.add(valorDiametro, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, 40, 20));
+
+			areaParafuso.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			areaParafuso.setText("Comprimento:");
+			jPanel10.add(areaParafuso, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 90, -1, -1));
+
+			valorComprimento.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			valorComprimento.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+			valorComprimento.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+			jPanel10.add(valorComprimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 90, 40, 20));
+
+			numeroParafusos.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			numeroParafusos.setText("Número de Pregos:");
+			jPanel10.add(numeroParafusos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, -1));
+
+			classeAco.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			classeAco.setText("Classe do Aço:");
+			jPanel10.add(classeAco, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 130, -1, -1));
+
+			comboAco.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			comboAco.setModel(new javax.swing.DefaultComboBoxModel<ClasseAcoPrego>(ClasseAcoPrego.values()));
+			comboAco.setToolTipText("Defina a classe do aço do parafuso, baseado revisão da norma ABNT NBR 7190 (2011).");
+			comboAco.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					comboAcoActionPerformed(evt);
+				}
+			});
+			jPanel10.add(comboAco, new org.netbeans.lib.awtextra.AbsoluteConstraints(505, 130, 221, -1));
+
+			fyk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			fyk.setText("fy,k:");
+			jPanel10.add(fyk, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 165, -1, -1));
+
+			fuk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			fuk.setText("fu,k:");
+			jPanel10.add(fuk, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 165, -1, -1));
+
+			valorFyk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			valorFyk.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+			valorFyk.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+			jPanel10.add(valorFyk, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 165, 40, 20));
+
+			valorFuk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			valorFuk.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+			valorFuk.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+			jPanel10.add(valorFuk, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 165, 40, 20));
+
+			unFyk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			unFyk.setText("(MPa)");
+			jPanel10.add(unFyk, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 165, -1, -1));
+
+			unFuk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			unFuk.setText("(MPa)");
+			jPanel10.add(unFuk, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 165, -1, -1));
+
+			testeParafuso.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			testeParafuso.setText("Foram realizados ensaios na ligação em estudo que comprovem que o");
+			testeParafuso.setToolTipText("Considera-se ou não a força de arrancamento causada pelo parafuso na madeira. EUROCODE 5 (2004);");
+			jPanel10.add(testeParafuso, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, -1, -1));
+
+			grouptesteParafuso.add(testeParafusoSim);
+			testeParafusoSim.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			testeParafusoSim.setText("Sim");
+			testeParafusoSim.setToolTipText("Escolha se a ligação considera ou não a força de arrancamento causada pelo parafuso na madeira.");
+			testeParafusoSim.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					testeParafusoSimActionPerformed(evt);
+				}
+			});
+			jPanel10.add(testeParafusoSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 215, 50, -1));
+
+			grouptesteParafuso.add(testeParafusoNao);
+			testeParafusoNao.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			testeParafusoNao.setText("Não");
+			testeParafusoNao.setToolTipText("Escolha se a ligação considera ou não a força de arrancamento causada pelo parafuso na madeira.\n");
+			testeParafusoNao.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					testeParafusoNaoActionPerformed(evt);
+				}
+			});
+			jPanel10.add(testeParafusoNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(675, 215, 50, -1));
+
+			comboQuantPregos.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			comboQuantPregos.setModel(new javax.swing.DefaultComboBoxModel<ClasseQuantidadePregos>(ClasseQuantidadePregos.values()));
+			comboQuantPregos.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					comboQuantPregosActionPerformed(evt);
+				}
+			});
+			jPanel10.add(comboQuantPregos, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 230, -1));
+
+			jLabel6.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel6.setText("(mm)");
+			jPanel10.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 90, -1, -1));
+
+			jLabel10.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel10.setText("(mm)");
+			jPanel10.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 90, -1, -1));
+
+			jLabel11.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel11.setText("(*) - Pregos mais utilizados.");
+			jPanel10.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 65, -1, -1));
+
+			jLabel41.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel41.setText("efeito de confinamento possa ser utilizado?");
+			jPanel10.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 225, -1, -1));
+
+			elementosMetalicos.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 780, 250));
+
+			buttonCalcular.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+			buttonCalcular.setText("CALCULAR LIGAÇÃO");
+			buttonCalcular
+			        .setToolTipText("Clique aqui para calcular sua ligação. Fique atento! Caso haja informações faltantes ou inconsistentes, o cálculo não será realizado e aparecerá uma mensagem.");
+			buttonCalcular.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					buttonCalcularActionPerformed(evt);
+				}
+			});
+			elementosMetalicos.add(buttonCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 480, 210, 41));
+
+			figuraTipoParafuso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/Imagens/Prego.png"))); // NOI18N
+			figuraTipoParafuso.setContentAreaFilled(false);
+			elementosMetalicos.add(figuraTipoParafuso, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 340, 160));
+			elementosMetalicos.add(imagemTipoArruela, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 300, 150));
+
+			jTabbedPane1.addTab("Conectores", elementosMetalicos);
+
+			resultado.setBackground(new java.awt.Color(204, 204, 204));
+			resultado.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+			labelModeloFalha.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+			labelModeloFalha.setText("Modelo de falha:");
+			resultado.add(labelModeloFalha, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 110, 20));
+
+			labelresultadoModeloFalha.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			resultado.add(labelresultadoModeloFalha, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 320, 660, 20));
+
+			labelResistenciaLigacao.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			labelResistenciaLigacao.setText("Fv,Rk:");
+			resultado.add(labelResistenciaLigacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 60, 20));
+
+			resultadoFvk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			resultadoFvk.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			resultado.add(resultadoFvk, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 360, 80, 20));
+
+			figuraresultadoModoFalha.setContentAreaFilled(false);
+			figuraresultadoModoFalha.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					figuraresultadoModoFalhaActionPerformed(evt);
+				}
+			});
+			resultado.add(figuraresultadoModoFalha, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, 335, 245));
+
+			jLabel74.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel74.setText("(N)");
+			resultado.add(jLabel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 420, 60, 20));
+
+			jLabel85.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel85.setText("Rk:");
+			resultado.add(jLabel85, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, -1, 20));
+
+			jLabel86.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel86.setText("(N)");
+			resultado.add(jLabel86, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 360, 60, 20));
+
+			jLabel89.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel89.setText("Rd:");
+			resultado.add(jLabel89, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, -1, 20));
+
+			jLabel96.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel96.setText("(N)");
+			resultado.add(jLabel96, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 390, 60, 20));
+
+			resultadoRk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			resultadoRk.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			resultado.add(resultadoRk, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 390, 80, 20));
+
+			resultadoRd.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			resultadoRd.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			resultado.add(resultadoRd, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 420, 80, 20));
+
+			jLabel98.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel98.setText("*Fv,Rk = resistência característica de uma seção de corte por prego.");
+			resultado.add(jLabel98, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 450, -1));
+
+			jLabel99.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel99.setText("*Rk = resistência característica da ligação considerando as quantidades de seções de corte e pregos. ");
+			resultado.add(jLabel99, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, 670, -1));
+
+			jLabel100.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel100.setText("*Rd = resistência de cálculo da ligação.");
+			resultado.add(jLabel100, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, 670, -1));
+
+			next3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/next.png"))); // NOI18N
+			next3.setToolTipText("Clique para avançar.");
+			next3.setEnabled(false);
+			next3.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					next3ActionPerformed(evt);
+				}
+			});
+			resultado.add(next3, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 480, 40, -1));
+
+			jTabbedPane1.addTab("resultado", resultado);
+
+			relatorio.setBackground(new java.awt.Color(204, 204, 204));
+			relatorio.setEnabled(false);
+
+			relatorioFinal.setBackground(new java.awt.Color(255, 255, 255));
+			relatorioFinal.setPreferredSize(new java.awt.Dimension(760, 1000));
+			relatorioFinal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+			jLabel12.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+			jLabel12.setText("ELEMENTOS DE MADEIRA");
+			relatorioFinal.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, -1));
+
+			jLabel13.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+			jLabel13.setText("RELATÓRIO DE RESISTÊNCIA DA LIGAÇÃO ");
+			relatorioFinal.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 39, -1, -1));
+
+			relatorioSecaoCorte.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioSecaoCorte.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+			relatorioFinal.add(relatorioSecaoCorte, new org.netbeans.lib.awtextra.AbsoluteConstraints(315, 80, 190, 14));
+
+			relatorioAngulacao.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioAngulacao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+			relatorioFinal.add(relatorioAngulacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(315, 100, 180, 20));
+			relatorioFinal.add(relatoriofcok4, new org.netbeans.lib.awtextra.AbsoluteConstraints(339, 658, -1, -1));
+
+			relatorioElem1.setBackground(new java.awt.Color(255, 255, 255));
+			relatorioElem1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+			relatorioElem1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+			jLabel14.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+			jLabel14.setText("Elemento 1:");
+			relatorioElem1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 5, 80, -1));
+
+			jLabel2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel2.setText("fc0,k:");
+			relatorioElem1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 25, -1, -1));
+
+			jLabel16.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel16.setText("fv0,k:");
+			relatorioElem1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 45, -1, -1));
+
+			jLabel18.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel18.setText("Ec0,m:");
+			relatorioElem1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 65, -1, -1));
+
+			jLabel19.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel19.setText("Densidade:");
+			relatorioElem1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 85, 70, -1));
+
+			relatorioDensidade1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioDensidade1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			relatorioDensidade1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+			relatorioElem1.add(relatorioDensidade1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 85, 35, 14));
+
+			relatorioEc0m1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioEc0m1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			relatorioEc0m1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+			relatorioElem1.add(relatorioEc0m1, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 65, 50, 14));
+
+			relatoriofv0k1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatoriofv0k1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			relatoriofv0k1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+			relatorioElem1.add(relatoriofv0k1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 45, 35, 14));
+
+			relatoriofcok1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatoriofcok1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			relatoriofcok1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+			relatorioElem1.add(relatoriofcok1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 25, 35, 14));
+
+			jLabel20.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel20.setText("(MPa)");
+			relatorioElem1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 25, 40, -1));
+
+			jLabel21.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel21.setText("(MPa)");
+			relatorioElem1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 45, 40, -1));
+
+			jLabel22.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel22.setText("(MPa)");
+			relatorioElem1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 65, 40, -1));
+
+			jLabel23.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel23.setText("(kg/m³)");
+			relatorioElem1.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 85, 40, -1));
+			relatorioElem1.add(relatorioClasseElem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 5, 40, 14));
+
+			jLabel51.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel51.setText("Espessura:");
+			relatorioElem1.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 105, -1, -1));
+
+			relatorioEspessura1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioEspessura1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			relatorioElem1.add(relatorioEspessura1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 105, 35, 14));
+
+			jLabel69.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel69.setText("(mm)");
+			relatorioElem1.add(jLabel69, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 105, 40, -1));
+
+			inclinado1.setBorder(null);
+			inclinado1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+			inclinado1.setToolTipText("");
+			inclinado1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+			inclinado1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+
+			jTextArea2.setEditable(false);
+			jTextArea2.setColumns(20);
+			jTextArea2.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
+			jTextArea2.setLineWrap(true);
+			jTextArea2.setRows(5);
+			jTextArea2.setText("Força paralela às fibras deste\nelemento.");
+			inclinado1.setViewportView(jTextArea2);
+
+			relatorioElem1.add(inclinado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 122, 170, 30));
+
+			relatorioFinal.add(relatorioElem1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 175, 180, 155));
+
+			relatorioElem2.setBackground(new java.awt.Color(255, 255, 255));
+			relatorioElem2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+			relatorioElem2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+			jLabel30.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel30.setText("(MPa)");
+			relatorioElem2.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 45, -1, -1));
+
+			jLabel29.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel29.setText("(MPa)");
+			relatorioElem2.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 25, -1, -1));
+
+			jLabel32.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel32.setText("(kg/m³)");
+			relatorioElem2.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 85, -1, -1));
+
+			jLabel31.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel31.setText("(MPa)");
+			relatorioElem2.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 65, -1, -1));
+
+			relatorioEc0m2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioEc0m2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			relatorioElem2.add(relatorioEc0m2, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 65, 50, 14));
+
+			relatorioDensidade2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioDensidade2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			relatorioElem2.add(relatorioDensidade2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 85, 35, 14));
+
+			relatoriofcok2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatoriofcok2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			relatorioElem2.add(relatoriofcok2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 25, 35, 14));
+
+			relatoriofv0k2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatoriofv0k2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			relatorioElem2.add(relatoriofv0k2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 45, 35, 14));
+
+			jLabel27.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel27.setText("Ec0,m:");
+			relatorioElem2.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 65, -1, -1));
+
+			jLabel26.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel26.setText("fv0,k:");
+			relatorioElem2.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 45, -1, -1));
+
+			jLabel28.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel28.setText("Densidade:");
+			relatorioElem2.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 85, 70, -1));
+
+			jLabel24.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+			jLabel24.setText("Elemento 2:");
+			relatorioElem2.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 5, -1, -1));
+
+			jLabel25.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel25.setText("fc0,k:");
+			relatorioElem2.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 25, -1, -1));
+			relatorioElem2.add(relatorioClasseElem2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 5, 40, 14));
+
+			relatorioEspessura2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioEspessura2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			relatorioElem2.add(relatorioEspessura2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 105, 35, 14));
+
+			jLabel52.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel52.setText("Espessura:");
+			relatorioElem2.add(jLabel52, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 105, -1, -1));
+
+			jLabel70.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel70.setText("(mm)");
+			relatorioElem2.add(jLabel70, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 105, -1, -1));
+
+			inclinado2.setBorder(null);
+			inclinado2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+			inclinado2.setToolTipText("");
+			inclinado2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+			inclinado2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+
+			jTextArea1.setEditable(false);
+			jTextArea1.setColumns(20);
+			jTextArea1.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
+			jTextArea1.setLineWrap(true);
+			jTextArea1.setRows(5);
+			jTextArea1.setText("Força paralela às fibras deste\nelemento.");
+			inclinado2.setViewportView(jTextArea1);
+
+			relatorioElem2.add(inclinado2, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 122, 170, 30));
+
+			relatorioFinal.add(relatorioElem2, new org.netbeans.lib.awtextra.AbsoluteConstraints(225, 175, 180, 155));
+
+			relatorioCoeficientes.setBackground(new java.awt.Color(255, 255, 255));
+			relatorioCoeficientes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+			relatorioCoeficientes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+			jLabel88.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel88.setText("(°)");
+			relatorioCoeficientes.add(jLabel88, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, -1, 20));
+
+			relatoriokmod3.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatoriokmod3.setText("Densidade:");
+			relatorioCoeficientes.add(relatoriokmod3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 75, 35, 14));
+
+			relatorioAngulo.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioAngulo.setText("De");
+			relatorioCoeficientes.add(relatorioAngulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, 25, 20));
+
+			relatorioKmod1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioKmod1.setText("jLabel20");
+			relatorioCoeficientes.add(relatorioKmod1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 25, 35, 14));
+
+			relatoriokmod2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatoriokmod2.setText("Densidade:");
+			relatorioCoeficientes.add(relatoriokmod2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 35, 14));
+
+			jLabel90.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel90.setText("kmod 3:");
+			relatorioCoeficientes.add(jLabel90, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 75, 50, -1));
+
+			jLabel91.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel91.setText("kmod 2:");
+			relatorioCoeficientes.add(jLabel91, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 50, 50, -1));
+
+			jLabel92.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel92.setText("Ângulo:");
+			relatorioCoeficientes.add(jLabel92, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 100, 50, 20));
+
+			jLabel93.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+			jLabel93.setText("Coeficientes");
+			relatorioCoeficientes.add(jLabel93, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 5, -1, -1));
+
+			jLabel94.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel94.setText("kmod 1:");
+			relatorioCoeficientes.add(jLabel94, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 25, 50, -1));
+
+			jLabel35.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel35.setText("γm,ligação:");
+			relatorioCoeficientes.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 125, -1, -1));
+
+			jLabel81.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel81.setText("1,4");
+			relatorioCoeficientes.add(jLabel81, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 125, -1, -1));
+
+			relatorioFinal.add(relatorioCoeficientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 175, 180, 150));
+
+			jLabel17.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+			jLabel17.setText("ELEMENTOS METÁLICOS");
+			relatorioFinal.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 333, -1, -1));
+
+			relatorioParafuso.setBackground(new java.awt.Color(255, 255, 255));
+			relatorioParafuso.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+			relatorioParafuso.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+			jLabel33.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+			jLabel33.setText("Prego Liso com Cabeça");
+			relatorioParafuso.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 5, -1, -1));
+
+			jLabel34.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel34.setText("Dimensões do Prego:");
+			relatorioParafuso.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 110, 14));
+
+			relatorioTipoParafuso.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioTipoParafuso.setText("");
+			relatorioParafuso.add(relatorioTipoParafuso, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, 230, -1));
+
+			jLabel36.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel36.setText("d:");
+			relatorioParafuso.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 20, 14));
+
+			relatorioDiametro.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioDiametro.setText("jLabel37");
+			relatorioParafuso.add(relatorioDiametro, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 52, 35, 14));
+
+			jLabel37.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel37.setText("Número de Pregos:");
+			relatorioParafuso.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, 100, -1));
+
+			relatorioNParafusos.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioParafuso.add(relatorioNParafusos, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 45, 25, 20));
+
+			jLabel43.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel43.setText("Classe de Aço:");
+			relatorioParafuso.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 80, -1));
+
+			relatorioClasseAco.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioClasseAco.setText("jLabel44");
+			relatorioParafuso.add(relatorioClasseAco, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 250, -1));
+
+			jLabel38.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel38.setText("Consideração da Força de Arrancamento:");
+			relatorioParafuso.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 110, 210, -1));
+
+			relatoriofaxrk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatoriofaxrk.setText("jLabel44");
+			relatorioParafuso.add(relatoriofaxrk, new org.netbeans.lib.awtextra.AbsoluteConstraints(225, 110, 35, 14));
+
+			jLabel45.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel45.setText("fy,k:");
+			relatorioParafuso.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 30, 14));
+
+			relatoriofyk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatoriofyk.setText("jLabel46");
+			relatorioParafuso.add(relatoriofyk, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 90, 35, 14));
+
+			jLabel46.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel46.setText("fu,k:");
+			relatorioParafuso.add(jLabel46, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, 30, 14));
+
+			relatoriofuk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatoriofuk.setText("jLabel47");
+			relatorioParafuso.add(relatoriofuk, new org.netbeans.lib.awtextra.AbsoluteConstraints(205, 90, 35, 14));
+
+			figuraParafuso.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			figuraParafuso.setText("jLabel35");
+			relatorioParafuso.add(figuraParafuso, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 110, 30));
+
+			jLabel71.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel71.setText("(mm)");
+			relatorioParafuso.add(jLabel71, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 50, 40, 14));
+
+			jLabel72.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel72.setText("(MPa)");
+			relatorioParafuso.add(jLabel72, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 90, 40, -1));
+
+			jLabel73.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel73.setText("(MPa)");
+			relatorioParafuso.add(jLabel73, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 90, 40, 14));
+
+			jSeparator8.setOrientation(javax.swing.SwingConstants.VERTICAL);
+			relatorioParafuso.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 90, 5, 14));
+
+			jSeparator11.setOrientation(javax.swing.SwingConstants.VERTICAL);
+			relatorioParafuso.add(jSeparator11, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, 10, 14));
+
+			jLabel7.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel7.setText("c:");
+			relatorioParafuso.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 20, -1));
+
+			relatorioComprimento.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioComprimento.setText("jLabel8");
+			relatorioParafuso.add(relatorioComprimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 50, -1, 10));
+
+			jLabel9.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel9.setText("(mm)");
+			relatorioParafuso.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 48, 30, -1));
+
+			relatorioFinal.add(relatorioParafuso, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 355, 600, 135));
+			relatorioFinal.add(relatorioFibras, new org.netbeans.lib.awtextra.AbsoluteConstraints(595, 313, -1, -1));
+
+			jLabel44.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+			jLabel44.setText("VALORES   CALCULADOS");
+			relatorioFinal.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 508, -1, -1));
+
+			jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+			jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+			jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+			jLabel53.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+			jLabel53.setText("Cálculos Preliminares");
+			jPanel2.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 12, -1, -1));
+
+			calculoForca01.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			calculoForca01.setText("fe0,k1:");
+			jPanel2.add(calculoForca01, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 35, 40, -1));
+
+			calculoForca02.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			calculoForca02.setText("fe0,k2:");
+			jPanel2.add(calculoForca02, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 60, 40, -1));
+
+			jLabel58.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel58.setText("Fax,rk:");
+			jPanel2.add(jLabel58, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 85, 40, -1));
+
+			relatorioFc0d1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioFc0d1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			relatorioFc0d1.setText("jLabel59");
+			jPanel2.add(relatorioFc0d1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 35, 40, -1));
+
+			relatorioFc0d2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioFc0d2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			relatorioFc0d2.setText("jLabel59");
+			jPanel2.add(relatorioFc0d2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 40, -1));
+
+			relatorioFaxrk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioFaxrk.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			relatorioFaxrk.setText("jLabel59");
+			jPanel2.add(relatorioFaxrk, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 85, 50, -1));
+
+			jLabel77.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel77.setText("(N)");
+			jPanel2.add(jLabel77, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 85, 30, -1));
+
+			jLabel78.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel78.setText("(MPa)");
+			jPanel2.add(jLabel78, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 35, 40, -1));
+
+			jLabel79.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel79.setText("(MPa)");
+			jPanel2.add(jLabel79, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 60, 40, -1));
+
+			calculoForcaAlfa1.setText("feα,k1:");
+			jPanel2.add(calculoForcaAlfa1, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 35, 40, -1));
+
+			calculoForca901.setText("fe90,k1:");
+			jPanel2.add(calculoForca901, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 35, 50, -1));
+
+			calculoForcaAlfa2.setText("feα,k2:");
+			jPanel2.add(calculoForcaAlfa2, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 60, 40, -1));
+
+			calculoForca902.setText("fe90,k2:");
+			jPanel2.add(calculoForca902, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 60, 50, -1));
+
+			relatorioFinal.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 530, 160, 110));
+
+			jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+			jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+			jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+			jLabel59.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+			jLabel59.setText("Cálculo do Eurocode 5");
+			jPanel3.add(jLabel59, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, -1, -1));
+
+			relatorioRd11.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioRd11.setText("Fv,k1:");
+			jPanel3.add(relatorioRd11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 40, -1));
+
+			relatorioRd12.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioRd12.setText("Fv,k2:");
+			jPanel3.add(relatorioRd12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 40, -1));
+
+			relatorioRd13.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioRd13.setText("Fv,k3:");
+			jPanel3.add(relatorioRd13, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 60, 40, -1));
+
+			relatorioRd1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioRd1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			relatorioRd1.setText("jLabel63");
+			jPanel3.add(relatorioRd1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 50, -1));
+
+			relatorioRd14.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioRd14.setText("Fv,k4:");
+			jPanel3.add(relatorioRd14, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 80, 40, -1));
+
+			relatorioRd2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioRd2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			relatorioRd2.setText("jLabel64");
+			jPanel3.add(relatorioRd2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 50, -1));
+
+			relatorioRd4.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioRd4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			relatorioRd4.setText("jLabel64");
+			jPanel3.add(relatorioRd4, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 80, 50, -1));
+
+			relatorioRd3.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioRd3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			relatorioRd3.setText("jLabel63");
+			jPanel3.add(relatorioRd3, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 60, 50, -1));
+
+			relatorioRd15.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioRd15.setText("Fv,k5:");
+			jPanel3.add(relatorioRd15, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 60, 40, -1));
+
+			relatorioRd16.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioRd16.setText("Fv,k6:");
+			jPanel3.add(relatorioRd16, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 40, -1));
+
+			relatorioRd6.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioRd6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			relatorioRd6.setText("jLabel64");
+			jPanel3.add(relatorioRd6, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, 50, -1));
+
+			relatorioRd5.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioRd5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			relatorioRd5.setText("jLabel63");
+			jPanel3.add(relatorioRd5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 60, 50, -1));
+
+			jLabel56.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel56.setText("Myk:");
+			jPanel3.add(jLabel56, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 30, -1));
+
+			relatorioMyd.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioMyd.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			relatorioMyd.setText("jLabel59");
+			jPanel3.add(relatorioMyd, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 30, 70, -1));
+
+			jLabel57.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel57.setText("β:");
+			jPanel3.add(jLabel57, new org.netbeans.lib.awtextra.AbsoluteConstraints(275, 30, 15, -1));
+
+			relatorioBeta.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioBeta.setText("jLabel59");
+			jPanel3.add(relatorioBeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(295, 30, -1, -1));
+			jPanel3.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 360, 10));
+			jPanel3.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 350, 10));
+
+			relatorioRd23.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioRd23.setText("Fv,k3:");
+			jPanel3.add(relatorioRd23, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 60, 40, -1));
+
+			jLabel54.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel54.setText("(N)");
+			jPanel3.add(jLabel54, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 80, 30, -1));
+
+			jLabel55.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel55.setText("(N)");
+			jPanel3.add(jLabel55, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 60, 30, -1));
+
+			jLabel60.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel60.setText("(N)");
+			jPanel3.add(jLabel60, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 30, -1));
+
+			jLabel61.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel61.setText("(N)");
+			jPanel3.add(jLabel61, new org.netbeans.lib.awtextra.AbsoluteConstraints(355, 80, -1, -1));
+
+			jLabel62.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel62.setText("(N)");
+			jPanel3.add(jLabel62, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, 30, -1));
+
+			jLabel63.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel63.setText("(N)");
+			jPanel3.add(jLabel63, new org.netbeans.lib.awtextra.AbsoluteConstraints(355, 60, -1, -1));
+
+			relatorioRd24.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioRd24.setText("Fv,k4:");
+			jPanel3.add(relatorioRd24, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 40, -1));
+
+			jLabel64.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel64.setText("(N.mm)");
+			jPanel3.add(jLabel64, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 30, 40, -1));
+
+			relatorioFinal.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 530, 400, 110));
+
+			jLabel67.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+			jLabel67.setText("RESULTADO:");
+			relatorioFinal.add(jLabel67, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 655, -1, -1));
+
+			modoFalha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+			relatorioFinal.add(modoFalha, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 680, 170, 120));
+
+			jLabel87.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel87.setText("Tipo de ruptura:");
+			relatorioFinal.add(jLabel87, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 665, -1, -1));
+
+			jLabel95.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel95.setText("Rk:");
+			relatorioFinal.add(jLabel95, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 740, 70, -1));
+
+			relatorioRk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioRk.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			relatorioFinal.add(relatorioRk, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 740, 70, 15));
+			relatorioFinal.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 650, 600, 10));
+			relatorioFinal.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 135, 600, 10));
+
+			figuraSecoes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+			relatorioFinal.add(figuraSecoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 60, 80, 70));
+			relatorioFinal.add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, 600, 10));
+
+			data.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			data.setText(objDataHora.MostraData());
+			relatorioFinal.add(data, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 870, 80, -1));
+
+			jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+			jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+			jScrollPane2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+
+			consideracao1.setEditable(false);
+			consideracao1.setColumns(20);
+			consideracao1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			consideracao1.setLineWrap(true);
+			consideracao1.setRows(5);
+			consideracao1
+			        .setText("*Fv,Rk = resistência característica de uma seção de corte por prego.\n*Rk = resistência característica da ligação considerando as quantidades de seções de corte e pregos.\n*Rd = resistência de cálculo da ligação.");
+			consideracao1.setWrapStyleWord(true);
+			consideracao1.setBorder(null);
+			jScrollPane2.setViewportView(consideracao1);
+
+			relatorioFinal.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 810, 570, 50));
+
+			jScrollPane3.setBorder(null);
+			jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+			jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
+			teste.setEditable(false);
+			teste.setColumns(20);
+			teste.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			teste.setLineWrap(true);
+			teste.setRows(5);
+			teste.setWrapStyleWord(true);
+			teste.setAutoscrolls(false);
+			jScrollPane3.setViewportView(teste);
+
+			relatorioFinal.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 660, 310, 30));
+
+			hora.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			hora.setText(objDataHora.MostraHora());
+			relatorioFinal.add(hora, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 870, -1, -1));
+			relatorioFinal.add(rLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 120, 80));
+
+			jLabel66.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel66.setText("Fv,Rk:");
+			relatorioFinal.add(jLabel66, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 720, 50, -1));
+
+			relatorioFvk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioFvk.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			relatorioFvk.setText("jLabel67");
+			relatorioFinal.add(relatorioFvk, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 720, 70, -1));
+
+			jLabel80.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel80.setText("Rd:");
+			relatorioFinal.add(jLabel80, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 760, 50, -1));
+
+			relatorioRd.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			relatorioRd.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+			relatorioRd.setText("jLabel81");
+			relatorioFinal.add(relatorioRd, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 760, 70, -1));
+
+			jLabel82.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel82.setText("(N)");
+			relatorioFinal.add(jLabel82, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 760, -1, -1));
+
+			jLabel83.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel83.setText("(N)");
+			relatorioFinal.add(jLabel83, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 720, -1, -1));
+
+			jLabel84.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+			jLabel84.setText("(N)");
+			relatorioFinal.add(jLabel84, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 740, -1, -1));
+
+			jScrollPane1.setViewportView(relatorioFinal);
+
+			jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+			jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/Print.png"))); // NOI18N
+			jButton1.setToolTipText("Clique para imprimir o relatório.");
+			jButton1.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					jButton1ActionPerformed(evt);
+				}
+			});
+
+			jButton2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+			jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/New.png"))); // NOI18N
+			jButton2.setToolTipText("Clique para realizar novo cálculo.");
+			jButton2.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					jButton2ActionPerformed(evt);
+				}
+			});
+
+			jButton3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+			jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/Return.png"))); // NOI18N
+			jButton3.setToolTipText("Clique para retornar a tela inicial.");
+			jButton3.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					jButton3ActionPerformed(evt);
+				}
+			});
+
+			javax.swing.GroupLayout relatorioLayout = new javax.swing.GroupLayout(relatorio);
+			relatorio.setLayout(relatorioLayout);
+			relatorioLayout.setHorizontalGroup(relatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+			        .addGroup(relatorioLayout.createSequentialGroup()
+			                .addGroup(relatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+			                        .addGroup(relatorioLayout.createSequentialGroup().addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+			                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+			                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+			                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+			                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+			                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+			                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 790, javax.swing.GroupLayout.PREFERRED_SIZE))
+			                .addGap(0, 0, Short.MAX_VALUE)));
+			relatorioLayout.setVerticalGroup(relatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+			        .addGroup(relatorioLayout.createSequentialGroup().addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+			                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+			                .addGroup(relatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+			                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+			                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+			                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+			                .addContainerGap(107, Short.MAX_VALUE)));
+
+			jTabbedPane1.addTab("Relatório", relatorio);
+
+			jTabbedPane1.setSelectedComponent(inicio);
+			relatorio.setVisible(false);
+
+			getContentPane().add(jTabbedPane1, java.awt.BorderLayout.PAGE_START);
+
+			jProgressBarPrego.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+			//		jProgressBarPrego.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+			jProgressBarPrego.setString("Clique em \"Iniciar Cálculo\" para começar o dimensionamento.");
+			jProgressBarPrego.setBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")));
+			jProgressBarPrego.setPreferredSize(new java.awt.Dimension(34, 30));
+			jProgressBarPrego.setStringPainted(true);
+			getContentPane().add(jProgressBarPrego, java.awt.BorderLayout.PAGE_END);
+
+			getAccessibleContext().setAccessibleName("ProgramaMarcos");
+
+			pack();
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
 	}// </editor-fold>//GEN-END:initComponents
 
-	private void ButtonCalcularActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ButtonCalcularActionPerformed
-		if(ButtonCalcular.hasFocus()) {
-			jProgressBarPrego.setString("Clique em avançar para continuar.");
-			jTabbedPane1.setSelectedComponent(Resultado);
-			jTabbedPane1.setEnabledAt(4, true);
-			Next3.setEnabled(true);
+	private void buttonCalcularActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_buttonCalcularActionPerformed
+		try {
+			if(buttonCalcular.hasFocus()) {
+				jProgressBarPrego.setString("Clique em avançar para continuar.");
+				jTabbedPane1.setSelectedComponent(resultado);
+				jTabbedPane1.setEnabledAt(4, true);
+				next3.setEnabled(true);
 
-			calculoModeloLigacao = new CalculoModeloLigacao(modeloLigacao, IncSim1, IncSim2, m);
+				calculoModeloLigacao = new CalculoModeloLigacao(modeloLigacao, incSim1, incSim2, m);
 
-			RelatorioKmod1.setText(modeloLigacao.getKmod1().getValor() + "");
-			Relatoriokmod2.setText(modeloLigacao.getKmod2().getValor() + "");
-			Relatoriokmod3.setText(modeloLigacao.getKmod3().getValor() + "");
-			RelatorioEspessura1.setText(modeloLigacao.getElementoLigação1().getEspessura() + "");
-			RelatorioEspessura2.setText(modeloLigacao.getElementoLigação2().getEspessura() + "");
-			RelatorioAngulo.setText(modeloLigacao.getAngulo().getValorGrau() + "");
-			RelatorioFc0d1.setText(String.format("%.1f", calculoModeloLigacao.getFe0d1()));
-			RelatorioFc0d2.setText(String.format("%.1f", calculoModeloLigacao.getFe0d2()));
-			RelatorioRd1.setText(String.format("%.0f", calculoModeloLigacao.getRd1()));
-			RelatorioRd2.setText(String.format("%.0f", calculoModeloLigacao.getRd2()));
-			RelatorioRd3.setText(String.format("%.0f", calculoModeloLigacao.getRd3()));
-			RelatorioRd4.setText(String.format("%.0f", calculoModeloLigacao.getRd4()));
-			RelatorioRd5.setText(String.format("%.0f", calculoModeloLigacao.getRd5()));
-			RelatorioRd6.setText(String.format("%.0f", calculoModeloLigacao.getRd6()));
-			RelatorioMyd.setText(String.format("%.0f", calculoModeloLigacao.getMyd()));
-			RelatorioBeta.setText(String.format("%.3f", calculoModeloLigacao.getBeta()));
-			RelatorioFvk.setText(String.format("%.0f", calculoModeloLigacao.getRdmin()));
-			ResultadoFvk.setText(String.format("%.0f", calculoModeloLigacao.getRdmin()));
-			RelatorioRk.setText(String.format("%.0f", calculoModeloLigacao.getRdlig()));
-			ResultadoRk.setText(String.format("%.0f", calculoModeloLigacao.getRdlig()));
-			RelatorioFaxrk.setText(String.format("%.0f", calculoModeloLigacao.getValorFaxrkFinal()));
-			RelatorioRd.setText(String.format("%.0f", calculoModeloLigacao.getRvd()));
-			ResultadoRd.setText(String.format("%.0f", calculoModeloLigacao.getRvd()));
+				relatorioKmod1.setText(modeloLigacao.getKmod1().getValor() + "");
+				relatoriokmod2.setText(modeloLigacao.getKmod2().getValor() + "");
+				relatoriokmod3.setText(modeloLigacao.getKmod3().getValor() + "");
+				relatorioEspessura1.setText(modeloLigacao.getElementoLigação1().getEspessura() + "");
+				relatorioEspessura2.setText(modeloLigacao.getElementoLigação2().getEspessura() + "");
+				relatorioAngulo.setText(modeloLigacao.getAngulo().getValorGrau() + "");
+				relatorioFc0d1.setText(String.format("%.1f", calculoModeloLigacao.getFe0d1()));
+				relatorioFc0d2.setText(String.format("%.1f", calculoModeloLigacao.getFe0d2()));
+				relatorioRd1.setText(String.format("%.0f", calculoModeloLigacao.getRd1()));
+				relatorioRd2.setText(String.format("%.0f", calculoModeloLigacao.getRd2()));
+				relatorioRd3.setText(String.format("%.0f", calculoModeloLigacao.getRd3()));
+				relatorioRd4.setText(String.format("%.0f", calculoModeloLigacao.getRd4()));
+				relatorioRd5.setText(String.format("%.0f", calculoModeloLigacao.getRd5()));
+				relatorioRd6.setText(String.format("%.0f", calculoModeloLigacao.getRd6()));
+				relatorioMyd.setText(String.format("%.0f", calculoModeloLigacao.getMyd()));
+				relatorioBeta.setText(String.format("%.3f", calculoModeloLigacao.getBeta()));
+				relatorioFvk.setText(String.format("%.0f", calculoModeloLigacao.getRdmin()));
+				resultadoFvk.setText(String.format("%.0f", calculoModeloLigacao.getRdmin()));
+				relatorioRk.setText(String.format("%.0f", calculoModeloLigacao.getRdlig()));
+				resultadoRk.setText(String.format("%.0f", calculoModeloLigacao.getRdlig()));
+				relatorioFaxrk.setText(String.format("%.0f", calculoModeloLigacao.getValorFaxrkFinal()));
+				relatorioRd.setText(String.format("%.0f", calculoModeloLigacao.getRvd()));
+				resultadoRd.setText(String.format("%.0f", calculoModeloLigacao.getRvd()));
 
-			String ImagemFalha = "";
-			String Tipo = "";
+				String ImagemFalha = "";
+				String Tipo = "";
 
-			if((modeloLigacao == ModeloLigacao.CORTE_SIMPLES || modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES) && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PARALELO) {
+				if((modeloLigacao == ModeloLigacao.CORTE_SIMPLES || modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES) && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PARALELO) {
 
-				Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
-				ImagemFalha = "1.1P.png";
+					Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
+					ImagemFalha = "1.1P.png";
 
-				if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
-					ImagemFalha = "1.2P.png";
-				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Embutimento do pino metálico nas duas peças, devido ao giro do pino metálico.";
-					ImagemFalha = "1.3P.png";
-				} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
-					ImagemFalha = "1.4P.png";
-				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd5() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 1.";
-					ImagemFalha = "1.5P.png";
-				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd6() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
-					ImagemFalha = "1.6P.png";
+					if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
+						ImagemFalha = "1.2P.png";
+					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Embutimento do pino metálico nas duas peças, devido ao giro do pino metálico.";
+						ImagemFalha = "1.3P.png";
+					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
+						ImagemFalha = "1.4P.png";
+					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd5() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 1.";
+						ImagemFalha = "1.5P.png";
+					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd6() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
+						ImagemFalha = "1.6P.png";
+					}
+					labelresultadoModeloFalha.setText(Tipo);
+
+					jScrollPane2.setVisible(true);
+					inclinado1.setVisible(false);
+					inclinado2.setVisible(false);
+					relatorioRd13.setVisible(true);
+					relatorioRd14.setVisible(true);
+					relatorioRd3.setVisible(true);
+					relatorioRd4.setVisible(true);
+					jLabel60.setVisible(true);
+					jLabel62.setVisible(true);
+					relatorioRd15.setVisible(true);
+					relatorioRd16.setVisible(true);
+					relatorioRd23.setVisible(false);
+					relatorioRd24.setVisible(false);
+
+					teste.setText(Tipo);
+				} else if((modeloLigacao == ModeloLigacao.CORTE_SIMPLES || modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES)
+				          && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
+
+					Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
+					ImagemFalha = "1.1P.png";
+
+					if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
+						ImagemFalha = "1.2P.png";
+					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Embutimento do pino metálico nas duas peças, devido ao giro do pino metálico.";
+						ImagemFalha = "1.3P.png";
+					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
+						ImagemFalha = "1.4P.png";
+					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd5() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 1.";
+						ImagemFalha = "1.5P.png";
+					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd6() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
+						ImagemFalha = "1.6P.png";
+					}
+
+					labelresultadoModeloFalha.setText(Tipo);
+
+					jScrollPane2.setVisible(true);
+					inclinado1.setVisible(false);
+					inclinado2.setVisible(false);
+					relatorioRd13.setVisible(true);
+					relatorioRd14.setVisible(true);
+					relatorioRd3.setVisible(true);
+					relatorioRd4.setVisible(true);
+					jLabel60.setVisible(true);
+					jLabel62.setVisible(true);
+					relatorioRd15.setVisible(true);
+					relatorioRd16.setVisible(true);
+					relatorioRd23.setVisible(false);
+					relatorioRd24.setVisible(false);
+
+					teste.setText(Tipo);
+				} else if((modeloLigacao == ModeloLigacao.CORTE_SIMPLES || modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES)
+				          && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
+
+					Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
+					ImagemFalha = "1.1P.png";
+
+					if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
+						ImagemFalha = "1.2P.png";
+					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Embutimento do pino metálico nas duas peças, devido ao giro do pino metálico.";
+						ImagemFalha = "1.3P.png";
+					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
+						ImagemFalha = "1.4P.png";
+					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd5() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 1.";
+						ImagemFalha = "1.5P.png";
+					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd6() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
+						ImagemFalha = "1.6P.png";
+					}
+
+					labelresultadoModeloFalha.setText(Tipo);
+
+					relatorioRd13.setVisible(true);
+					relatorioRd14.setVisible(true);
+					relatorioRd3.setVisible(true);
+					relatorioRd4.setVisible(true);
+					jLabel60.setVisible(true);
+					jLabel62.setVisible(true);
+					jScrollPane2.setVisible(true);
+					relatorioRd15.setVisible(true);
+					relatorioRd16.setVisible(true);
+					relatorioRd23.setVisible(false);
+					relatorioRd24.setVisible(false);
+
+					teste.setText(Tipo);
+				} else if((modeloLigacao == ModeloLigacao.CORTE_SIMPLES || modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES)
+				          && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
+
+					Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
+					ImagemFalha = "1.1P.png";
+
+					if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
+						ImagemFalha = "1.2P.png";
+					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Embutimento do pino metálico nas duas peças, devido ao giro do pino metálico.";
+						ImagemFalha = "1.3P.png";
+					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
+						ImagemFalha = "1.4P.png";
+					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd5() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 1.";
+						ImagemFalha = "1.5P.png";
+					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd6() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
+						ImagemFalha = "1.6P.png";
+					}
+
+					labelresultadoModeloFalha.setText(Tipo);
+
+					relatorioRd13.setVisible(true);
+					relatorioRd14.setVisible(true);
+					relatorioRd3.setVisible(true);
+					relatorioRd4.setVisible(true);
+					jLabel60.setVisible(true);
+					jLabel62.setVisible(true);
+					jScrollPane2.setVisible(true);
+					relatorioRd15.setVisible(true);
+					relatorioRd16.setVisible(true);
+					relatorioRd23.setVisible(false);
+					relatorioRd24.setVisible(false);
+
+					teste.setText(Tipo);
+				} else if(modeloLigacao == ModeloLigacao.CORTE_DUPLO && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PARALELO) {
+
+					Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
+					ImagemFalha = "2.1P.png";
+
+					if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
+						ImagemFalha = "2.2P.png";
+					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
+						ImagemFalha = "2.3P.png";
+					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
+						ImagemFalha = "2.4P.png";
+					}
+
+					labelresultadoModeloFalha.setText(Tipo);
+
+					jScrollPane2.setVisible(true);
+					relatorioRd13.setVisible(false);
+					relatorioRd14.setVisible(false);
+					relatorioRd3.setVisible(false);
+					relatorioRd4.setVisible(false);
+					jLabel60.setVisible(false);
+					jLabel62.setVisible(false);
+					relatorioRd15.setVisible(false);
+					relatorioRd16.setVisible(false);
+					relatorioRd23.setVisible(true);
+					relatorioRd24.setVisible(true);
+					inclinado1.setVisible(false);
+					inclinado2.setVisible(false);
+
+					teste.setText(Tipo);
+				} else if(modeloLigacao == ModeloLigacao.CORTE_DUPLO && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
+
+					Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
+					ImagemFalha = "2.1P.png";
+
+					if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
+						ImagemFalha = "2.2P.png";
+					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
+						ImagemFalha = "2.3P.png";
+					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
+						ImagemFalha = "2.4P.png";
+					}
+
+					jScrollPane2.setVisible(true);
+					relatorioRd13.setVisible(false);
+					relatorioRd14.setVisible(false);
+					relatorioRd3.setVisible(false);
+					relatorioRd4.setVisible(false);
+					jLabel60.setVisible(false);
+					jLabel62.setVisible(false);
+					relatorioRd15.setVisible(false);
+					relatorioRd16.setVisible(false);
+					relatorioRd23.setVisible(true);
+					relatorioRd24.setVisible(true);
+
+					teste.setText(Tipo);
+				} else if(modeloLigacao == ModeloLigacao.CORTE_DUPLO && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
+					Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
+					ImagemFalha = "2.1P.png";
+
+					if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
+						ImagemFalha = "2.2P.png";
+					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()) {
+						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
+						ImagemFalha = "2.3P.png";
+					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
+						ImagemFalha = "2.4P.png";
+					}
+
+					labelresultadoModeloFalha.setText(Tipo);
+
+					jScrollPane2.setVisible(true);
+					relatorioRd13.setVisible(false);
+					relatorioRd14.setVisible(false);
+					relatorioRd3.setVisible(false);
+					relatorioRd4.setVisible(false);
+					jLabel60.setVisible(false);
+					jLabel62.setVisible(false);
+					relatorioRd15.setVisible(false);
+					relatorioRd16.setVisible(false);
+					relatorioRd23.setVisible(true);
+					relatorioRd24.setVisible(true);
+
+					teste.setText(Tipo);
 				}
-				LabelResultadoModeloFalha.setText(Tipo);
 
-				jScrollPane2.setVisible(true);
-				Inclinado1.setVisible(false);
-				Inclinado2.setVisible(false);
-				RelatorioRd13.setVisible(true);
-				RelatorioRd14.setVisible(true);
-				RelatorioRd3.setVisible(true);
-				RelatorioRd4.setVisible(true);
-				jLabel60.setVisible(true);
-				jLabel62.setVisible(true);
-				RelatorioRd15.setVisible(true);
-				RelatorioRd16.setVisible(true);
-				RelatorioRd23.setVisible(false);
-				RelatorioRd24.setVisible(false);
-
-				teste.setText(Tipo);
-			} else if((modeloLigacao == ModeloLigacao.CORTE_SIMPLES || modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES)
-			          && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
-
-				Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
-				ImagemFalha = "1.1P.png";
-
-				if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
-					ImagemFalha = "1.2P.png";
-				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Embutimento do pino metálico nas duas peças, devido ao giro do pino metálico.";
-					ImagemFalha = "1.3P.png";
-				} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
-					ImagemFalha = "1.4P.png";
-				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd5() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 1.";
-					ImagemFalha = "1.5P.png";
-				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd6() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
-					ImagemFalha = "1.6P.png";
-				}
-
-				LabelResultadoModeloFalha.setText(Tipo);
-
-				jScrollPane2.setVisible(true);
-				Inclinado1.setVisible(false);
-				Inclinado2.setVisible(false);
-				RelatorioRd13.setVisible(true);
-				RelatorioRd14.setVisible(true);
-				RelatorioRd3.setVisible(true);
-				RelatorioRd4.setVisible(true);
-				jLabel60.setVisible(true);
-				jLabel62.setVisible(true);
-				RelatorioRd15.setVisible(true);
-				RelatorioRd16.setVisible(true);
-				RelatorioRd23.setVisible(false);
-				RelatorioRd24.setVisible(false);
-
-				teste.setText(Tipo);
-			} else if((modeloLigacao == ModeloLigacao.CORTE_SIMPLES || modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES)
-			          && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
-
-				Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
-				ImagemFalha = "1.1P.png";
-
-				if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
-					ImagemFalha = "1.2P.png";
-				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Embutimento do pino metálico nas duas peças, devido ao giro do pino metálico.";
-					ImagemFalha = "1.3P.png";
-				} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
-					ImagemFalha = "1.4P.png";
-				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd5() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 1.";
-					ImagemFalha = "1.5P.png";
-				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd6() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
-					ImagemFalha = "1.6P.png";
-				}
-
-				LabelResultadoModeloFalha.setText(Tipo);
-
-				RelatorioRd13.setVisible(true);
-				RelatorioRd14.setVisible(true);
-				RelatorioRd3.setVisible(true);
-				RelatorioRd4.setVisible(true);
-				jLabel60.setVisible(true);
-				jLabel62.setVisible(true);
-				jScrollPane2.setVisible(true);
-				RelatorioRd15.setVisible(true);
-				RelatorioRd16.setVisible(true);
-				RelatorioRd23.setVisible(false);
-				RelatorioRd24.setVisible(false);
-
-				teste.setText(Tipo);
-			} else if((modeloLigacao == ModeloLigacao.CORTE_SIMPLES || modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES)
-			          && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
-
-				Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
-				ImagemFalha = "1.1P.png";
-
-				if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
-					ImagemFalha = "1.2P.png";
-				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Embutimento do pino metálico nas duas peças, devido ao giro do pino metálico.";
-					ImagemFalha = "1.3P.png";
-				} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
-					ImagemFalha = "1.4P.png";
-				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd5() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 1.";
-					ImagemFalha = "1.5P.png";
-				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd6() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
-					ImagemFalha = "1.6P.png";
-				}
-
-				LabelResultadoModeloFalha.setText(Tipo);
-
-				RelatorioRd13.setVisible(true);
-				RelatorioRd14.setVisible(true);
-				RelatorioRd3.setVisible(true);
-				RelatorioRd4.setVisible(true);
-				jLabel60.setVisible(true);
-				jLabel62.setVisible(true);
-				jScrollPane2.setVisible(true);
-				RelatorioRd15.setVisible(true);
-				RelatorioRd16.setVisible(true);
-				RelatorioRd23.setVisible(false);
-				RelatorioRd24.setVisible(false);
-
-				teste.setText(Tipo);
-			} else if(modeloLigacao == ModeloLigacao.CORTE_DUPLO && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PARALELO) {
-
-				Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
-				ImagemFalha = "2.1P.png";
-
-				if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
-					ImagemFalha = "2.2P.png";
-				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
-					ImagemFalha = "2.3P.png";
-				} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
-					ImagemFalha = "2.4P.png";
-				}
-
-				LabelResultadoModeloFalha.setText(Tipo);
-
-				jScrollPane2.setVisible(true);
-				RelatorioRd13.setVisible(false);
-				RelatorioRd14.setVisible(false);
-				RelatorioRd3.setVisible(false);
-				RelatorioRd4.setVisible(false);
-				jLabel60.setVisible(false);
-				jLabel62.setVisible(false);
-				RelatorioRd15.setVisible(false);
-				RelatorioRd16.setVisible(false);
-				RelatorioRd23.setVisible(true);
-				RelatorioRd24.setVisible(true);
-				Inclinado1.setVisible(false);
-				Inclinado2.setVisible(false);
-
-				teste.setText(Tipo);
-			} else if(modeloLigacao == ModeloLigacao.CORTE_DUPLO && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
-
-				Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
-				ImagemFalha = "2.1P.png";
-
-				if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
-					ImagemFalha = "2.2P.png";
-				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
-					ImagemFalha = "2.3P.png";
-				} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
-					ImagemFalha = "2.4P.png";
-				}
-
-				jScrollPane2.setVisible(true);
-				RelatorioRd13.setVisible(false);
-				RelatorioRd14.setVisible(false);
-				RelatorioRd3.setVisible(false);
-				RelatorioRd4.setVisible(false);
-				jLabel60.setVisible(false);
-				jLabel62.setVisible(false);
-				RelatorioRd15.setVisible(false);
-				RelatorioRd16.setVisible(false);
-				RelatorioRd23.setVisible(true);
-				RelatorioRd24.setVisible(true);
-
-				teste.setText(Tipo);
-			} else if(modeloLigacao == ModeloLigacao.CORTE_DUPLO && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
-				Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
-				ImagemFalha = "2.1P.png";
-
-				if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
-					ImagemFalha = "2.2P.png";
-				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()) {
-					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
-					ImagemFalha = "2.3P.png";
-				} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
-					ImagemFalha = "2.4P.png";
-				}
-
-				LabelResultadoModeloFalha.setText(Tipo);
-
-				jScrollPane2.setVisible(true);
-				RelatorioRd13.setVisible(false);
-				RelatorioRd14.setVisible(false);
-				RelatorioRd3.setVisible(false);
-				RelatorioRd4.setVisible(false);
-				jLabel60.setVisible(false);
-				jLabel62.setVisible(false);
-				RelatorioRd15.setVisible(false);
-				RelatorioRd16.setVisible(false);
-				RelatorioRd23.setVisible(true);
-				RelatorioRd24.setVisible(true);
-
-				teste.setText(Tipo);
+				// COM ESSAS FUNÇÕES ALTERAM-SE AS IMAGENS DO RELATÓRIO
+				figuraresultadoModoFalha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensFalhas/" + ImagemFalha))); // NOI18N
+				figuraParafuso.setIcon(new ImageIcon(((ImageIcon)figuraTipoParafuso.getIcon()).getImage().getScaledInstance(110, 25, Image.SCALE_SMOOTH)));
+				figuraParafuso.setIcon(new ImageIcon(((ImageIcon)figuraTipoParafuso.getIcon()).getImage().getScaledInstance(110, 25, Image.SCALE_SMOOTH)));
+				modoFalha.setIcon(new ImageIcon(((ImageIcon)figuraresultadoModoFalha.getIcon()).getImage().getScaledInstance(84, 120, Image.SCALE_SMOOTH)));
+				rLogo.setIcon(new ImageIcon(((ImageIcon)logoPrograma.getIcon()).getImage().getScaledInstance(125, 80, Image.SCALE_SMOOTH)));
 			}
 
-			// COM ESSAS FUNÇÕES ALTERAM-SE AS IMAGENS DO RELATÓRIO
-			FiguraResultadoModoFalha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensFalhas/" + ImagemFalha))); // NOI18N
-			FiguraParafuso.setIcon(new ImageIcon(((ImageIcon)FiguraTipoParafuso.getIcon()).getImage().getScaledInstance(110, 25, Image.SCALE_SMOOTH)));
-			FiguraParafuso.setIcon(new ImageIcon(((ImageIcon)FiguraTipoParafuso.getIcon()).getImage().getScaledInstance(110, 25, Image.SCALE_SMOOTH)));
-			ModoFalha.setIcon(new ImageIcon(((ImageIcon)FiguraResultadoModoFalha.getIcon()).getImage().getScaledInstance(84, 120, Image.SCALE_SMOOTH)));
-			RLogo.setIcon(new ImageIcon(((ImageIcon)LogoPrograma.getIcon()).getImage().getScaledInstance(125, 80, Image.SCALE_SMOOTH)));
+			jProgressBarPrego.setValue(3);
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
+	}// GEN-LAST:event_buttonCalcularActionPerformed
 
-		jProgressBarPrego.setValue(3);
-	}// GEN-LAST:event_ButtonCalcularActionPerformed
-
-	private void TesteParafusoNaoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_TesteParafusoNaoActionPerformed
-		Relatoriofaxrk.setText("Não");
-	}// GEN-LAST:event_TesteParafusoNaoActionPerformed
-
-	private void TesteParafusoSimActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_TesteParafusoSimActionPerformed
-		JOptionPane
-		        .showMessageDialog(this,
-		                           "Será considerado no cálculo o efeito não linear de compressão provocado pela arruela devido a rotação\n do pino metálico e de tração do pino metálico, conhecido como efeito de corda (Fax,rk). ");
-		m = true;
-		Relatoriofaxrk.setText("Sim");
-	}// GEN-LAST:event_TesteParafusoSimActionPerformed
-
-	private void ComboAcoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ComboAcoActionPerformed
-		if(((VerificadoresPrego)ComboAco.getInputVerifier()).verify(ComboAco)) {
-			ValorFyk.setText(modeloLigacao.getConectores().getClasseAcoPrego().getFyk() + "");
-			ValorFuk.setText(modeloLigacao.getConectores().getClasseAcoPrego().getFuk() + "");
-			RelatorioClasseAco.setText(modeloLigacao.getConectores().getClasseAcoPrego().getNome() + "");
-			Relatoriofyk.setText(modeloLigacao.getConectores().getClasseAcoPrego().getFyk() + "");
-			Relatoriofuk.setText(modeloLigacao.getConectores().getClasseAcoPrego().getFuk() + "");
+	private void testeParafusoNaoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_testeParafusoNaoActionPerformed
+		try {
+			relatoriofaxrk.setText("Não");
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
+	}// GEN-LAST:event_testeParafusoNaoActionPerformed
 
-		atualizaButtonCalcular();
-	}// GEN-LAST:event_ComboAcoActionPerformed
-
-	private void ComboTipoPregoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ComboTipoPregoActionPerformed
-		if(((VerificadoresPrego)ComboTipoPrego.getInputVerifier()).verify(ComboTipoPrego)) {
-			ValorDiametro.setText(modeloLigacao.getConectores().getTipoPrego().getDiametro() + "");
-			ValorComprimento.setText(modeloLigacao.getConectores().getTipoPrego().getComprimento() + "");
-			RelatorioTipoParafuso.setText(modeloLigacao.getConectores().getTipoPrego().getNome() + "");
-			RelatorioDiametro.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getfc0k() + "");
-			RelatorioComprimento.setText(modeloLigacao.getConectores().getTipoPrego().getComprimento() + "");
+	private void testeParafusoSimActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_testeParafusoSimActionPerformed
+		try {
+			JOptionPane
+			        .showMessageDialog(this,
+			                           "Será considerado no cálculo o efeito não linear de compressão provocado pela arruela devido a rotação\n do pino metálico e de tração do pino metálico, conhecido como efeito de corda (Fax,rk). ");
+			m = true;
+			relatoriofaxrk.setText("Sim");
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
+	}// GEN-LAST:event_testeParafusoSimActionPerformed
 
-		atualizaButtonCalcular();
+	private void comboAcoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_comboAcoActionPerformed
+		try {
+			if(((VerificadoresPrego)comboAco.getInputVerifier()).verify(comboAco)) {
+				valorFyk.setText(modeloLigacao.getConectores().getClasseAcoPrego().getFyk() + "");
+				valorFuk.setText(modeloLigacao.getConectores().getClasseAcoPrego().getFuk() + "");
+				relatorioClasseAco.setText(modeloLigacao.getConectores().getClasseAcoPrego().getNome() + "");
+				relatoriofyk.setText(modeloLigacao.getConectores().getClasseAcoPrego().getFyk() + "");
+				relatoriofuk.setText(modeloLigacao.getConectores().getClasseAcoPrego().getFuk() + "");
+			}
+
+			atualizabuttonCalcular();
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
+	}// GEN-LAST:event_comboAcoActionPerformed
+
+	private void comboTipoPregoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ComboTipoPregoActionPerformed
+		try {
+			if(((VerificadoresPrego)comboTipoPrego.getInputVerifier()).verify(comboTipoPrego)) {
+				valorDiametro.setText(modeloLigacao.getConectores().getTipoPrego().getDiametro() + "");
+				valorComprimento.setText(modeloLigacao.getConectores().getTipoPrego().getComprimento() + "");
+				relatorioTipoParafuso.setText(modeloLigacao.getConectores().getTipoPrego().getNome() + "");
+				relatorioDiametro.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getfc0k() + "");
+				relatorioComprimento.setText(modeloLigacao.getConectores().getTipoPrego().getComprimento() + "");
+			}
+
+			atualizabuttonCalcular();
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
 	}// GEN-LAST:event_ComboTipoPregoActionPerformed
 
-	private void LimparExpessura(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_LimparExpessura2
-		if(Espessura1.getText().length() > 4) {
-			Espessura1.setText("");
+	private void limparExpessura(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_LimparExpessura2
+		try {
+			if(espessura1.getText().length() > 4) {
+				espessura1.setText("");
+			}
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_LimparExpessura2
 
-	private void LimparExpessura2(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_LimparExpessura2
-		if(Espessura2.getText().length() > 4) {
-			Espessura2.setText("");
+	private void limparExpessura2(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_LimparExpessura2
+		try {
+			if(espessura2.getText().length() > 4) {
+				espessura2.setText("");
+			}
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_LimparExpessura2
 
-	private void ComboElem2ClasseMadeiraFocusLost(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_ComboElem2ClasseMadeiraActionPerformed
-		if(((VerificadoresPrego)ComboElem2ClasseMadeira.getInputVerifier()).isVerified()) {
-			ValorFc2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getfc0k() + "");
-			ValorDensidade2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getDensidade() + "");
-			ValorFvok2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getfv0k() + "");
-			ValorEc0m2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getec0m() + "");
-			RelatorioClasseElem2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().name());
-			Relatoriofcok2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getfc0k() + "");
-			RelatorioDensidade2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getDensidade() + "");
-			Relatoriofv0k2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getfv0k() + "");
-			RelatorioEc0m2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getec0m() + "");
-		}
+	private void comboElem2ClasseMadeiraFocusLost(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_comboElem2ClasseMadeiraActionPerformed
+		try {
+			if(((VerificadoresPrego)comboElem2ClasseMadeira.getInputVerifier()).isVerified()) {
+				valorFc2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getfc0k() + "");
+				valorDensidade2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getDensidade() + "");
+				valorFvok2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getfv0k() + "");
+				valorEc0m2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getec0m() + "");
+				relatorioClasseElem2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().name());
+				relatoriofcok2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getfc0k() + "");
+				relatorioDensidade2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getDensidade() + "");
+				relatoriofv0k2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getfv0k() + "");
+				relatorioEc0m2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getec0m() + "");
+			}
 
-		atualizaNextElementosLigacao(); // TODO add your handling code here:
-	}// GEN-LAST:event_ComboElem2ClasseMadeiraActionPerformed
-
-	private void ValorAngulo(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_ValorAngulo
-		if(ValorAngulo.getText().length() > 4) {
-			ValorAngulo.setText("0");
+			atualizanextElementosLigacao();
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
-	}// GEN-LAST:event_ValorAngulo
+	}// GEN-LAST:event_comboElem2ClasseMadeiraActionPerformed
+
+	private void valorAngulo(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_valorAngulo
+		try {
+			if(valorAngulo.getText().length() > 4) {
+				valorAngulo.setText("0");
+			}
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
+	}// GEN-LAST:event_valorAngulo
 
 	private void btn1SecaoCorteActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn1SecaoCorteActionPerformed
-		modeloLigacao = ModeloLigacao.CORTE_SIMPLES;
-		MadeiraFigura.setVisible(true);
-		InclinacaoSim1.setEnabled(true);
-		InclinacaoSim2.setEnabled(true);
-		jProgressBarPrego.setString("Escolha a espécie da madeira para continuar.");
-		ConiferasButton.setEnabled(true);
-		FolhosasButton.setEnabled(true);
+		try {
+			modeloLigacao = ModeloLigacao.CORTE_SIMPLES;
+			madeiraFigura.setVisible(true);
+			inclinacaoSim1.setEnabled(true);
+			inclinacaoSim2.setEnabled(true);
+			jProgressBarPrego.setString("Escolha a espécie da madeira para continuar.");
+			coniferasButton.setEnabled(true);
+			folhosasButton.setEnabled(true);
 
-		RelatorioSecaoCorte.setText("Ligação com Corte Simples");
-		MadeiraFigura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/2Paralelo.png"))); // NOI18N
-		FiguraSecoes.setIcon(new ImageIcon(((ImageIcon)btn1SecaoCorte.getIcon()).getImage().getScaledInstance(55, 60, Image.SCALE_SMOOTH)));
+			relatorioSecaoCorte.setText("Ligação com Corte Simples");
+			madeiraFigura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/2Paralelo.png"))); // NOI18N
+			figuraSecoes.setIcon(new ImageIcon(((ImageIcon)btn1SecaoCorte.getIcon()).getImage().getScaledInstance(55, 60, Image.SCALE_SMOOTH)));
 
-		System.out.println("modeloLigacao =" + modeloLigacao);
-		System.out.println("NumSecao =" + modeloLigacao.getNumSecao());
+			System.out.println("modeloLigacao =" + modeloLigacao);
+			System.out.println("NumSecao =" + modeloLigacao.getNumSecao());
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
 	}// GEN-LAST:event_btn1SecaoCorteActionPerformed
 
-	private void InclinacaoSim1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_InclinacaoSim1ActionPerformed
-		IncSim1 = false;
-		IncSim2 = true;
+	private void inclinacaoSim1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_inclinacaoSim1ActionPerformed
+		try {
+			incSim1 = false;
+			incSim2 = true;
 
-		MadeiraFigura.setVisible(true);
-		String TrocaFigura = "";
+			madeiraFigura.setVisible(true);
+			String TrocaFigura = "";
 
-		if(modeloLigacao == ModeloLigacao.CORTE_SIMPLES && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
-			CalculoForca01.setVisible(true);
-			CalculoForca02.setVisible(false);
-			CalculoForca901.setVisible(false);
-			CalculoForca902.setVisible(false);
-			CalculoForcaAlfa1.setVisible(false);
-			CalculoForcaAlfa2.setVisible(true);
+			if(modeloLigacao == ModeloLigacao.CORTE_SIMPLES && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
+				calculoForca01.setVisible(true);
+				calculoForca02.setVisible(false);
+				calculoForca901.setVisible(false);
+				calculoForca902.setVisible(false);
+				calculoForcaAlfa1.setVisible(false);
+				calculoForcaAlfa2.setVisible(true);
 
-			TrocaFigura = "1InclinadoElem2P.png"; // NOI18N
-		} else if(modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
-			CalculoForca01.setVisible(true);
-			CalculoForca02.setVisible(false);
-			CalculoForca901.setVisible(false);
-			CalculoForca902.setVisible(false);
-			CalculoForcaAlfa1.setVisible(false);
-			CalculoForcaAlfa2.setVisible(true);
+				TrocaFigura = "1InclinadoElem2P.png"; // NOI18N
+			} else if(modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
+				calculoForca01.setVisible(true);
+				calculoForca02.setVisible(false);
+				calculoForca901.setVisible(false);
+				calculoForca902.setVisible(false);
+				calculoForcaAlfa1.setVisible(false);
+				calculoForcaAlfa2.setVisible(true);
 
-			TrocaFigura = "2InclinadoElem2P.png"; // NOI18N
-		} else if(modeloLigacao == ModeloLigacao.CORTE_SIMPLES && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
-			CalculoForca01.setVisible(true);
-			CalculoForca02.setVisible(false);
-			CalculoForca901.setVisible(false);
-			CalculoForca902.setVisible(true);
-			CalculoForcaAlfa1.setVisible(false);
-			CalculoForcaAlfa2.setVisible(false);
+				TrocaFigura = "2InclinadoElem2P.png"; // NOI18N
+			} else if(modeloLigacao == ModeloLigacao.CORTE_SIMPLES && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
+				calculoForca01.setVisible(true);
+				calculoForca02.setVisible(false);
+				calculoForca901.setVisible(false);
+				calculoForca902.setVisible(true);
+				calculoForcaAlfa1.setVisible(false);
+				calculoForcaAlfa2.setVisible(false);
 
-			TrocaFigura = "1PerpendicularElem2P.png"; // NOI18N
-		} else if(modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
-			CalculoForca01.setVisible(true);
-			CalculoForca02.setVisible(false);
-			CalculoForca901.setVisible(false);
-			CalculoForca902.setVisible(true);
-			CalculoForcaAlfa1.setVisible(false);
-			CalculoForcaAlfa2.setVisible(false);
+				TrocaFigura = "1PerpendicularElem2P.png"; // NOI18N
+			} else if(modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
+				calculoForca01.setVisible(true);
+				calculoForca02.setVisible(false);
+				calculoForca901.setVisible(false);
+				calculoForca902.setVisible(true);
+				calculoForcaAlfa1.setVisible(false);
+				calculoForcaAlfa2.setVisible(false);
 
-			TrocaFigura = "2PerpendicularElem2P.png"; // NOI18N
-		} else if(modeloLigacao == ModeloLigacao.CORTE_DUPLO && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
-			CalculoForca01.setVisible(true);
-			CalculoForca02.setVisible(false);
-			CalculoForca901.setVisible(false);
-			CalculoForca902.setVisible(false);
-			CalculoForcaAlfa1.setVisible(false);
-			CalculoForcaAlfa2.setVisible(true);
+				TrocaFigura = "2PerpendicularElem2P.png"; // NOI18N
+			} else if(modeloLigacao == ModeloLigacao.CORTE_DUPLO && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
+				calculoForca01.setVisible(true);
+				calculoForca02.setVisible(false);
+				calculoForca901.setVisible(false);
+				calculoForca902.setVisible(false);
+				calculoForcaAlfa1.setVisible(false);
+				calculoForcaAlfa2.setVisible(true);
 
-			TrocaFigura = "2InclinadoElem2P.png"; // NOI18N
-		} else if(modeloLigacao == ModeloLigacao.CORTE_DUPLO && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
-			CalculoForca01.setVisible(true);
-			CalculoForca02.setVisible(false);
-			CalculoForca901.setVisible(false);
-			CalculoForca902.setVisible(true);
-			CalculoForcaAlfa1.setVisible(false);
-			CalculoForcaAlfa2.setVisible(false);
+				TrocaFigura = "2InclinadoElem2P.png"; // NOI18N
+			} else if(modeloLigacao == ModeloLigacao.CORTE_DUPLO && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
+				calculoForca01.setVisible(true);
+				calculoForca02.setVisible(false);
+				calculoForca901.setVisible(false);
+				calculoForca902.setVisible(true);
+				calculoForcaAlfa1.setVisible(false);
+				calculoForcaAlfa2.setVisible(false);
 
-			TrocaFigura = "2PerpendicularElem2P.png"; // NOI18N
+				TrocaFigura = "2PerpendicularElem2P.png"; // NOI18N
+			}
+
+			madeiraFigura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/" + TrocaFigura))); // NOI18N
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
+	}// GEN-LAST:event_inclinacaoSim1ActionPerformed
 
-		MadeiraFigura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/" + TrocaFigura))); // NOI18N
-	}// GEN-LAST:event_InclinacaoSim1ActionPerformed
+	private void inclinacaoSim2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_inclinacaoSim2ActionPerformed
+		try {
+			incSim1 = true;
+			incSim2 = false;
 
-	private void InclinacaoSim2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_InclinacaoSim2ActionPerformed
-		IncSim1 = true;
-		IncSim2 = false;
+			madeiraFigura.setVisible(true);
+			String TrocaFigura = "";
 
-		MadeiraFigura.setVisible(true);
-		String TrocaFigura = "";
+			if(modeloLigacao == ModeloLigacao.CORTE_SIMPLES && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
+				calculoForca01.setVisible(false);
+				calculoForca02.setVisible(true);
+				calculoForca901.setVisible(false);
+				calculoForca902.setVisible(false);
+				calculoForcaAlfa1.setVisible(true);
+				calculoForcaAlfa2.setVisible(false);
 
-		if(modeloLigacao == ModeloLigacao.CORTE_SIMPLES && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
-			CalculoForca01.setVisible(false);
-			CalculoForca02.setVisible(true);
-			CalculoForca901.setVisible(false);
-			CalculoForca902.setVisible(false);
-			CalculoForcaAlfa1.setVisible(true);
-			CalculoForcaAlfa2.setVisible(false);
+				TrocaFigura = "1InclinadoElem1P.png"; // NOI18N
+			} else if(modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
+				calculoForca01.setVisible(false);
+				calculoForca02.setVisible(true);
+				calculoForca901.setVisible(false);
+				calculoForca902.setVisible(false);
+				calculoForcaAlfa1.setVisible(true);
+				calculoForcaAlfa2.setVisible(false);
 
-			TrocaFigura = "1InclinadoElem1P.png"; // NOI18N
-		} else if(modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
-			CalculoForca01.setVisible(false);
-			CalculoForca02.setVisible(true);
-			CalculoForca901.setVisible(false);
-			CalculoForca902.setVisible(false);
-			CalculoForcaAlfa1.setVisible(true);
-			CalculoForcaAlfa2.setVisible(false);
+				TrocaFigura = "2InclinadoElem1P.png"; // NOI18N
+			} else if(modeloLigacao == ModeloLigacao.CORTE_SIMPLES && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
+				calculoForca01.setVisible(false);
+				calculoForca02.setVisible(true);
+				calculoForca901.setVisible(true);
+				calculoForca902.setVisible(false);
+				calculoForcaAlfa1.setVisible(false);
+				calculoForcaAlfa2.setVisible(false);
 
-			TrocaFigura = "2InclinadoElem1P.png"; // NOI18N
-		} else if(modeloLigacao == ModeloLigacao.CORTE_SIMPLES && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
-			CalculoForca01.setVisible(false);
-			CalculoForca02.setVisible(true);
-			CalculoForca901.setVisible(true);
-			CalculoForca902.setVisible(false);
-			CalculoForcaAlfa1.setVisible(false);
-			CalculoForcaAlfa2.setVisible(false);
+				TrocaFigura = "1PerpendicularElem1P.png"; // NOI18N
+			} else if(modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
+				calculoForca01.setVisible(false);
+				calculoForca02.setVisible(true);
+				calculoForca901.setVisible(true);
+				calculoForca902.setVisible(false);
+				calculoForcaAlfa1.setVisible(false);
+				calculoForcaAlfa2.setVisible(false);
 
-			TrocaFigura = "1PerpendicularElem1P.png"; // NOI18N
-		} else if(modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
-			CalculoForca01.setVisible(false);
-			CalculoForca02.setVisible(true);
-			CalculoForca901.setVisible(true);
-			CalculoForca902.setVisible(false);
-			CalculoForcaAlfa1.setVisible(false);
-			CalculoForcaAlfa2.setVisible(false);
+				TrocaFigura = "2PerpendicularElem1P.png"; // NOI18N
+			} else if(modeloLigacao == ModeloLigacao.CORTE_DUPLO && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
+				calculoForca01.setVisible(false);
+				calculoForca02.setVisible(true);
+				calculoForca901.setVisible(false);
+				calculoForca902.setVisible(false);
+				calculoForcaAlfa1.setVisible(true);
+				calculoForcaAlfa2.setVisible(false);
 
-			TrocaFigura = "2PerpendicularElem1P.png"; // NOI18N
-		} else if(modeloLigacao == ModeloLigacao.CORTE_DUPLO && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
-			CalculoForca01.setVisible(false);
-			CalculoForca02.setVisible(true);
-			CalculoForca901.setVisible(false);
-			CalculoForca902.setVisible(false);
-			CalculoForcaAlfa1.setVisible(true);
-			CalculoForcaAlfa2.setVisible(false);
+				TrocaFigura = "2InclinadoElem1P.png"; // NOI18N
+			} else if(modeloLigacao == ModeloLigacao.CORTE_DUPLO && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
+				calculoForca01.setVisible(false);
+				calculoForca02.setVisible(true);
+				calculoForca901.setVisible(true);
+				calculoForca902.setVisible(false);
+				calculoForcaAlfa1.setVisible(false);
+				calculoForcaAlfa2.setVisible(false);
 
-			TrocaFigura = "2InclinadoElem1P.png"; // NOI18N
-		} else if(modeloLigacao == ModeloLigacao.CORTE_DUPLO && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
-			CalculoForca01.setVisible(false);
-			CalculoForca02.setVisible(true);
-			CalculoForca901.setVisible(true);
-			CalculoForca902.setVisible(false);
-			CalculoForcaAlfa1.setVisible(false);
-			CalculoForcaAlfa2.setVisible(false);
+				TrocaFigura = "2PerpendicularElem1P.png"; // NOI18N
+			}
 
-			TrocaFigura = "2PerpendicularElem1P.png"; // NOI18N
+			madeiraFigura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/" + TrocaFigura))); // NOI18N
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
+	}// GEN-LAST:event_inclinacaoSim2ActionPerformed
 
-		MadeiraFigura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/" + TrocaFigura))); // NOI18N
-	}// GEN-LAST:event_InclinacaoSim2ActionPerformed
-
-	private void ValorAnguloKeyTyped(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_ValorAnguloKeyTyped
-		if((evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') || evt.getKeyChar() == ',') {
-			return;
+	private void valorAnguloKeyTyped(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_valorAnguloKeyTyped
+		try {
+			if((evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') || evt.getKeyChar() == ',') {
+				return;
+			}
+			evt.consume();
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
-		evt.consume();
-	}// GEN-LAST:event_ValorAnguloKeyTyped
+	}// GEN-LAST:event_valorAnguloKeyTyped
 
-	private void Espessura2KeyTyped(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_Espessura2KeyTyped
-		if((evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') || evt.getKeyChar() == ',') {
-			return;
+	private void espessura2KeyTyped(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_Espessura2KeyTyped
+		try {
+			if((evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') || evt.getKeyChar() == ',') {
+				return;
+			}
+			evt.consume();
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
-		evt.consume();
 	}// GEN-LAST:event_Espessura2KeyTyped
 
-	private void ValorAnguloActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ValorAnguloActionPerformed
-		RelatorioAngulo.setText(modeloLigacao.getAngulo().getValorGrau() + "");
-		atualizaNextElementosLigacao();
-	}// GEN-LAST:event_ValorAnguloActionPerformed
+	private void valorAnguloActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_valorAnguloActionPerformed
+		try {
+			relatorioAngulo.setText(modeloLigacao.getAngulo().getValorGrau() + "");
+			atualizanextElementosLigacao();
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
+	}// GEN-LAST:event_valorAnguloActionPerformed
 
 	private void formWindowActivated(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_formWindowActivated
-		Relatorio.setVisible(false);
+		try {
+			relatorio.setVisible(false);
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
 	}// GEN-LAST:event_formWindowActivated
 
 	private void jTabbedPane1FocusGained(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_jTabbedPane1FocusGained
-		switch(jTabbedPane1.getSelectedIndex()){
-			case 2:
-				ValorAngulo.setText("0");
-				MadeiraFigura.setVisible(true);
-				String FiguraMadeira = "";
+		try {
+			switch(jTabbedPane1.getSelectedIndex()){
+				case 2:
+					valorAngulo.setText("0");
+					madeiraFigura.setVisible(true);
+					String FiguraMadeira = "";
 
-				if(modeloLigacao == ModeloLigacao.CORTE_SIMPLES) {
+					if(modeloLigacao == ModeloLigacao.CORTE_SIMPLES) {
 
-					FiguraMadeira = "1ParaleloP.png";
+						FiguraMadeira = "1ParaleloP.png";
 
-				}
-				if(modeloLigacao == ModeloLigacao.CORTE_DUPLO) {
-
-					FiguraMadeira = "2ParaleloP.png";
-
-				}
-				if(modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES) {
-					FiguraMadeira = "2ParaleloP.png";
-
-				}
-
-				MadeiraFigura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/" + FiguraMadeira))); // NOI18N
-
-				// Remove todos os elementos a partir do segundo
-				while(ComboKmod1.getModel().getSize() > 1) {
-					ComboKmod1.removeItemAt(1);
-				}
-
-				for(Kmod1 kmod1 : Kmod1.values()) {
-					if(kmod1.getTipoMadeira() == modeloLigacao.getTipoMadeira()) {
-						ComboKmod1.addItem(kmod1);
 					}
-				}
-				ComboKmod1.addItem(Kmod1.OUTRO);
+					if(modeloLigacao == ModeloLigacao.CORTE_DUPLO) {
 
-				while(ComboKmod2.getModel().getSize() > 1) {
-					ComboKmod2.removeItemAt(1);
-				}
+						FiguraMadeira = "2ParaleloP.png";
 
-				for(Kmod2 kmod2 : Kmod2.values()) {
-					if(kmod2.getTipoMadeira() == modeloLigacao.getTipoMadeira()) {
-						ComboKmod2.addItem(kmod2);
 					}
-				}
-				ComboKmod2.addItem(Kmod2.OUTRO);
+					if(modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES) {
+						FiguraMadeira = "2ParaleloP.png";
 
-				while(ComboKmod3.getModel().getSize() > 1) {
-					ComboKmod3.removeItemAt(1);
-				}
-
-				for(Kmod3 kmod3 : Kmod3.values()) {
-					if(kmod3.getEspecieMadeira() == modeloLigacao.getEspecieMadeira()) {
-						ComboKmod3.addItem(kmod3);
 					}
-				}
-				ComboKmod3.addItem(Kmod3.OUTRO);
 
-				break;
-			case 3:
-				double t1 = modeloLigacao.getElementoLigação1().getEspessura();
-				double t2 = modeloLigacao.getElementoLigação2().getEspessura();
+					madeiraFigura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/" + FiguraMadeira))); // NOI18N
 
-				while(ComboTipoPrego.getModel().getSize() > 1) {
-					ComboTipoPrego.removeItemAt(1);
-				}
+					// Remove todos os elementos a partir do segundo
+					while(comboKmod1.getModel().getSize() > 1) {
+						comboKmod1.removeItemAt(1);
+					}
 
-				boolean entrouDiametro = false;
-
-				for(TipoPrego tipoPrego : TipoPrego.values()) {
-					boolean passou = false;
-
-					if(tipoPrego.getDiametro() < t1 / 5) {
-						entrouDiametro = true;
-						double tp;
-						switch(modeloLigacao){
-							case CORTE_SIMPLES:
-								tp = tipoPrego.getComprimento() - t1;
-								if(tp > 12 * tipoPrego.getDiametro()) {
-									passou = true;
-								}
-								break;
-							case DUPLO_CORTE_SIMPLES:
-								tp = tipoPrego.getComprimento() - t1;
-								if(tp > 12 * tipoPrego.getDiametro() && tp < t2) {
-									passou = true;
-								}
-								break;
-
-							case CORTE_DUPLO:
-								tp = tipoPrego.getComprimento() - (t1 + t2);
-								if(tp > 12 * tipoPrego.getDiametro()) {
-									passou = true;
-								}
-								break;
+					for(Kmod1 kmod1 : Kmod1.values()) {
+						if(kmod1.getTipoMadeira() == modeloLigacao.getTipoMadeira()) {
+							comboKmod1.addItem(kmod1);
 						}
 					}
+					comboKmod1.addItem(Kmod1.OUTRO);
 
-					if(passou) {
-						ComboTipoPrego.addItem(tipoPrego);
+					while(comboKmod2.getModel().getSize() > 1) {
+						comboKmod2.removeItemAt(1);
 					}
-				}
-				if(ComboTipoPrego.getItemCount() == 1 && !entrouDiametro) {
-					jProgressBarPrego.setString("Nenhum prego é compatível com as espessuras inseridas, experimente aumentar as espessuras.");
-				}
-				if(ComboTipoPrego.getItemCount() == 1 && entrouDiametro) {
-					jProgressBarPrego.setString("Nenhum prego é compatível com as espessuras inseridas, experimente diminuir as espessuras.");
-				}
-				break;
+
+					for(Kmod2 kmod2 : Kmod2.values()) {
+						if(kmod2.getTipoMadeira() == modeloLigacao.getTipoMadeira()) {
+							comboKmod2.addItem(kmod2);
+						}
+					}
+					comboKmod2.addItem(Kmod2.OUTRO);
+
+					while(comboKmod3.getModel().getSize() > 1) {
+						comboKmod3.removeItemAt(1);
+					}
+
+					for(Kmod3 kmod3 : Kmod3.values()) {
+						if(kmod3.getEspecieMadeira() == modeloLigacao.getEspecieMadeira()) {
+							comboKmod3.addItem(kmod3);
+						}
+					}
+					comboKmod3.addItem(Kmod3.OUTRO);
+
+					break;
+				case 3:
+					double t1 = modeloLigacao.getElementoLigação1().getEspessura();
+					double t2 = modeloLigacao.getElementoLigação2().getEspessura();
+
+					while(comboTipoPrego.getModel().getSize() > 1) {
+						comboTipoPrego.removeItemAt(1);
+					}
+
+					boolean entrouDiametro = false;
+
+					for(TipoPrego tipoPrego : TipoPrego.values()) {
+						boolean passou = false;
+
+						if(tipoPrego.getDiametro() < t1 / 5) {
+							entrouDiametro = true;
+							double tp;
+							switch(modeloLigacao){
+								case CORTE_SIMPLES:
+									tp = tipoPrego.getComprimento() - t1;
+									if(tp > 12 * tipoPrego.getDiametro()) {
+										passou = true;
+									}
+									break;
+								case DUPLO_CORTE_SIMPLES:
+									tp = tipoPrego.getComprimento() - t1;
+									if(tp > 12 * tipoPrego.getDiametro() && tp < t2) {
+										passou = true;
+									}
+									break;
+
+								case CORTE_DUPLO:
+									tp = tipoPrego.getComprimento() - (t1 + t2);
+									if(tp > 12 * tipoPrego.getDiametro()) {
+										passou = true;
+									}
+									break;
+							}
+						}
+
+						if(passou) {
+							comboTipoPrego.addItem(tipoPrego);
+						}
+					}
+					if(comboTipoPrego.getItemCount() == 1 && !entrouDiametro) {
+						jProgressBarPrego.setString("Nenhum prego é compatível com as espessuras inseridas, experimente aumentar as espessuras.");
+					}
+					if(comboTipoPrego.getItemCount() == 1 && entrouDiametro) {
+						jProgressBarPrego.setString("Nenhum prego é compatível com as espessuras inseridas, experimente diminuir as espessuras.");
+					}
+					break;
+			}
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_jTabbedPane1FocusGained
 
-	private void ComboQuantPregosActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ComboQuantPregosActionPerformed
-		if(((VerificadoresPrego)ComboQuantPregos.getInputVerifier()).verify(ComboQuantPregos)) {
-			RelatorioNParafusos.setText(modeloLigacao.getConectores().getQuantidadePrego().getNome() + "");
-		}
+	private void comboQuantPregosActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ComboQuantPregosActionPerformed
+		try {
+			if(((VerificadoresPrego)comboQuantPregos.getInputVerifier()).verify(comboQuantPregos)) {
+				relatorioNParafusos.setText(modeloLigacao.getConectores().getQuantidadePrego().getNome() + "");
+			}
 
-		atualizaButtonCalcular();
+			atualizabuttonCalcular();
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
 	}// GEN-LAST:event_ComboQuantPregosActionPerformed
 
 	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
-		Printable p = new Printable(){
+		try {
+			Printable p = new Printable(){
 
-			public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-				if(pageIndex > 0) {
-					/* We have only one page, and 'page' is zero-based */
-					return NO_SUCH_PAGE;
+				public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+					if(pageIndex > 0) {
+						/* We have only one page, and 'page' is zero-based */
+						return NO_SUCH_PAGE;
+					}
+
+					// pageFormat.setOrientation(pageIndex);
+					Graphics2D g2d = (Graphics2D)graphics;
+					g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+
+					g2d.transform(AffineTransform.getScaleInstance(0.9, 0.9)); // Reduz
+					                                                           // a
+					                                                           // forma
+					                                                           // em
+					                                                           // 90%
+					                                                           // para
+					                                                           // dar
+					                                                           // certo
+					                                                           // no
+					                                                           // tamanho
+					                                                           // da
+					                                                           // página
+					relatorioFinal.printAll(g2d);
+
+					return PAGE_EXISTS;
 				}
+			};
 
-				// pageFormat.setOrientation(pageIndex);
-				Graphics2D g2d = (Graphics2D)graphics;
-				g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+			PrinterJob job = PrinterJob.getPrinterJob();
+			job.setPrintable(p);
 
-				g2d.transform(AffineTransform.getScaleInstance(0.9, 0.9)); // Reduz
-				                                                           // a
-				                                                           // forma
-				                                                           // em
-				                                                           // 90%
-				                                                           // para
-				                                                           // dar
-				                                                           // certo
-				                                                           // no
-				                                                           // tamanho
-				                                                           // da
-				                                                           // página
-				RelatorioFinal.printAll(g2d);
+			boolean ok = job.printDialog();
 
-				return PAGE_EXISTS;
+			if(ok) {
+				try {
+					job.print();
+				} catch (PrinterException ex) {
+					/* The job did not successfully complete */
+				}
 			}
-		};
-
-		PrinterJob job = PrinterJob.getPrinterJob();
-		job.setPrintable(p);
-
-		boolean ok = job.printDialog();
-
-		if(ok) {
-			try {
-				job.print();
-			} catch (PrinterException ex) {
-				/* The job did not successfully complete */
-			}
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_jButton1ActionPerformed
 
 	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton2ActionPerformed
-        TelaPrego telaprego = new TelaPrego();
-        telaprego.setVisible(true);
-        this.dispose();
+		try {
+			TelaPrego telaprego = new TelaPrego();
+			telaprego.setVisible(true);
+			this.dispose();
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
 	}// GEN-LAST:event_jButton2ActionPerformed
 
-	private void VoltarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_VoltarActionPerformed
-		this.dispose();
-		TelaInicial2 telainicial = new TelaInicial2();
-		telainicial.setVisible(true);
+	private void voltarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_VoltarActionPerformed
+		try {
+			this.dispose();
+			TelaInicial2 telainicial = new TelaInicial2();
+			telainicial.setVisible(true);
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
 	}// GEN-LAST:event_VoltarActionPerformed
 
 	private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton3ActionPerformed
-		this.dispose();
-		TelaInicial2 telainicial = new TelaInicial2();
-		telainicial.setVisible(true);
+		try {
+			this.dispose();
+			TelaInicial2 telainicial = new TelaInicial2();
+			telainicial.setVisible(true);
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
 	}// GEN-LAST:event_jButton3ActionPerformed
 
-	private void ComboKmod1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ComboKmod1ActionPerformed
-		if(((VerificadoresPrego)ComboKmod1.getInputVerifier()).verify(ComboKmod1)) {
-			if(modeloLigacao.getKmod1() == Kmod1.OUTRO) {
+	private void comboKmod1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_comboKmod1ActionPerformed
+		try {
+			if(((VerificadoresPrego)comboKmod1.getInputVerifier()).verify(comboKmod1)) {
+				if(modeloLigacao.getKmod1() == Kmod1.OUTRO) {
 
-				double kmod1 = -1;
+					double kmod1 = -1;
 
-				do {
-					String value = (String)JOptionPane.showInputDialog(this, "Entre com um valor entre 0 e 1.", "Kmod 1", JOptionPane.INFORMATION_MESSAGE, null, null, "Digite o valor");
-					try {
-						kmod1 = Double.parseDouble(value.replace(",", "."));
-					} catch (RuntimeException e) {
+					do {
+						String value = (String)JOptionPane.showInputDialog(this, "Entre com um valor entre 0 e 1.", "Kmod 1", JOptionPane.INFORMATION_MESSAGE, null, null, "Digite o valor");
+						try {
+							kmod1 = Double.parseDouble(value.replace(",", "."));
+						} catch (RuntimeException e) {
 
-					}
-					jProgressBarPrego.setString("Entre com um valor válido, entre 0 e 1.");
-				} while(kmod1 > 1 || kmod1 <= 0);
-				modeloLigacao.getKmod1().setValor(kmod1);
-				jProgressBarPrego.setString("");
+						}
+						jProgressBarPrego.setString("Entre com um valor válido, entre 0 e 1.");
+					} while(kmod1 > 1 || kmod1 <= 0);
+					modeloLigacao.getKmod1().setValor(kmod1);
+					jProgressBarPrego.setString("");
+				}
+				textkmod1.setText(modeloLigacao.getKmod1().getValor() + "");
+				relatorioKmod1.setText(modeloLigacao.getKmod1().getValor() + "");
 			}
-			Textkmod1.setText(modeloLigacao.getKmod1().getValor() + "");
-			RelatorioKmod1.setText(modeloLigacao.getKmod1().getValor() + "");
+
+			atualizanextElementosLigacao();
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
+	}// GEN-LAST:event_comboKmod1ActionPerformed
 
-		atualizaNextElementosLigacao();
-	}// GEN-LAST:event_ComboKmod1ActionPerformed
+	private void comboKmod3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_comboKmod3ActionPerformed
+		try {
+			if(((VerificadoresPrego)comboKmod3.getInputVerifier()).verify(comboKmod3)) {
+				if(modeloLigacao.getKmod3() == Kmod3.OUTRO) {
 
-	private void ComboKmod3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ComboKmod3ActionPerformed
-		if(((VerificadoresPrego)ComboKmod3.getInputVerifier()).verify(ComboKmod3)) {
-			if(modeloLigacao.getKmod3() == Kmod3.OUTRO) {
+					double kmod3 = -1;
 
-				double kmod3 = -1;
+					do {
+						String value = (String)JOptionPane.showInputDialog(this, "Entre com um valor entre 0 e 1.", "Kmod 3", JOptionPane.INFORMATION_MESSAGE, null, null, "Digite o valor");
+						try {
+							kmod3 = Double.parseDouble(value.replace(",", "."));
+						} catch (NumberFormatException e) {
 
-				do {
-					String value = (String)JOptionPane.showInputDialog(this, "Entre com um valor entre 0 e 1.", "Kmod 3", JOptionPane.INFORMATION_MESSAGE, null, null, "Digite o valor");
-					try {
-						kmod3 = Double.parseDouble(value.replace(",", "."));
-					} catch (NumberFormatException e) {
-
-					}
-					jProgressBarPrego.setString("Entre com um valor válido, entre 0 e 1.");
-				} while(kmod3 > 1 || kmod3 <= 0);
-				modeloLigacao.getKmod3().setValor(kmod3);
-				jProgressBarPrego.setString("");
+						}
+						jProgressBarPrego.setString("Entre com um valor válido, entre 0 e 1.");
+					} while(kmod3 > 1 || kmod3 <= 0);
+					modeloLigacao.getKmod3().setValor(kmod3);
+					jProgressBarPrego.setString("");
+				}
+				textkmod3.setText(modeloLigacao.getKmod3().getValor() + "");
+				relatoriokmod3.setText(modeloLigacao.getKmod3().getValor() + "");
 			}
-			Textkmod3.setText(modeloLigacao.getKmod3().getValor() + "");
-			Relatoriokmod3.setText(modeloLigacao.getKmod3().getValor() + "");
+
+			atualizanextElementosLigacao();
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
+	}// GEN-LAST:event_comboKmod3ActionPerformed
 
-		atualizaNextElementosLigacao();
-	}// GEN-LAST:event_ComboKmod3ActionPerformed
+	private void comboKmod2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_comboKmod2ActionPerformed
+		try {
+			if(((VerificadoresPrego)comboKmod2.getInputVerifier()).verify(comboKmod2)) {
+				if(modeloLigacao.getKmod2() == Kmod2.OUTRO) {
 
-	private void ComboKmod2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ComboKmod2ActionPerformed
-		if(((VerificadoresPrego)ComboKmod2.getInputVerifier()).verify(ComboKmod2)) {
-			if(modeloLigacao.getKmod2() == Kmod2.OUTRO) {
+					double kmod2 = -1;
 
-				double kmod2 = -1;
+					do {
+						String value = (String)JOptionPane.showInputDialog(this, "Entre com um valor entre 0 e 1.", "Kmod 2", JOptionPane.INFORMATION_MESSAGE, null, null, "Digite o valor");
+						try {
+							kmod2 = Double.parseDouble(value.replace(",", "."));
+						} catch (NumberFormatException e) {
 
-				do {
-					String value = (String)JOptionPane.showInputDialog(this, "Entre com um valor entre 0 e 1.", "Kmod 2", JOptionPane.INFORMATION_MESSAGE, null, null, "Digite o valor");
-					try {
-						kmod2 = Double.parseDouble(value.replace(",", "."));
-					} catch (NumberFormatException e) {
-
-					}
-					jProgressBarPrego.setString("Entre com um valor válido, entre 0 e 1.");
-				} while(kmod2 > 1 || kmod2 <= 0);
-				modeloLigacao.getKmod2().setValor(kmod2);
-				jProgressBarPrego.setString("");
+						}
+						jProgressBarPrego.setString("Entre com um valor válido, entre 0 e 1.");
+					} while(kmod2 > 1 || kmod2 <= 0);
+					modeloLigacao.getKmod2().setValor(kmod2);
+					jProgressBarPrego.setString("");
+				}
+				textkmod2.setText(modeloLigacao.getKmod2().getValor() + "");
+				relatoriokmod2.setText(modeloLigacao.getKmod2().getValor() + "");
 			}
-			Textkmod2.setText(modeloLigacao.getKmod2().getValor() + "");
-			Relatoriokmod2.setText(modeloLigacao.getKmod2().getValor() + "");
+
+			atualizanextElementosLigacao();
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
+	}// GEN-LAST:event_comboKmod2ActionPerformed
 
-		atualizaNextElementosLigacao();
-	}// GEN-LAST:event_ComboKmod2ActionPerformed
-
-	private void Espessura1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_Espessura1ActionPerformed
-		RelatorioEspessura1.setText(modeloLigacao.getElementoLigação1().getEspessura() + "");
-		atualizaNextElementosLigacao();
+	private void espessura1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_Espessura1ActionPerformed
+		try {
+			relatorioEspessura1.setText(modeloLigacao.getElementoLigação1().getEspessura() + "");
+			atualizanextElementosLigacao();
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
 	}// GEN-LAST:event_Espessura1ActionPerformed
 
-	private void Espessura1KeyTyped(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_Espessura1KeyTyped
-		if(evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') {
-			return;
+	private void espessura1KeyTyped(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_Espessura1KeyTyped
+		try {
+			if(evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') {
+				return;
+			}
+			evt.consume();
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
-		evt.consume();
 	}// GEN-LAST:event_Espessura1KeyTyped
 
-	private void Espessura2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_Espessura2ActionPerformed
-		RelatorioEspessura2.setText(modeloLigacao.getElementoLigação2().getEspessura() + "");
-		atualizaNextElementosLigacao();
+	private void espessura2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_Espessura2ActionPerformed
+		try {
+			relatorioEspessura2.setText(modeloLigacao.getElementoLigação2().getEspessura() + "");
+			atualizanextElementosLigacao();
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
 	}// GEN-LAST:event_Espessura2ActionPerformed
 
-	private void FiguraResultadoModoFalhaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_FiguraResultadoModoFalhaActionPerformed
-		atualizaNextElementosLigacao();
-	}// GEN-LAST:event_FiguraResultadoModoFalhaActionPerformed
+	private void figuraresultadoModoFalhaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_FiguraresultadoModoFalhaActionPerformed
+		try {
+			atualizanextElementosLigacao();
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
+	}// GEN-LAST:event_FiguraresultadoModoFalhaActionPerformed
 
 	private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jToggleButton1ActionPerformed
-		modeloLigacao = ModeloLigacao.DUPLO_CORTE_SIMPLES;
-		MadeiraFigura.setVisible(true);
-		InclinacaoSim1.setEnabled(true);
-		InclinacaoSim2.setEnabled(true);
-		jProgressBarPrego.setString("Escolha a espécie da madeira para continuar.");
-		ConiferasButton.setEnabled(true);
-		FolhosasButton.setEnabled(true);
+		try {
+			modeloLigacao = ModeloLigacao.DUPLO_CORTE_SIMPLES;
+			madeiraFigura.setVisible(true);
+			inclinacaoSim1.setEnabled(true);
+			inclinacaoSim2.setEnabled(true);
+			jProgressBarPrego.setString("Escolha a espécie da madeira para continuar.");
+			coniferasButton.setEnabled(true);
+			folhosasButton.setEnabled(true);
 
-		Next.setEnabled(true);
-		RelatorioSecaoCorte.setText("Ligação com Corte Simples");
-		MadeiraFigura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/2ParaleloP.png"))); // NOI18N
-		FiguraSecoes.setIcon(new ImageIcon(((ImageIcon)btn1SecaoCorte.getIcon()).getImage().getScaledInstance(55, 60, Image.SCALE_SMOOTH)));
+			next.setEnabled(true);
+			relatorioSecaoCorte.setText("Ligação com Corte Simples");
+			madeiraFigura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/2ParaleloP.png"))); // NOI18N
+			figuraSecoes.setIcon(new ImageIcon(((ImageIcon)btn1SecaoCorte.getIcon()).getImage().getScaledInstance(55, 60, Image.SCALE_SMOOTH)));
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
 	}// GEN-LAST:event_jToggleButton1ActionPerformed
 
-	private void Espessura2FocusLost(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_Espessura2FocusLost
-		if(Espessura1.getText() == null || Espessura1.getText().equals("") || Espessura2.getText() == null || Espessura2.getText().equals("")) {
-			ComboKmod1.setEnabled(false);
-			ComboKmod2.setEnabled(false);
-			ComboKmod3.setEnabled(false);
-		} else {
-			double t1 = Integer.parseInt(Espessura1.getText());
-			double t2 = Integer.parseInt(Espessura2.getText());
-
-			if(t2 < t1) {
-				String msg = "";
-
-				msg += ".";
-
-				if(!msg.isEmpty()) {
-					JOptionPane.showMessageDialog(this, "- A espessura do Elemento 1 deve ser menor ou igual a espessura do Elemento 2\n" + msg);
-				}
-				t1 = 0;
-				t2 = 0;
-				ComboKmod1.setEnabled(false);
-				ComboKmod2.setEnabled(false);
-				ComboKmod3.setEnabled(false);
+	private void espessura2FocusLost(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_Espessura2FocusLost
+		try {
+			if(espessura1.getText() == null || espessura1.getText().equals("") || espessura2.getText() == null || espessura2.getText().equals("")) {
+				comboKmod1.setEnabled(false);
+				comboKmod2.setEnabled(false);
+				comboKmod3.setEnabled(false);
 			} else {
-				ComboKmod1.setEnabled(true);
-				ComboKmod2.setEnabled(true);
-				ComboKmod3.setEnabled(true);
+				double t1 = Integer.parseInt(espessura1.getText());
+				double t2 = Integer.parseInt(espessura2.getText());
+
+				if(t2 < t1) {
+					String msg = "";
+
+					msg += ".";
+
+					if(!msg.isEmpty()) {
+						JOptionPane.showMessageDialog(this, "- A espessura do Elemento 1 deve ser menor ou igual a espessura do Elemento 2\n" + msg);
+					}
+					t1 = 0;
+					t2 = 0;
+					comboKmod1.setEnabled(false);
+					comboKmod2.setEnabled(false);
+					comboKmod3.setEnabled(false);
+				} else {
+					comboKmod1.setEnabled(true);
+					comboKmod2.setEnabled(true);
+					comboKmod3.setEnabled(true);
+				}
 			}
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_Espessura2FocusLost
 
 	private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton4ActionPerformed
-		jTabbedPane1.setEnabledAt(1, true);
-		jTabbedPane1.setSelectedComponent(SecoesCorte);
-		jProgressBarPrego.setString("Escolha a quantidade de seções de corte no prego.");
-		btn1SecaoCorte.setEnabled(true);
-		jToggleButton1.setEnabled(true);
-		jToggleButton2.setEnabled(true);
+		try {
+			jTabbedPane1.setEnabledAt(1, true);
+			jTabbedPane1.setSelectedComponent(secoesCorte);
+			jProgressBarPrego.setString("Escolha a quantidade de seções de corte no prego.");
+			btn1SecaoCorte.setEnabled(true);
+			jToggleButton1.setEnabled(true);
+			jToggleButton2.setEnabled(true);
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
 	}// GEN-LAST:event_jButton4ActionPerformed
 
 	private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jToggleButton2ActionPerformed
-		modeloLigacao = ModeloLigacao.CORTE_DUPLO;
-		MadeiraFigura.setVisible(true);
-		InclinacaoSim1.setEnabled(true);
-		InclinacaoSim2.setEnabled(true);
-		jProgressBarPrego.setString("Escolha a espécie da madeira para continuar.");
-		ConiferasButton.setEnabled(true);
-		FolhosasButton.setEnabled(true);
+		try {
+			modeloLigacao = ModeloLigacao.CORTE_DUPLO;
+			madeiraFigura.setVisible(true);
+			inclinacaoSim1.setEnabled(true);
+			inclinacaoSim2.setEnabled(true);
+			jProgressBarPrego.setString("Escolha a espécie da madeira para continuar.");
+			coniferasButton.setEnabled(true);
+			folhosasButton.setEnabled(true);
 
-		Next.setEnabled(true);
-		RelatorioSecaoCorte.setText("Ligação com Corte Duplo");
-		MadeiraFigura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/2Paralelo.png"))); // NOI18N
-		FiguraSecoes.setIcon(new ImageIcon(((ImageIcon)btn1SecaoCorte.getIcon()).getImage().getScaledInstance(55, 60, Image.SCALE_SMOOTH)));
+			next.setEnabled(true);
+			relatorioSecaoCorte.setText("Ligação com Corte Duplo");
+			madeiraFigura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/2Paralelo.png"))); // NOI18N
+			figuraSecoes.setIcon(new ImageIcon(((ImageIcon)btn1SecaoCorte.getIcon()).getImage().getScaledInstance(55, 60, Image.SCALE_SMOOTH)));
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
 	}// GEN-LAST:event_jToggleButton2ActionPerformed
 
-	private void ValorAnguloFocusLost(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_ValorAnguloFocusLost
-		modeloLigacao.getAngulo().setValorGrau(Double.parseDouble(ValorAngulo.getText().replace(",", ".")));
+	private void valorAnguloFocusLost(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_valorAnguloFocusLost
+		try {
+			modeloLigacao.getAngulo().setValorGrau(Double.parseDouble(valorAngulo.getText().replace(",", ".")));
 
-		MadeiraFigura.setVisible(true);
-		String FiguraMadeira = "";
+			madeiraFigura.setVisible(true);
+			String FiguraMadeira = "";
 
-		switch(modeloLigacao){
-			case CORTE_SIMPLES:
-				switch(modeloLigacao.getAngulo().getTipoAngulo()){
-					case PARALELO:
-						FiguraMadeira = "1ParaleloP.png";
-						InclinacaoSim1.setEnabled(false);
-						InclinacaoSim2.setEnabled(false);
-						RelatorioAngulacao.setText("Direção Paralela");
-						CalculoForca01.setVisible(true);
-						CalculoForca901.setVisible(false);// excluído o boolean
-						                                  // paralelo, inclinado ou
-						                                  // perpendicular recebe true
-						CalculoForcaAlfa1.setVisible(false);
-						break;
-					case PERPENDICULAR:
-						FiguraMadeira = "1PerpendicularElem1P.png";
-						InclinacaoSim1.setEnabled(true);
-						InclinacaoSim2.setEnabled(true);
-						RelatorioAngulacao.setText("Direção Perpendicular");
-						CalculoForca01.setVisible(false);
-						CalculoForca901.setVisible(true);
-						CalculoForcaAlfa1.setVisible(false);
-						break;
-					case INCLINADO:
-						InclinacaoSim1.setEnabled(true);
-						InclinacaoSim2.setEnabled(true);
-						RelatorioAngulacao.setText("Direção Inclinada");
-						CalculoForca01.setVisible(false);
-						CalculoForca901.setVisible(false);
-						CalculoForcaAlfa1.setVisible(true);
-						break;
-				}
-				break;
-			case CORTE_DUPLO:
-				switch(modeloLigacao.getAngulo().getTipoAngulo()){
-					case PARALELO:
-						FiguraMadeira = "2ParaleloP.png";
-						InclinacaoSim1.setEnabled(false);
-						InclinacaoSim2.setEnabled(false);
-						RelatorioAngulacao.setText("Direção Paralela");
-						CalculoForca01.setVisible(true);
-						CalculoForca901.setVisible(false);
-						CalculoForcaAlfa1.setVisible(false);
-						break;
-					case PERPENDICULAR:
-						FiguraMadeira = "2PerpendicularElem1P.png";
-						InclinacaoSim1.setEnabled(true);
-						InclinacaoSim2.setEnabled(true);
-						RelatorioAngulacao.setText("Direção Perpendicular");
-						CalculoForca01.setVisible(false);
-						CalculoForca901.setVisible(true);
-						CalculoForcaAlfa1.setVisible(false);
-						break;
-					case INCLINADO:
-						FiguraMadeira = "2InclinadoElem1P.png";
-						InclinacaoSim1.setEnabled(true);
-						InclinacaoSim2.setEnabled(true);
-						RelatorioAngulacao.setText("Direção Inclinada");
-						CalculoForca01.setVisible(false);
-						CalculoForca901.setVisible(false);
-						CalculoForcaAlfa1.setVisible(true);
-						break;
-				}
-				break;
-			case DUPLO_CORTE_SIMPLES:
-				switch(modeloLigacao.getAngulo().getTipoAngulo()){
-					case PARALELO:
-						FiguraMadeira = "2ParaleloP.png";
-						InclinacaoSim1.setEnabled(false);
-						InclinacaoSim2.setEnabled(false);
-						RelatorioAngulacao.setText("Direção Paralela");
-						CalculoForca01.setVisible(true);
-						CalculoForca901.setVisible(false);
-						CalculoForcaAlfa1.setVisible(false);
-						break;
-					case PERPENDICULAR:
-						FiguraMadeira = "2PerpendicularElem1P.png";
-						InclinacaoSim1.setEnabled(true);
-						InclinacaoSim2.setEnabled(true);
-						RelatorioAngulacao.setText("Direção Perpendicular");
-						CalculoForca01.setVisible(false);
-						CalculoForca901.setVisible(true);
-						CalculoForcaAlfa1.setVisible(false);
-						break;
-					case INCLINADO:
-						FiguraMadeira = "2InclinadoElem1P.png";
-						InclinacaoSim1.setEnabled(true);
-						InclinacaoSim2.setEnabled(true);
-						RelatorioAngulacao.setText("Direção Inclinada");
-						CalculoForca01.setVisible(false);
-						CalculoForca901.setVisible(false);
-						CalculoForcaAlfa1.setVisible(true);
-						break;
-				}
-				break;
+			switch(modeloLigacao){
+				case CORTE_SIMPLES:
+					switch(modeloLigacao.getAngulo().getTipoAngulo()){
+						case PARALELO:
+							FiguraMadeira = "1ParaleloP.png";
+							inclinacaoSim1.setEnabled(false);
+							inclinacaoSim2.setEnabled(false);
+							relatorioAngulacao.setText("Direção Paralela");
+							calculoForca01.setVisible(true);
+							calculoForca901.setVisible(false);// excluído o boolean
+							                                  // paralelo, inclinado ou
+							                                  // perpendicular recebe true
+							calculoForcaAlfa1.setVisible(false);
+							break;
+						case PERPENDICULAR:
+							FiguraMadeira = "1PerpendicularElem1P.png";
+							inclinacaoSim1.setEnabled(true);
+							inclinacaoSim2.setEnabled(true);
+							relatorioAngulacao.setText("Direção Perpendicular");
+							calculoForca01.setVisible(false);
+							calculoForca901.setVisible(true);
+							calculoForcaAlfa1.setVisible(false);
+							break;
+						case INCLINADO:
+							inclinacaoSim1.setEnabled(true);
+							inclinacaoSim2.setEnabled(true);
+							relatorioAngulacao.setText("Direção Inclinada");
+							calculoForca01.setVisible(false);
+							calculoForca901.setVisible(false);
+							calculoForcaAlfa1.setVisible(true);
+							break;
+					}
+					break;
+				case CORTE_DUPLO:
+					switch(modeloLigacao.getAngulo().getTipoAngulo()){
+						case PARALELO:
+							FiguraMadeira = "2ParaleloP.png";
+							inclinacaoSim1.setEnabled(false);
+							inclinacaoSim2.setEnabled(false);
+							relatorioAngulacao.setText("Direção Paralela");
+							calculoForca01.setVisible(true);
+							calculoForca901.setVisible(false);
+							calculoForcaAlfa1.setVisible(false);
+							break;
+						case PERPENDICULAR:
+							FiguraMadeira = "2PerpendicularElem1P.png";
+							inclinacaoSim1.setEnabled(true);
+							inclinacaoSim2.setEnabled(true);
+							relatorioAngulacao.setText("Direção Perpendicular");
+							calculoForca01.setVisible(false);
+							calculoForca901.setVisible(true);
+							calculoForcaAlfa1.setVisible(false);
+							break;
+						case INCLINADO:
+							FiguraMadeira = "2InclinadoElem1P.png";
+							inclinacaoSim1.setEnabled(true);
+							inclinacaoSim2.setEnabled(true);
+							relatorioAngulacao.setText("Direção Inclinada");
+							calculoForca01.setVisible(false);
+							calculoForca901.setVisible(false);
+							calculoForcaAlfa1.setVisible(true);
+							break;
+					}
+					break;
+				case DUPLO_CORTE_SIMPLES:
+					switch(modeloLigacao.getAngulo().getTipoAngulo()){
+						case PARALELO:
+							FiguraMadeira = "2ParaleloP.png";
+							inclinacaoSim1.setEnabled(false);
+							inclinacaoSim2.setEnabled(false);
+							relatorioAngulacao.setText("Direção Paralela");
+							calculoForca01.setVisible(true);
+							calculoForca901.setVisible(false);
+							calculoForcaAlfa1.setVisible(false);
+							break;
+						case PERPENDICULAR:
+							FiguraMadeira = "2PerpendicularElem1P.png";
+							inclinacaoSim1.setEnabled(true);
+							inclinacaoSim2.setEnabled(true);
+							relatorioAngulacao.setText("Direção Perpendicular");
+							calculoForca01.setVisible(false);
+							calculoForca901.setVisible(true);
+							calculoForcaAlfa1.setVisible(false);
+							break;
+						case INCLINADO:
+							FiguraMadeira = "2InclinadoElem1P.png";
+							inclinacaoSim1.setEnabled(true);
+							inclinacaoSim2.setEnabled(true);
+							relatorioAngulacao.setText("Direção Inclinada");
+							calculoForca01.setVisible(false);
+							calculoForca901.setVisible(false);
+							calculoForcaAlfa1.setVisible(true);
+							break;
+					}
+					break;
+			}
+			madeiraFigura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/" + FiguraMadeira))); // NOI18N
+			madeiraFigura.doClick();
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
-		MadeiraFigura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/" + FiguraMadeira))); // NOI18N
-		MadeiraFigura.doClick();
-	}// GEN-LAST:event_ValorAnguloFocusLost
+	}// GEN-LAST:event_valorAnguloFocusLost
 
-	private void NextActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_NextActionPerformed
-		jTabbedPane1.setEnabledAt(2, true);
-		jTabbedPane1.setSelectedComponent(ElementosMadeira);
-		jProgressBarPrego.setString("Preencha todos os campos sem exceção.");
-		jProgressBarPrego.setValue(1);
-	}// GEN-LAST:event_NextActionPerformed
-
-	private void Next2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_Next2ActionPerformed
-		Espessura1.getInputVerifier().shouldYieldFocus(Espessura1);
-		Espessura2.getInputVerifier().shouldYieldFocus(Espessura2);
-		ValorAngulo.getInputVerifier().shouldYieldFocus(ValorAngulo);
-		ComboElem1ClasseMadeira.getInputVerifier().shouldYieldFocus(ComboElem1ClasseMadeira);
-		ComboElem2ClasseMadeira.getInputVerifier().shouldYieldFocus(ComboElem2ClasseMadeira);
-		ComboKmod1.getInputVerifier().shouldYieldFocus(ComboKmod1);
-		ComboKmod2.getInputVerifier().shouldYieldFocus(ComboKmod2);
-		ComboKmod3.getInputVerifier().shouldYieldFocus(ComboKmod3);
-
-		modeloLigacao.setConectores(new Conectores());
-
-		if(Next2.hasFocus()) {
-			jTabbedPane1.setEnabledAt(3, true);
-			jTabbedPane1.setSelectedComponent(ElementosMetalicos);
+	private void nextActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_nextActionPerformed
+		try {
+			jTabbedPane1.setEnabledAt(2, true);
+			jTabbedPane1.setSelectedComponent(elementosMadeira);
 			jProgressBarPrego.setString("Preencha todos os campos sem exceção.");
-			jProgressBarPrego.setValue(2);
+			jProgressBarPrego.setValue(1);
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
-	}// GEN-LAST:event_Next2ActionPerformed
+	}// GEN-LAST:event_nextActionPerformed
 
-	private void Next3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_Next3ActionPerformed
-		jTabbedPane1.setEnabledAt(5, true);
-		jTabbedPane1.setSelectedComponent(Relatorio);
-		jProgressBarPrego.setString("Verifique o relatório do dimensionamento. Fique atento para as opções fornecidas nos botões.");
-		jProgressBarPrego.setValue(4);
-	}// GEN-LAST:event_Next3ActionPerformed
+	private void next2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_next2ActionPerformed
+		try {
+			espessura1.getInputVerifier().shouldYieldFocus(espessura1);
+			espessura2.getInputVerifier().shouldYieldFocus(espessura2);
+			valorAngulo.getInputVerifier().shouldYieldFocus(valorAngulo);
+			comboElem1ClasseMadeira.getInputVerifier().shouldYieldFocus(comboElem1ClasseMadeira);
+			comboElem2ClasseMadeira.getInputVerifier().shouldYieldFocus(comboElem2ClasseMadeira);
+			comboKmod1.getInputVerifier().shouldYieldFocus(comboKmod1);
+			comboKmod2.getInputVerifier().shouldYieldFocus(comboKmod2);
+			comboKmod3.getInputVerifier().shouldYieldFocus(comboKmod3);
 
-	private void ValorAnguloMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_ValorAnguloMouseClicked
-		jProgressBarPrego.setString("Digite o ângulo entre as peças e aperte a tecla TAB.");
-	}// GEN-LAST:event_ValorAnguloMouseClicked
+			modeloLigacao.setConectores(new Conectores());
 
-	private void ConiferasButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ConiferasButtonActionPerformed
-		if(ConiferasButton.isSelected()) {
-			modeloLigacao.setEspecieMadeira(EspecieMadeira.CONIFERA);
-			jProgressBarPrego.setString("Escolha o tipo de madeira para continuar.");
-			SerradaButton.setEnabled(true);
-			RecompostaButton.setEnabled(true);
-			FolhosasButton.setSelected(false);
-		} else {
-			Next.setEnabled(false);
-			SerradaButton.setEnabled(false);
-			RecompostaButton.setEnabled(false);
-			SerradaButton.setSelected(false);
-			RecompostaButton.setSelected(false);
+			if(next2.hasFocus()) {
+				jTabbedPane1.setEnabledAt(3, true);
+				jTabbedPane1.setSelectedComponent(elementosMetalicos);
+				jProgressBarPrego.setString("Preencha todos os campos sem exceção.");
+				jProgressBarPrego.setValue(2);
+			}
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
+	}// GEN-LAST:event_next2ActionPerformed
+
+	private void next3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_next3ActionPerformed
+		try {
+			jTabbedPane1.setEnabledAt(5, true);
+			jTabbedPane1.setSelectedComponent(relatorio);
+			jProgressBarPrego.setString("Verifique o relatório do dimensionamento. Fique atento para as opções fornecidas nos botões.");
+			jProgressBarPrego.setValue(4);
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
+	}// GEN-LAST:event_next3ActionPerformed
+
+	private void valorAnguloMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_valorAnguloMouseClicked
+		try {
+			jProgressBarPrego.setString("Digite o ângulo entre as peças e aperte a tecla TAB.");
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
+	}// GEN-LAST:event_valorAnguloMouseClicked
+
+	private void coniferasButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ConiferasButtonActionPerformed
+		try {
+			if(coniferasButton.isSelected()) {
+				modeloLigacao.setEspecieMadeira(EspecieMadeira.CONIFERA);
+				jProgressBarPrego.setString("Escolha o tipo de madeira para continuar.");
+				serradaButton.setEnabled(true);
+				recompostaButton.setEnabled(true);
+				folhosasButton.setSelected(false);
+			} else {
+				next.setEnabled(false);
+				serradaButton.setEnabled(false);
+				recompostaButton.setEnabled(false);
+				serradaButton.setSelected(false);
+				recompostaButton.setSelected(false);
+			}
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_ConiferasButtonActionPerformed
 
-	private void FolhosasButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_FolhosasButtonActionPerformed
-		if(FolhosasButton.isSelected()) {
-			modeloLigacao.setEspecieMadeira(EspecieMadeira.FOLHOSA);
-			jProgressBarPrego.setString("Escolha o tipo de madeira para continuar.");
-			SerradaButton.setEnabled(true);
-			RecompostaButton.setEnabled(true);
-			ConiferasButton.setSelected(false);
-		} else {
-			Next.setEnabled(false);
-			SerradaButton.setEnabled(false);
-			RecompostaButton.setEnabled(false);
-			SerradaButton.setSelected(false);
-			RecompostaButton.setSelected(false);
+	private void folhosasButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_FolhosasButtonActionPerformed
+		try {
+			if(folhosasButton.isSelected()) {
+				modeloLigacao.setEspecieMadeira(EspecieMadeira.FOLHOSA);
+				jProgressBarPrego.setString("Escolha o tipo de madeira para continuar.");
+				serradaButton.setEnabled(true);
+				recompostaButton.setEnabled(true);
+				coniferasButton.setSelected(false);
+			} else {
+				next.setEnabled(false);
+				serradaButton.setEnabled(false);
+				recompostaButton.setEnabled(false);
+				serradaButton.setSelected(false);
+				recompostaButton.setSelected(false);
+			}
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_FolhosasButtonActionPerformed
 
-	private void SerradaButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_SerradaButtonActionPerformed
-		if(SerradaButton.isSelected()) {
-			modeloLigacao.setTipoMadeira(TipoMadeira.SERRADA);
-			jProgressBarPrego.setString("Clique em avançar para continuar.");
-			RecompostaButton.setSelected(false);
-			Next.setEnabled(true);
-		} else {
-			Next.setEnabled(false);
+	private void serradaButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_SerradaButtonActionPerformed
+		try {
+			if(serradaButton.isSelected()) {
+				modeloLigacao.setTipoMadeira(TipoMadeira.SERRADA);
+				jProgressBarPrego.setString("Clique em avançar para continuar.");
+				recompostaButton.setSelected(false);
+				next.setEnabled(true);
+			} else {
+				next.setEnabled(false);
+			}
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_SerradaButtonActionPerformed
 
-	private void RecompostaButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_RecompostaButtonActionPerformed
-		if(RecompostaButton.isSelected()) {
-			modeloLigacao.setTipoMadeira(TipoMadeira.SERRADA);
-			jProgressBarPrego.setString("Clique em avançar para continuar.");
-			SerradaButton.setSelected(false);
-			Next.setEnabled(true);
-		} else {
-			Next.setEnabled(false);
+	private void recompostaButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_RecompostaButtonActionPerformed
+		try {
+			if(recompostaButton.isSelected()) {
+				modeloLigacao.setTipoMadeira(TipoMadeira.SERRADA);
+				jProgressBarPrego.setString("Clique em avançar para continuar.");
+				serradaButton.setSelected(false);
+				next.setEnabled(true);
+			} else {
+				next.setEnabled(false);
+			}
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_RecompostaButtonActionPerformed
 
-	private void ComboElem1ClasseMadeiraFocusLost(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_ComboElem1ClasseMadeiraFocusLost
-		if(((VerificadoresPrego)ComboElem1ClasseMadeira.getInputVerifier()).isVerified()) {
+	private void comboElem1ClasseMadeiraFocusLost(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_comboElem1ClasseMadeiraFocusLost
+		try {
+			if(((VerificadoresPrego)comboElem1ClasseMadeira.getInputVerifier()).isVerified()) {
 
-			ValorFc01.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getfc0k() + "");
-			ValorDensidade1.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getDensidade() + "");
-			ValorFvok1.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getfv0k() + "");
-			ValorEc0m1.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getec0m() + "");
-			RelatorioClasseElem1.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().name());
-			Relatoriofcok1.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getfc0k() + "");
-			RelatorioDensidade1.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getDensidade() + "");
-			Relatoriofv0k1.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getfv0k() + "");
-			RelatorioEc0m1.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getec0m() + "");
+				valorFc01.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getfc0k() + "");
+				valorDensidade1.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getDensidade() + "");
+				valorFvok1.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getfv0k() + "");
+				valorEc0m1.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getec0m() + "");
+				relatorioClasseElem1.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().name());
+				relatoriofcok1.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getfc0k() + "");
+				relatorioDensidade1.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getDensidade() + "");
+				relatoriofv0k1.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getfv0k() + "");
+				relatorioEc0m1.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getec0m() + "");
+			}
+
+			atualizanextElementosLigacao();
+		} catch (Exception e) {
+			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
-
-		atualizaNextElementosLigacao(); // TODO add your handling code here:
-	}// GEN-LAST:event_ComboElem1ClasseMadeiraFocusLost
+	}// GEN-LAST:event_comboElem1ClasseMadeiraFocusLost
 	/**/
 
 	/**
@@ -3115,166 +3311,184 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		});
 	}
 
+	private void atualizanextElementosLigacao() {
+		next2.setEnabled(((VerificadoresPrego)espessura1.getInputVerifier()).isVerified() && ((VerificadoresPrego)espessura2.getInputVerifier()).isVerified()
+		                 && ((VerificadoresPrego)valorAngulo.getInputVerifier()).isVerified() && ((VerificadoresPrego)comboElem1ClasseMadeira.getInputVerifier()).isVerified()
+		                 && ((VerificadoresPrego)comboElem2ClasseMadeira.getInputVerifier()).isVerified() && ((VerificadoresPrego)comboKmod1.getInputVerifier()).isVerified()
+		                 && ((VerificadoresPrego)comboKmod2.getInputVerifier()).isVerified() && ((VerificadoresPrego)comboKmod3.getInputVerifier()).isVerified());
+	}
+
+	private void atualizabuttonCalcular() {
+		buttonCalcular.setEnabled(((VerificadoresPrego)comboTipoPrego.getInputVerifier()).isVerified() && ((VerificadoresPrego)comboQuantPregos.getInputVerifier()).isVerified()
+		                          && ((VerificadoresPrego)comboAco.getInputVerifier()).isVerified()
+
+		);
+	}
+
+	public ModeloLigacao getModeloLigacao() {
+		return this.modeloLigacao;
+	}
+
 	// Variables declaration - do not modify//GEN-BEGIN:variables
-	private javax.swing.JLabel AreaParafuso;
-	private javax.swing.JButton ButtonCalcular;
-	private javax.swing.JLabel CalculoForca01;
-	private javax.swing.JLabel CalculoForca02;
-	private javax.swing.JLabel CalculoForca901;
-	private javax.swing.JLabel CalculoForca902;
-	private javax.swing.JLabel CalculoForcaAlfa1;
-	private javax.swing.JLabel CalculoForcaAlfa2;
-	private javax.swing.JLabel ClasseAco;
-	private javax.swing.JComboBox<ClasseAcoPrego> ComboAco;
-	private javax.swing.JComboBox<ClasseMadeira> ComboElem1ClasseMadeira;
-	private javax.swing.JComboBox<ClasseMadeira> ComboElem2ClasseMadeira;
-	private javax.swing.JComboBox<Kmod1> ComboKmod1;
-	private javax.swing.JComboBox<Kmod2> ComboKmod2;
-	private javax.swing.JComboBox<Kmod3> ComboKmod3;
-	private javax.swing.JComboBox<ClasseQuantidadePregos> ComboQuantPregos;
-	private javax.swing.JComboBox<TipoPrego> ComboTipoPrego;
-	private javax.swing.JToggleButton ConiferasButton;
-	private javax.swing.JTextArea Consideracao1;
-	private javax.swing.JLabel Data;
-	private javax.swing.JLabel Densidade1;
-	private javax.swing.JLabel Densidade2;
-	private javax.swing.JLabel Diametro;
-	private javax.swing.JLabel Ec0m1;
-	private javax.swing.JLabel Ec0m2;
-	private javax.swing.JPanel ElementosMadeira;
-	private javax.swing.JPanel ElementosMetalicos;
-	private javax.swing.JTextField Espessura1;
-	private javax.swing.JTextField Espessura2;
-	private javax.swing.JLabel Fcok1;
-	private javax.swing.JLabel Fcok2;
-	private javax.swing.JLabel FiguraParafuso;
-	private javax.swing.JButton FiguraResultadoModoFalha;
-	private javax.swing.JLabel FiguraSecoes;
-	private javax.swing.JButton FiguraTipoParafuso;
-	private javax.swing.JToggleButton FolhosasButton;
-	private javax.swing.JLabel Fv0k1;
-	private javax.swing.JLabel Fv0k2;
-	private javax.swing.JLabel Fyk;
-	private javax.swing.ButtonGroup GroupInclinacaoSim;
-	private javax.swing.ButtonGroup GroupSecoesCorte;
-	private javax.swing.ButtonGroup GroupTesteParafuso;
-	private javax.swing.JLabel Hora;
-	private javax.swing.JLabel ImagemTipoArruela;
-	private javax.swing.JRadioButton InclinacaoSim1;
-	private javax.swing.JRadioButton InclinacaoSim2;
-	private javax.swing.JScrollPane Inclinado1;
-	private javax.swing.JScrollPane Inclinado2;
-	private javax.swing.JPanel Inicio;
-	private javax.swing.JLabel LabelModeloFalha;
-	private javax.swing.JLabel LabelResistenciaLigacao;
-	private javax.swing.JLabel LabelResultadoModeloFalha;
-	private javax.swing.JLabel LogoPrograma;
-	private javax.swing.JButton MadeiraFigura;
-	private javax.swing.JLabel ModoFalha;
-	private javax.swing.JButton Next;
-	private javax.swing.JButton Next2;
-	private javax.swing.JButton Next3;
-	private javax.swing.JLabel NumeroParafusos;
-	private javax.swing.JPanel PainelEspecieMadeira;
-	private javax.swing.JPanel PainelTipoMadeira;
-	private javax.swing.JLabel PossuiInclinacao1;
-	private javax.swing.JLabel PossuiInclinacao11;
-	private javax.swing.JLabel PossuiInclinacao3;
-	private javax.swing.JLabel RLogo;
-	private javax.swing.JToggleButton RecompostaButton;
-	private javax.swing.JPanel Relatorio;
-	private javax.swing.JLabel RelatorioAngulacao;
-	private javax.swing.JLabel RelatorioAngulo;
-	private javax.swing.JLabel RelatorioBeta;
-	private javax.swing.JLabel RelatorioClasseAco;
-	private javax.swing.JLabel RelatorioClasseElem1;
-	private javax.swing.JLabel RelatorioClasseElem2;
-	private javax.swing.JPanel RelatorioCoeficientes;
-	private javax.swing.JLabel RelatorioComprimento;
-	private javax.swing.JLabel RelatorioDensidade1;
-	private javax.swing.JLabel RelatorioDensidade2;
-	private javax.swing.JLabel RelatorioDiametro;
-	private javax.swing.JLabel RelatorioEc0m1;
-	private javax.swing.JLabel RelatorioEc0m2;
-	private javax.swing.JPanel RelatorioElem1;
-	private javax.swing.JPanel RelatorioElem2;
-	private javax.swing.JLabel RelatorioEspessura1;
-	private javax.swing.JLabel RelatorioEspessura2;
-	private javax.swing.JLabel RelatorioFaxrk;
-	private javax.swing.JLabel RelatorioFc0d1;
-	private javax.swing.JLabel RelatorioFc0d2;
-	private javax.swing.JLabel RelatorioFibras;
-	private javax.swing.JPanel RelatorioFinal;
-	private javax.swing.JLabel RelatorioFvk;
-	private javax.swing.JLabel RelatorioKmod1;
-	private javax.swing.JLabel RelatorioMyd;
-	private javax.swing.JLabel RelatorioNParafusos;
-	private javax.swing.JPanel RelatorioParafuso;
-	private javax.swing.JLabel RelatorioRd;
-	private javax.swing.JLabel RelatorioRd1;
-	private javax.swing.JLabel RelatorioRd11;
-	private javax.swing.JLabel RelatorioRd12;
-	private javax.swing.JLabel RelatorioRd13;
-	private javax.swing.JLabel RelatorioRd14;
-	private javax.swing.JLabel RelatorioRd15;
-	private javax.swing.JLabel RelatorioRd16;
-	private javax.swing.JLabel RelatorioRd2;
-	private javax.swing.JLabel RelatorioRd23;
-	private javax.swing.JLabel RelatorioRd24;
-	private javax.swing.JLabel RelatorioRd3;
-	private javax.swing.JLabel RelatorioRd4;
-	private javax.swing.JLabel RelatorioRd5;
-	private javax.swing.JLabel RelatorioRd6;
-	private javax.swing.JLabel RelatorioRk;
-	private javax.swing.JLabel RelatorioSecaoCorte;
-	private javax.swing.JLabel RelatorioTipoParafuso;
-	private javax.swing.JLabel Relatoriofaxrk;
-	private javax.swing.JLabel Relatoriofcok1;
-	private javax.swing.JLabel Relatoriofcok2;
-	private javax.swing.JLabel Relatoriofcok4;
-	private javax.swing.JLabel Relatoriofuk;
-	private javax.swing.JLabel Relatoriofv0k1;
-	private javax.swing.JLabel Relatoriofv0k2;
-	private javax.swing.JLabel Relatoriofyk;
-	private javax.swing.JLabel Relatoriokmod2;
-	private javax.swing.JLabel Relatoriokmod3;
-	private javax.swing.JPanel Resultado;
-	private javax.swing.JLabel ResultadoFvk;
-	private javax.swing.JLabel ResultadoRd;
-	private javax.swing.JLabel ResultadoRk;
-	private javax.swing.JPanel SecoesCorte;
-	private javax.swing.JToggleButton SerradaButton;
-	private javax.swing.JLabel TamanhoParafuso;
-	private javax.swing.JLabel TesteParafuso;
-	private javax.swing.JRadioButton TesteParafusoNao;
-	private javax.swing.JRadioButton TesteParafusoSim;
-	private javax.swing.JLabel Textkmod1;
-	private javax.swing.JLabel Textkmod2;
-	private javax.swing.JLabel Textkmod3;
-	private javax.swing.JLabel UnDensidade1;
-	private javax.swing.JLabel UnDensidade2;
-	private javax.swing.JLabel UnEc0m1;
-	private javax.swing.JLabel UnEc0m2;
-	private javax.swing.JLabel UnFcok1;
-	private javax.swing.JLabel UnFcok2;
-	private javax.swing.JLabel UnFuk;
-	private javax.swing.JLabel UnFv0k1;
-	private javax.swing.JLabel UnFv0k2;
-	private javax.swing.JLabel UnFyk;
-	private javax.swing.JTextField ValorAngulo;
-	private javax.swing.JLabel ValorComprimento;
-	private javax.swing.JLabel ValorDensidade1;
-	private javax.swing.JLabel ValorDensidade2;
-	private javax.swing.JLabel ValorDiametro;
-	private javax.swing.JLabel ValorEc0m1;
-	private javax.swing.JLabel ValorEc0m2;
-	private javax.swing.JLabel ValorFc01;
-	private javax.swing.JLabel ValorFc2;
-	private javax.swing.JLabel ValorFuk;
-	private javax.swing.JLabel ValorFvok1;
-	private javax.swing.JLabel ValorFvok2;
-	private javax.swing.JLabel ValorFyk;
-	private javax.swing.JButton Voltar;
+	private javax.swing.JLabel areaParafuso;
+	private javax.swing.JButton buttonCalcular;
+	private javax.swing.JLabel calculoForca01;
+	private javax.swing.JLabel calculoForca02;
+	private javax.swing.JLabel calculoForca901;
+	private javax.swing.JLabel calculoForca902;
+	private javax.swing.JLabel calculoForcaAlfa1;
+	private javax.swing.JLabel calculoForcaAlfa2;
+	private javax.swing.JLabel classeAco;
+	private javax.swing.JComboBox<ClasseAcoPrego> comboAco;
+	private javax.swing.JComboBox<ClasseMadeira> comboElem1ClasseMadeira;
+	private javax.swing.JComboBox<ClasseMadeira> comboElem2ClasseMadeira;
+	private javax.swing.JComboBox<Kmod1> comboKmod1;
+	private javax.swing.JComboBox<Kmod2> comboKmod2;
+	private javax.swing.JComboBox<Kmod3> comboKmod3;
+	private javax.swing.JComboBox<ClasseQuantidadePregos> comboQuantPregos;
+	private javax.swing.JComboBox<TipoPrego> comboTipoPrego;
+	private javax.swing.JToggleButton coniferasButton;
+	private javax.swing.JTextArea consideracao1;
+	private javax.swing.JLabel data;
+	private javax.swing.JLabel densidade1;
+	private javax.swing.JLabel densidade2;
+	private javax.swing.JLabel diametro;
+	private javax.swing.JLabel ec0m1;
+	private javax.swing.JLabel ec0m2;
+	private javax.swing.JPanel elementosMadeira;
+	private javax.swing.JPanel elementosMetalicos;
+	private javax.swing.JTextField espessura1;
+	private javax.swing.JTextField espessura2;
+	private javax.swing.JLabel fcok1;
+	private javax.swing.JLabel fcok2;
+	private javax.swing.JLabel figuraParafuso;
+	private javax.swing.JButton figuraresultadoModoFalha;
+	private javax.swing.JLabel figuraSecoes;
+	private javax.swing.JButton figuraTipoParafuso;
+	private javax.swing.JToggleButton folhosasButton;
+	private javax.swing.JLabel fv0k1;
+	private javax.swing.JLabel fv0k2;
+	private javax.swing.JLabel fyk;
+	private javax.swing.ButtonGroup groupInclinacaoSim;
+	private javax.swing.ButtonGroup groupSecoesCorte;
+	private javax.swing.ButtonGroup grouptesteParafuso;
+	private javax.swing.JLabel hora;
+	private javax.swing.JLabel imagemTipoArruela;
+	private javax.swing.JRadioButton inclinacaoSim1;
+	private javax.swing.JRadioButton inclinacaoSim2;
+	private javax.swing.JScrollPane inclinado1;
+	private javax.swing.JScrollPane inclinado2;
+	private javax.swing.JPanel inicio;
+	private javax.swing.JLabel labelModeloFalha;
+	private javax.swing.JLabel labelResistenciaLigacao;
+	private javax.swing.JLabel labelresultadoModeloFalha;
+	private javax.swing.JLabel logoPrograma;
+	private javax.swing.JButton madeiraFigura;
+	private javax.swing.JLabel modoFalha;
+	private javax.swing.JButton next;
+	private javax.swing.JButton next2;
+	private javax.swing.JButton next3;
+	private javax.swing.JLabel numeroParafusos;
+	private javax.swing.JPanel painelEspecieMadeira;
+	private javax.swing.JPanel painelTipoMadeira;
+	private javax.swing.JLabel possuiInclinacao1;
+	private javax.swing.JLabel possuiInclinacao11;
+	private javax.swing.JLabel possuiInclinacao3;
+	private javax.swing.JLabel rLogo;
+	private javax.swing.JToggleButton recompostaButton;
+	private javax.swing.JPanel relatorio;
+	private javax.swing.JLabel relatorioAngulacao;
+	private javax.swing.JLabel relatorioAngulo;
+	private javax.swing.JLabel relatorioBeta;
+	private javax.swing.JLabel relatorioClasseAco;
+	private javax.swing.JLabel relatorioClasseElem1;
+	private javax.swing.JLabel relatorioClasseElem2;
+	private javax.swing.JPanel relatorioCoeficientes;
+	private javax.swing.JLabel relatorioComprimento;
+	private javax.swing.JLabel relatorioDensidade1;
+	private javax.swing.JLabel relatorioDensidade2;
+	private javax.swing.JLabel relatorioDiametro;
+	private javax.swing.JLabel relatorioEc0m1;
+	private javax.swing.JLabel relatorioEc0m2;
+	private javax.swing.JPanel relatorioElem1;
+	private javax.swing.JPanel relatorioElem2;
+	private javax.swing.JLabel relatorioEspessura1;
+	private javax.swing.JLabel relatorioEspessura2;
+	private javax.swing.JLabel relatorioFaxrk;
+	private javax.swing.JLabel relatorioFc0d1;
+	private javax.swing.JLabel relatorioFc0d2;
+	private javax.swing.JLabel relatorioFibras;
+	private javax.swing.JPanel relatorioFinal;
+	private javax.swing.JLabel relatorioFvk;
+	private javax.swing.JLabel relatorioKmod1;
+	private javax.swing.JLabel relatorioMyd;
+	private javax.swing.JLabel relatorioNParafusos;
+	private javax.swing.JPanel relatorioParafuso;
+	private javax.swing.JLabel relatorioRd;
+	private javax.swing.JLabel relatorioRd1;
+	private javax.swing.JLabel relatorioRd11;
+	private javax.swing.JLabel relatorioRd12;
+	private javax.swing.JLabel relatorioRd13;
+	private javax.swing.JLabel relatorioRd14;
+	private javax.swing.JLabel relatorioRd15;
+	private javax.swing.JLabel relatorioRd16;
+	private javax.swing.JLabel relatorioRd2;
+	private javax.swing.JLabel relatorioRd23;
+	private javax.swing.JLabel relatorioRd24;
+	private javax.swing.JLabel relatorioRd3;
+	private javax.swing.JLabel relatorioRd4;
+	private javax.swing.JLabel relatorioRd5;
+	private javax.swing.JLabel relatorioRd6;
+	private javax.swing.JLabel relatorioRk;
+	private javax.swing.JLabel relatorioSecaoCorte;
+	private javax.swing.JLabel relatorioTipoParafuso;
+	private javax.swing.JLabel relatoriofaxrk;
+	private javax.swing.JLabel relatoriofcok1;
+	private javax.swing.JLabel relatoriofcok2;
+	private javax.swing.JLabel relatoriofcok4;
+	private javax.swing.JLabel relatoriofuk;
+	private javax.swing.JLabel relatoriofv0k1;
+	private javax.swing.JLabel relatoriofv0k2;
+	private javax.swing.JLabel relatoriofyk;
+	private javax.swing.JLabel relatoriokmod2;
+	private javax.swing.JLabel relatoriokmod3;
+	private javax.swing.JPanel resultado;
+	private javax.swing.JLabel resultadoFvk;
+	private javax.swing.JLabel resultadoRd;
+	private javax.swing.JLabel resultadoRk;
+	private javax.swing.JPanel secoesCorte;
+	private javax.swing.JToggleButton serradaButton;
+	private javax.swing.JLabel tamanhoParafuso;
+	private javax.swing.JLabel testeParafuso;
+	private javax.swing.JRadioButton testeParafusoNao;
+	private javax.swing.JRadioButton testeParafusoSim;
+	private javax.swing.JLabel textkmod1;
+	private javax.swing.JLabel textkmod2;
+	private javax.swing.JLabel textkmod3;
+	private javax.swing.JLabel unDensidade1;
+	private javax.swing.JLabel unDensidade2;
+	private javax.swing.JLabel unEc0m1;
+	private javax.swing.JLabel unEc0m2;
+	private javax.swing.JLabel unFcok1;
+	private javax.swing.JLabel unFcok2;
+	private javax.swing.JLabel unFuk;
+	private javax.swing.JLabel unFv0k1;
+	private javax.swing.JLabel unFv0k2;
+	private javax.swing.JLabel unFyk;
+	private javax.swing.JTextField valorAngulo;
+	private javax.swing.JLabel valorComprimento;
+	private javax.swing.JLabel valorDensidade1;
+	private javax.swing.JLabel valorDensidade2;
+	private javax.swing.JLabel valorDiametro;
+	private javax.swing.JLabel valorEc0m1;
+	private javax.swing.JLabel valorEc0m2;
+	private javax.swing.JLabel valorFc01;
+	private javax.swing.JLabel valorFc2;
+	private javax.swing.JLabel valorFuk;
+	private javax.swing.JLabel valorFvok1;
+	private javax.swing.JLabel valorFvok2;
+	private javax.swing.JLabel valorFyk;
+	private javax.swing.JButton voltar;
 	private javax.swing.JToggleButton btn1SecaoCorte;
 	private javax.swing.JLabel fuk;
 	private javax.swing.JButton jButton1;
@@ -3407,33 +3621,5 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 	private javax.swing.JToggleButton jToggleButton2;
 	private javax.swing.JTextArea teste;
 	// End of variables declaration//GEN-END:variables
-
-	public int calc() {
-		double pi = Math.PI;
-		Math.random();
-		Math.sqrt(pi);
-
-		return 0;
-	}
-
-	private void atualizaNextElementosLigacao() {
-
-		Next2.setEnabled(((VerificadoresPrego)Espessura1.getInputVerifier()).isVerified() && ((VerificadoresPrego)Espessura2.getInputVerifier()).isVerified()
-		                 && ((VerificadoresPrego)ValorAngulo.getInputVerifier()).isVerified() && ((VerificadoresPrego)ComboElem1ClasseMadeira.getInputVerifier()).isVerified()
-		                 && ((VerificadoresPrego)ComboElem2ClasseMadeira.getInputVerifier()).isVerified() && ((VerificadoresPrego)ComboKmod1.getInputVerifier()).isVerified()
-		                 && ((VerificadoresPrego)ComboKmod2.getInputVerifier()).isVerified() && ((VerificadoresPrego)ComboKmod3.getInputVerifier()).isVerified());
-	}
-
-	private void atualizaButtonCalcular() {
-
-		ButtonCalcular.setEnabled(((VerificadoresPrego)ComboTipoPrego.getInputVerifier()).isVerified() && ((VerificadoresPrego)ComboQuantPregos.getInputVerifier()).isVerified()
-		                          && ((VerificadoresPrego)ComboAco.getInputVerifier()).isVerified()
-
-		);
-	}
-
-	public ModeloLigacao getModeloLigacao() {
-		return this.modeloLigacao;
-	}
 
 }

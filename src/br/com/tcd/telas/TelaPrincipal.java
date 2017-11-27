@@ -5,11 +5,20 @@
  */
 package br.com.tcd.telas;
 
-import javax.accessibility.AccessibleRole;
-import javax.swing.ComboBoxModel;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.geom.AffineTransform;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.text.html.HTMLEditorKit;
 
 import br.com.tcd.controller.DuasSecoesCorteInclinadaController;
 import br.com.tcd.controller.DuasSecoesCorteParaleloController;
@@ -17,40 +26,6 @@ import br.com.tcd.controller.DuasSecoesCortePerpendicularController;
 import br.com.tcd.controller.UmaSecaoCorteInclinadaController;
 import br.com.tcd.controller.UmaSecaoCorteParaleloController;
 import br.com.tcd.controller.UmaSecaoCortePerpendicularController;
-
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.geom.AffineTransform;
-import java.awt.print.PageFormat;
-import java.awt.print.Printable;
-import static java.awt.print.Printable.NO_SUCH_PAGE;
-import static java.awt.print.Printable.PAGE_EXISTS;
-import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.InputVerifier;
-import javax.swing.JComponent;
-import javax.swing.JTextField;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.plaf.BorderUIResource;
-import javax.swing.text.DefaultEditorKit;
 
 /**
  *
@@ -67,7 +42,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private Boolean s1,s2,apa,ai,ape, m, IncSim1, IncSim2, UmaSecao, DuasSecoes, Paralelo, Inclinado, Perpendicular;
     private int NumParafusos;
   
-    clsDataHora objDataHora = new clsDataHora();
+    ClsDataHora objDataHora = new ClsDataHora();
     private Map<String, Map<String, Double[]>> normas;
        
     public TelaPrincipal() {
