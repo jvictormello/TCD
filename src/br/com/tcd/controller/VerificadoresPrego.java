@@ -8,13 +8,12 @@ package br.com.tcd.controller;
 import java.awt.Color;
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.swing.InputVerifier;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
+import javax.swing.JProgressBar;
+import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 
 import br.com.tcd.modelo.ClasseAcoPrego;
@@ -23,7 +22,6 @@ import br.com.tcd.modelo.ClasseQuantidadePregos;
 import br.com.tcd.modelo.Kmod1;
 import br.com.tcd.modelo.Kmod2;
 import br.com.tcd.modelo.Kmod3;
-import br.com.tcd.modelo.ModeloLigacao;
 import br.com.tcd.modelo.TipoPrego;
 
 /**
@@ -32,11 +30,11 @@ import br.com.tcd.modelo.TipoPrego;
  */
 public class VerificadoresPrego extends InputVerifier {
 
-	protected JLabel status;
+	protected JProgressBar status;
 	protected boolean verified = false;
 	protected ModeloLigacaoProvider modeloLigacaoProvider;
 
-	public VerificadoresPrego(JLabel status, ModeloLigacaoProvider modeloLigacaoProvider) {
+	public VerificadoresPrego(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 		this.status = status;
 		this.modeloLigacaoProvider = modeloLigacaoProvider;
 	}
@@ -61,7 +59,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 	public static class VerificadorEspessura1 extends VerificadoresPrego {
 
-		public VerificadorEspessura1(JLabel status, ModeloLigacaoProvider modeloLigacaoProvider) {
+		public VerificadorEspessura1(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 			super(status, modeloLigacaoProvider);
 		}
 
@@ -71,7 +69,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 			if (field.getText().isEmpty()) {
 				input.setBackground(Color.red);
-				status.setText("Digite a espessura do elemento 1 de madeira.");
+				status.setString("Digite a espessura do elemento 1 de madeira.");
 				this.verified = false;
 			} else {
 				try {
@@ -79,7 +77,7 @@ public class VerificadoresPrego extends InputVerifier {
 					this.modeloLigacaoProvider.getModeloLigacao().getElementoLigação1().setEspessura(value);
 					validateSuccess(input);
 				} catch (ParseException ex) {
-					status.setText("A espessura deve ser inserida em números.");
+					status.setString("A espessura deve ser inserida em números.");
 					this.verified = false;
 				}
 				this.validateSuccess(input);
@@ -91,7 +89,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 	public static class VerificadorValorAngulo extends VerificadoresPrego {
 
-		public VerificadorValorAngulo(JLabel status, ModeloLigacaoProvider modeloLigacaoProvider) {
+		public VerificadorValorAngulo(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 			super(status, modeloLigacaoProvider);
 		}
 
@@ -103,7 +101,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 			if (field.getText().isEmpty()) {
 				input.setBackground(Color.red);
-				status.setText("Digite o ângulo entre os elementos de madeira.");
+				status.setString("Digite o ângulo entre os elementos de madeira.");
 				this.verified = false;
 			} else {
 				try {
@@ -111,7 +109,7 @@ public class VerificadoresPrego extends InputVerifier {
 					this.modeloLigacaoProvider.getModeloLigacao().getAngulo().setValorGrau(value);
 					validateSuccess(input);
 				} catch (ParseException ex) {
-					status.setText("O ângulo deve ser inserido em números.");
+					status.setString("O ângulo deve ser inserido em números.");
 					this.verified = false;
 				}
 
@@ -123,7 +121,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 	public static class VerificadorEspessura2 extends VerificadoresPrego {
 
-		public VerificadorEspessura2(JLabel status, ModeloLigacaoProvider modeloLigacaoProvider) {
+		public VerificadorEspessura2(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 			super(status, modeloLigacaoProvider);
 		}
 
@@ -133,7 +131,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 			if (field.getText().isEmpty()) {
 				input.setBackground(Color.red);
-				status.setText("Digite a espessura do elemento 2 de madeira.");
+				status.setString("Digite a espessura do elemento 2 de madeira.");
 				this.verified = false;
 			} else {
 				try {
@@ -141,7 +139,7 @@ public class VerificadoresPrego extends InputVerifier {
 					this.modeloLigacaoProvider.getModeloLigacao().getElementoLigação2().setEspessura(value);
 					validateSuccess(input);
 				} catch (ParseException ex) {
-					status.setText("A espessura deve ser inserida em números.");
+					status.setString("A espessura deve ser inserida em números.");
 					this.verified = false;
 				}
 
@@ -153,7 +151,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 	public static class VerificadorKmod1 extends VerificadoresPrego {
 
-		public VerificadorKmod1(JLabel status, ModeloLigacaoProvider modeloLigacaoProvider) {
+		public VerificadorKmod1(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 			super(status, modeloLigacaoProvider);
 		}
 
@@ -163,7 +161,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 			if ((box.getSelectedIndex() == 0)) {
 				input.setBackground(Color.red);
-				status.setText("Escolha o Kmod 1.");
+				status.setString("Escolha o Kmod 1.");
 				this.verified = false;
 			} else {
 				modeloLigacaoProvider.getModeloLigacao().setKmod1((Kmod1) box.getSelectedItem());
@@ -177,7 +175,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 	public static class VerificadorKmod2 extends VerificadoresPrego {
 
-		public VerificadorKmod2(JLabel status, ModeloLigacaoProvider modeloLigacaoProvider) {
+		public VerificadorKmod2(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 			super(status, modeloLigacaoProvider);
 		}
 
@@ -187,7 +185,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 			if ((box.getSelectedIndex() == 0)) {
 				input.setBackground(Color.red);
-				status.setText("Escolha o Kmod 2.");
+				status.setString("Escolha o Kmod 2.");
 				this.verified = false;
 			} else {
 				modeloLigacaoProvider.getModeloLigacao().setKmod2((Kmod2) box.getSelectedItem());
@@ -201,7 +199,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 	public static class VerificadorKmod3 extends VerificadoresPrego {
 
-		public VerificadorKmod3(JLabel status, ModeloLigacaoProvider modeloLigacaoProvider) {
+		public VerificadorKmod3(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 			super(status, modeloLigacaoProvider);
 
 		}
@@ -212,7 +210,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 			if ((box.getSelectedIndex() == 0)) {
 				input.setBackground(Color.red);
-				status.setText("Escolha o Kmod 3.");
+				status.setString("Escolha o Kmod 3.");
 				this.verified = false;
 
 			} else {
@@ -227,7 +225,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 	public static class VerificadorComboClasseElem1 extends VerificadoresPrego {
 
-		public VerificadorComboClasseElem1(JLabel status, ModeloLigacaoProvider modeloLigacaoProvider) {
+		public VerificadorComboClasseElem1(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 			super(status, modeloLigacaoProvider);
 		}
 
@@ -237,7 +235,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 			if (box.getSelectedIndex() == 0) {
 				input.setBackground(Color.red);
-				status.setText("Escolha a classe da madeira do elemento 1.");
+				status.setString("Escolha a classe da madeira do elemento 1.");
 				this.verified = false;
 			} else {
 				modeloLigacaoProvider.getModeloLigacao().getElementoLigação1()
@@ -252,7 +250,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 	public static class VerificadorComboClasseElem2 extends VerificadoresPrego {
 
-		public VerificadorComboClasseElem2(JLabel status, ModeloLigacaoProvider modeloLigacaoProvider) {
+		public VerificadorComboClasseElem2(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 			super(status, modeloLigacaoProvider);
 		}
 
@@ -262,7 +260,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 			if (box.getSelectedIndex() == 0) {
 				input.setBackground(Color.red);
-				status.setText("Escolha a classe da madeira do elemento 2.");
+				status.setString("Escolha a classe da madeira do elemento 2.");
 				this.verified = false;
 			} else {
 				modeloLigacaoProvider.getModeloLigacao().getElementoLigação2()
@@ -278,7 +276,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 	public static class VerificadorComboTipoPrego extends VerificadoresPrego {
 
-		public VerificadorComboTipoPrego(JLabel status, ModeloLigacaoProvider modeloLigacaoProvider) {
+		public VerificadorComboTipoPrego(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 			super(status, modeloLigacaoProvider);
 		}
 
@@ -288,7 +286,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 			if (box.getSelectedIndex() == 0) {
 				input.setBackground(Color.red);
-				status.setText("Escolha o tipo do parafuso.");
+				status.setString("Escolha o tipo do parafuso.");
 				this.verified = false;
 			} else {
 				modeloLigacaoProvider.getModeloLigacao().getConectores()
@@ -304,7 +302,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 	public static class VerificadorComboTipoParafuso extends VerificadoresPrego {
 
-		public VerificadorComboTipoParafuso(JLabel status, ModeloLigacaoProvider modeloLigacaoProvider) {
+		public VerificadorComboTipoParafuso(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 			super(status, modeloLigacaoProvider);
 		}
 
@@ -314,7 +312,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 			if (box.getSelectedIndex() == 0) {
 				input.setBackground(Color.red);
-				status.setText("Escolha o tipo do parafuso.");
+				status.setString("Escolha o tipo do parafuso.");
 				this.verified = false;
 			} else {
 				// modeloLigacao.getConectores().setTipoParafuso((TipoParafuso)
@@ -330,7 +328,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 	public static class VerificadorComboQuantParafuso extends VerificadoresPrego {
 
-		public VerificadorComboQuantParafuso(JLabel status, ModeloLigacaoProvider modeloLigacaoProvider) {
+		public VerificadorComboQuantParafuso(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 			super(status, modeloLigacaoProvider);
 		}
 
@@ -340,7 +338,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 			if (box.getSelectedIndex() == 0) {
 				input.setBackground(Color.red);
-				status.setText("Escolha a quantidade de parafusos.");
+				status.setString("Escolha a quantidade de parafusos.");
 				this.verified = false;
 			} else {
 				validateSuccess(input);
@@ -354,7 +352,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 	public static class VerificadorComboQuantPrego extends VerificadoresPrego {
 
-		public VerificadorComboQuantPrego(JLabel status, ModeloLigacaoProvider modeloLigacaoProvider) {
+		public VerificadorComboQuantPrego(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 			super(status, modeloLigacaoProvider);
 		}
 
@@ -364,7 +362,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 			if (box.getSelectedIndex() == 0) {
 				input.setBackground(Color.red);
-				status.setText("Escolha a quantidade de pregos.");
+				status.setString("Escolha a quantidade de pregos.");
 				this.verified = false;
 			} else {
 				modeloLigacaoProvider.getModeloLigacao().getConectores()
@@ -380,7 +378,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 	public static class VerificadorComboAcoParafuso extends VerificadoresPrego {
 
-		public VerificadorComboAcoParafuso(JLabel status, ModeloLigacaoProvider modeloLigacaoProvider) {
+		public VerificadorComboAcoParafuso(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 			super(status, modeloLigacaoProvider);
 		}
 
@@ -390,7 +388,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 			if (box.getSelectedIndex() == 0) {
 				input.setBackground(Color.red);
-				status.setText("Escolha a classe do aço do parafuso.");
+				status.setString("Escolha a classe do aço do parafuso.");
 				this.verified = false;
 			} else {
 				// modeloLigacao.getConectores().setClasseAcoParafuso((ClasseAcoParafuso)box.getSelectedItem());
@@ -405,7 +403,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 	public static class VerificadorComboAcoPrego extends VerificadoresPrego {
 
-		public VerificadorComboAcoPrego(JLabel status, ModeloLigacaoProvider modeloLigacaoProvider) {
+		public VerificadorComboAcoPrego(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 			super(status, modeloLigacaoProvider);
 		}
 
@@ -415,13 +413,13 @@ public class VerificadoresPrego extends InputVerifier {
 
 			if (box.getSelectedIndex() == 0) {
 				input.setBackground(Color.red);
-				status.setText("Escolha a classe do aço do prego.");
+				status.setString("Escolha a classe do aço do prego.");
 				this.verified = false;
 			} else {
 				modeloLigacaoProvider.getModeloLigacao().getConectores()
 						.setClasseAcoPrego((ClasseAcoPrego) box.getSelectedItem());
 				validateSuccess(input);
-				status.setText("Clique em \"Calcular Ligação\".");
+				status.setString("Clique em \"Calcular Ligação\".");
 			}
 
 			return this.verified;
@@ -431,7 +429,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 	public static class VerificadorComboArruelas extends VerificadoresPrego {
 
-		public VerificadorComboArruelas(JLabel status, ModeloLigacaoProvider modeloLigacaoProvider) {
+		public VerificadorComboArruelas(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 			super(status, modeloLigacaoProvider);
 		}
 
@@ -441,11 +439,11 @@ public class VerificadoresPrego extends InputVerifier {
 
 			if (box.getSelectedIndex() == 0) {
 				input.setBackground(Color.red);
-				status.setText("Escolha o tipo de arruela para madeira.");
+				status.setString("Escolha o tipo de arruela para madeira.");
 				this.verified = false;
 			} else {
 				validateSuccess(input);
-				status.setText("Clique em \"Calcular Ligação\".");
+				status.setString("Clique em \"Calcular Ligação\".");
 			}
 
 			return this.verified;
@@ -455,7 +453,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 	public static class VerificadorComboEspessuraAco extends VerificadoresPrego {
 
-		public VerificadorComboEspessuraAco(JLabel status, ModeloLigacaoProvider modeloLigacaoProvider) {
+		public VerificadorComboEspessuraAco(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 			super(status, modeloLigacaoProvider);
 		}
 
@@ -465,7 +463,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 			if (box.getSelectedIndex() == 0) {
 				input.setBackground(Color.red);
-				status.setText("Escolha a espessura da chapa de aço.");
+				status.setString("Escolha a espessura da chapa de aço.");
 				this.verified = false;
 			} else {
 				validateSuccess(input);
@@ -478,7 +476,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 	public static class VerificadorComboArruelaAco extends VerificadoresPrego {
 
-		public VerificadorComboArruelaAco(JLabel status, ModeloLigacaoProvider modeloLigacaoProvider) {
+		public VerificadorComboArruelaAco(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 			super(status, modeloLigacaoProvider);
 		}
 
@@ -488,11 +486,11 @@ public class VerificadoresPrego extends InputVerifier {
 
 			if (box.getSelectedIndex() == 0) {
 				input.setBackground(Color.red);
-				status.setText("Escolha o tipo de arruela para aço.");
+				status.setString("Escolha o tipo de arruela para aço.");
 				this.verified = false;
 			} else {
 				validateSuccess(input);
-				status.setText("Clique em \"Calcular Ligação\".");
+				status.setString("Clique em \"Calcular Ligação\".");
 			}
 
 			return this.verified;
@@ -502,7 +500,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 	public static class VerificadorComboClasseElemAco extends VerificadoresPrego {
 
-		public VerificadorComboClasseElemAco(JLabel status, ModeloLigacaoProvider modeloLigacaoProvider) {
+		public VerificadorComboClasseElemAco(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 			super(status, modeloLigacaoProvider);
 		}
 
@@ -512,7 +510,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 			if (box.getSelectedIndex() == 0) {
 				input.setBackground(Color.red);
-				status.setText("Escolha a classe da chapa de aço utilizada.");
+				status.setString("Escolha a classe da chapa de aço utilizada.");
 				this.verified = false;
 			} else {
 				this.validateSuccess(input);
@@ -525,7 +523,7 @@ public class VerificadoresPrego extends InputVerifier {
 
 	protected void validateSuccess(JComponent input) {
 		input.setBackground(new Color(255, 255, 255));
-		status.setText("");
+		status.setString("");
 		this.verified = true;
 	}
 

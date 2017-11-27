@@ -8,27 +8,16 @@ package br.com.tcd.telas;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.geom.AffineTransform;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
-import br.com.tcd.controller.DuasSecoesCorteInclinadaController;
-import br.com.tcd.controller.DuasSecoesCorteParaleloController;
-import br.com.tcd.controller.DuasSecoesCortePerpendicularController;
 import br.com.tcd.controller.ModeloLigacaoProvider;
-import br.com.tcd.controller.UmaSecaoCorteInclinadaController;
-import br.com.tcd.controller.UmaSecaoCorteParaleloController;
-import br.com.tcd.controller.UmaSecaoCortePerpendicularController;
 import br.com.tcd.controller.VerificadoresPrego;
 import br.com.tcd.modelo.Angulo;
 import br.com.tcd.modelo.CalculoModeloLigacao;
@@ -50,55 +39,25 @@ import br.com.tcd.modelo.TipoPrego;
  */
 public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvider {
 
-	private static Object dateFormat;
+	private static final long serialVersionUID = 7368389175354555241L;
 
 	/**
-	 * Creates new form TelaPrincipal
+	 * Creates new form TelaPrego
 	 */
-	public double d, c, d1, tp, d2, forcaaplicada, fe0d1, fe0d2, beta, valorFaxrk, valorFaxrkPrego, valorFaxrkFinal,
-			alfa, Rdmin, Rdlig, rd1, rd2, rd3, rd4, rd5, rd6, Rvd, nparafusos, arruela;
-	public int fyd, npar;
 	private ModeloLigacao modeloLigacao;
 	private CalculoModeloLigacao calculoModeloLigacao;
 	private Boolean m, IncSim1, IncSim2;
-	private int NumParafusos;
-
-	clsDataHora objDataHora = new clsDataHora();
-	private Map<String, Map<String, Double[]>> normas;
 
 	public TelaPrego() {
+		initComponents();
+		initVariables();
+	}
+
+	private void initVariables() {
 		m = false;
-		alfa = 0;
-		d = 0;
-		c = 0;
-		tp = 0;
-		d1 = 0;
-		d2 = 0;
-		forcaaplicada = 0;
-		nparafusos = 0.0;
-		// kmod1 = 0;
-		// kmod2 = 0;
-		// kmod3 = 0;
-		rd1 = 0;
-		rd2 = 0;
-		rd3 = 0;
-		rd4 = 0;
-		rd5 = 0;
-		rd6 = 0;
-		Rdmin = 0;
-		Rdlig = 0;
-		Rvd = 0;
-		valorFaxrk = 0;
-		valorFaxrkPrego = 0;
-		valorFaxrkFinal = 0;
-		npar = 0;
 		IncSim1 = false;
 		IncSim2 = true;
-		// Inclinado2 = false;
 
-		// Perpendicular2 = false;
-		initComponents();
-		inicializaNormas();
 		ImagemTipoArruela.setVisible(false);
 		CalculoForca01.setVisible(true);
 		CalculoForca02.setVisible(true);
@@ -134,113 +93,21 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		jToggleButton2.setEnabled(false);
 		ConiferasButton.setEnabled(false);
 		FolhosasButton.setEnabled(false);
+		ComboKmod1.setEnabled(false);
+		ComboKmod2.setEnabled(false);
+		ComboKmod3.setEnabled(false);
 
-		ItemListener il = new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				if (((JComboBox) e.getSource()).getSelectedIndex() == 0) {
-
-				}
-			}
-		};
-		ComboKmod1.addItemListener(il);
-
-		Espessura1.setInputVerifier(new VerificadoresPrego.VerificadorEspessura1(this.jLabelStatusPrego, this));
-		ValorAngulo.setInputVerifier(new VerificadoresPrego.VerificadorValorAngulo(this.jLabelStatusPrego, this));
-		Espessura2.setInputVerifier(new VerificadoresPrego.VerificadorEspessura2(this.jLabelStatusPrego, this));
-		ComboElem1ClasseMadeira
-				.setInputVerifier(new VerificadoresPrego.VerificadorComboClasseElem1(this.jLabelStatusPrego, this));
-		ComboElem2ClasseMadeira
-				.setInputVerifier(new VerificadoresPrego.VerificadorComboClasseElem2(this.jLabelStatusPrego, this));
-		ComboKmod1.setInputVerifier(new VerificadoresPrego.VerificadorKmod1(this.jLabelStatusPrego, this));
-		ComboKmod2.setInputVerifier(new VerificadoresPrego.VerificadorKmod2(this.jLabelStatusPrego, this));
-		ComboKmod3.setInputVerifier(new VerificadoresPrego.VerificadorKmod3(this.jLabelStatusPrego, this));
-		ComboQuantPregos
-				.setInputVerifier(new VerificadoresPrego.VerificadorComboQuantPrego(this.jLabelStatusPrego, this));
-		ComboTipoPrego.setInputVerifier(new VerificadoresPrego.VerificadorComboTipoPrego(this.jLabelStatusPrego, this));
-		ComboAco.setInputVerifier(new VerificadoresPrego.VerificadorComboAcoPrego(this.jLabelStatusPrego, this));
-
-	}
-
-	private void setNumParafusos(int x) { // alterar a variável global
-		NumParafusos = x;
-
-	}
-
-	public int getNumParafusos() {
-		return NumParafusos;
-	}
-
-	private void inicializaNormas() {
-		// Preenche os ComboBoxes
-		// ComboElem1ClasseMadeira.removeAllItems();
-		// for (ClasseMadeira classe : ClasseMadeira.values()) {
-		// ComboElem1ClasseMadeira.addItem(classe);
-		// }
-
-		// ComboElem1ClasseMadeira.setModel(new
-		// DefaultComboBoxModel(ClasseMadeira.values()));
-		// for (ClasseMadeira classe : ClasseMadeira.values()) {
-		// ComboElem2ClasseMadeira.addItem(classe);
-		// }
-
-		// for (Kmod1 classe : Kmod1.values()) {
-		// ComboKmod1.addItem(classe);
-		// }
-		//
-		// for (Kmod2 classe : Kmod2.values()) {
-		// ComboKmod2.addItem(classe);
-		// }
-		//
-		// for (Kmod3 classe : Kmod3.values()) {
-		// ComboKmod3.addItem(classe);
-		// }
-
-		// for (TipoPrego classe : TipoPrego.values()) {
-		// ComboTipoPrego.addItem(classe);
-		// }
-
-		// for (ClasseQuantidadePregos classe : ClasseQuantidadePregos.values())
-		// {
-		// ComboQuantPregos.addItem(classe);
-		// }
-		// for (ClasseAcoPrego classe : ClasseAcoPrego.values()) {
-		// ComboAco.addItem(classe);
-		// }
-
-		this.normas = new HashMap<String, Map<String, Double[]>>();
-
-		// Map<String, Double[]> parafusos = new HashMap<String, Double[]>();
-		// normas.put("DIN 436", parafusos);
-		// parafusos.put("M10", new Double[] { 11.0, 30.0, 1.9078, 1.0, 3.0 });
-		// parafusos.put("M12", new Double[] { 13.5, 40.0, 1.7391, 1.0, 3.0 });
-		// parafusos.put("M16", new Double[] { 17.5, 50.0, 1.5166, 1.0, 3.0 });
-		// parafusos.put("M20", new Double[] { 22.0, 60.0, 1.3868, 1.0, 3.0 });
-		// parafusos.put("M22", new Double[] { 24.0, 70.0, 1.3338, 1.0, 3.0 });
-		// parafusos.put("M24", new Double[] { 26.0, 80.0, 1.2963, 1.0, 3.0 });
-		// parafusos.put("M27", new Double[] { 30.0, 90.0, 1.25, 1.0, 3.0 });
-		// parafusos.put("M30", new Double[] { 33.0, 95.0, 1.2125, 1.0, 3.0 });
-		//
-		// parafusos = new HashMap<String, Double[]>();
-		// normas.put("DIN 440 R", parafusos);
-		// parafusos.put("M10", new Double[] { 11.0, 34.0, 1.9078, 2.0, 1.0 });
-		// parafusos.put("M12", new Double[] { 13.5, 44.0, 1.7391, 2.0, 1.0 });
-		// parafusos.put("M16", new Double[] { 17.5, 56.0, 1.5166, 2.0, 1.0 });
-		// parafusos.put("M20", new Double[] { 22.0, 72.0, 1.3868, 2.0, 1.0 });
-		// parafusos.put("M22", new Double[] { 24.0, 80.0, 1.3338, 2.0, 1.0 });
-		// parafusos.put("M24", new Double[] { 26.0, 85.0, 1.2963, 2.0, 1.0 });
-		// parafusos.put("M27", new Double[] { 30.0, 98.0, 1.25, 2.0, 1.0 });
-		// parafusos.put("M30", new Double[] { 33.0, 105.0, 1.2125, 2.0, 1.0 });
-		// parafusos.put("M33", new Double[] { 36.0, 112.0, 1.1805, 2.0, 1.0 });
-		// parafusos.put("M36", new Double[] { 39.0, 125.0, 1.1567, 2.0, 1.0 });
-		//
-		// parafusos = new HashMap<String, Double[]>();
-		// normas.put("DIN 440 V", parafusos);
-		// parafusos.put("M10", new Double[] { 11.0, 34.0, 1.9078, 3.0, 2.0 });
-		// parafusos.put("M12", new Double[] { 13.5, 44.0, 1.7391, 3.0, 2.0 });
-		// parafusos.put("M16", new Double[] { 17.5, 56.0, 1.5166, 3.0, 2.0 });
-		// parafusos.put("M20", new Double[] { 22.0, 72.0, 1.3868, 3.0, 2.0 });
-		// parafusos.put("M22", new Double[] { 24.0, 80.0, 1.3338, 3.0, 2.0 });
-
+		Espessura1.setInputVerifier(new VerificadoresPrego.VerificadorEspessura1(this.jProgressBarPrego, this));
+		ValorAngulo.setInputVerifier(new VerificadoresPrego.VerificadorValorAngulo(this.jProgressBarPrego, this));
+		Espessura2.setInputVerifier(new VerificadoresPrego.VerificadorEspessura2(this.jProgressBarPrego, this));
+		ComboElem1ClasseMadeira.setInputVerifier(new VerificadoresPrego.VerificadorComboClasseElem1(this.jProgressBarPrego, this));
+		ComboElem2ClasseMadeira.setInputVerifier(new VerificadoresPrego.VerificadorComboClasseElem2(this.jProgressBarPrego, this));
+		ComboKmod1.setInputVerifier(new VerificadoresPrego.VerificadorKmod1(this.jProgressBarPrego, this));
+		ComboKmod2.setInputVerifier(new VerificadoresPrego.VerificadorKmod2(this.jProgressBarPrego, this));
+		ComboKmod3.setInputVerifier(new VerificadoresPrego.VerificadorKmod3(this.jProgressBarPrego, this));
+		ComboQuantPregos.setInputVerifier(new VerificadoresPrego.VerificadorComboQuantPrego(this.jProgressBarPrego, this));
+		ComboTipoPrego.setInputVerifier(new VerificadoresPrego.VerificadorComboTipoPrego(this.jProgressBarPrego, this));
+		ComboAco.setInputVerifier(new VerificadoresPrego.VerificadorComboAcoPrego(this.jProgressBarPrego, this));
 	}
 
 	/**
@@ -248,13 +115,11 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 	 * WARNING: Do NOT modify this code. The content of this method is always
 	 * regenerated by the Form Editor.
 	 */
-	@SuppressWarnings("unchecked")
 	// <editor-fold defaultstate="collapsed" desc="Generated
 	// Code">//GEN-BEGIN:initComponents
 	private void initComponents() {
 
 		GroupSecoesCorte = new javax.swing.ButtonGroup();
-		GroupAngulacao = new javax.swing.ButtonGroup();
 		GroupTesteParafuso = new javax.swing.ButtonGroup();
 		GroupInclinacaoSim = new javax.swing.ButtonGroup();
 		jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -543,7 +408,8 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		jButton1 = new javax.swing.JButton();
 		jButton2 = new javax.swing.JButton();
 		jButton3 = new javax.swing.JButton();
-		jLabelStatusPrego = new javax.swing.JLabel();
+		jProgressBarPrego = new javax.swing.JProgressBar(0, 4);
+		jProgressBarPrego.setValue(0);
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		setTitle("TCD - Timber Connections Design");
@@ -553,7 +419,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		setMinimumSize(new java.awt.Dimension(820, 730));
 		setName(""); // NOI18N
 		setPreferredSize(new java.awt.Dimension(796, 680));
-		addWindowListener(new java.awt.event.WindowAdapter() {
+		addWindowListener(new java.awt.event.WindowAdapter(){
 			public void windowActivated(java.awt.event.WindowEvent evt) {
 				formWindowActivated(evt);
 			}
@@ -566,13 +432,9 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		jTabbedPane1.setOpaque(true);
 		jTabbedPane1.setPreferredSize(new java.awt.Dimension(795, 660));
 		jTabbedPane1.setRequestFocusEnabled(false);
-		jTabbedPane1.addFocusListener(new java.awt.event.FocusAdapter() {
+		jTabbedPane1.addFocusListener(new java.awt.event.FocusAdapter(){
 			public void focusGained(java.awt.event.FocusEvent evt) {
 				jTabbedPane1FocusGained(evt);
-			}
-
-			public void focusLost(java.awt.event.FocusEvent evt) {
-				jTabbedPane1FocusLost(evt);
 			}
 		});
 
@@ -587,7 +449,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		Voltar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
 		Voltar.setText("Voltar");
 		Voltar.setToolTipText("Escolha esta opção para retornar a tela inicial.");
-		Voltar.addActionListener(new java.awt.event.ActionListener() {
+		Voltar.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				VoltarActionPerformed(evt);
 			}
@@ -599,7 +461,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		jButton4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
 		jButton4.setText("Iniciar Cálculo");
 		jButton4.setToolTipText("Escolha esta opção para iniciar o dimensionamento de sua ligação.");
-		jButton4.addActionListener(new java.awt.event.ActionListener() {
+		jButton4.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jButton4ActionPerformed(evt);
 			}
@@ -607,60 +469,43 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 		javax.swing.GroupLayout InicioLayout = new javax.swing.GroupLayout(Inicio);
 		Inicio.setLayout(InicioLayout);
-		InicioLayout.setHorizontalGroup(InicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InicioLayout.createSequentialGroup()
-						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addGroup(InicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-								.addGroup(InicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-										.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-												InicioLayout.createSequentialGroup().addComponent(jLabel97).addGap(228,
-														228, 228))
-										.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InicioLayout
-												.createSequentialGroup().addComponent(LogoPrograma,
-														javax.swing.GroupLayout.PREFERRED_SIZE, 321,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addGap(198, 198, 198)))
-								.addGroup(InicioLayout.createSequentialGroup().addGap(10, 10, 10).addComponent(jLabel40)
-										.addContainerGap(270, Short.MAX_VALUE))))
-				.addGroup(InicioLayout.createSequentialGroup().addGap(162, 162, 162)
-						.addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 190,
-								javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addGap(105, 105, 105).addComponent(Voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 190,
-								javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addGap(0, 140, Short.MAX_VALUE)));
+		InicioLayout
+		        .setHorizontalGroup(InicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+		                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InicioLayout.createSequentialGroup().addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+		                        .addGroup(InicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+		                                .addGroup(InicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+		                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InicioLayout.createSequentialGroup().addComponent(jLabel97).addGap(228, 228, 228))
+		                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InicioLayout.createSequentialGroup()
+		                                                .addComponent(LogoPrograma, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE).addGap(198, 198, 198)))
+		                                .addGroup(InicioLayout.createSequentialGroup().addGap(10, 10, 10).addComponent(jLabel40).addContainerGap(270, Short.MAX_VALUE))))
+		                .addGroup(InicioLayout.createSequentialGroup().addGap(162, 162, 162).addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+		                        .addGap(105, 105, 105).addComponent(Voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE).addGap(0, 140, Short.MAX_VALUE)));
 		InicioLayout.setVerticalGroup(InicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(InicioLayout.createSequentialGroup().addGap(99, 99, 99)
-						.addComponent(LogoPrograma, javax.swing.GroupLayout.PREFERRED_SIZE, 189,
-								javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(jLabel97)
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(jLabel40)
-						.addGap(82, 82, 82)
-						.addGroup(InicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-								.addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addComponent(Voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
-										javax.swing.GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(135, Short.MAX_VALUE)));
+		        .addGroup(InicioLayout.createSequentialGroup().addGap(99, 99, 99).addComponent(LogoPrograma, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+		                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(jLabel97).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+		                .addComponent(jLabel40).addGap(82, 82, 82)
+		                .addGroup(InicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+		                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+		                        .addComponent(Voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+		                .addContainerGap(135, Short.MAX_VALUE)));
 
 		jTabbedPane1.addTab("Inicio", Inicio);
 
 		SecoesCorte.setBackground(new java.awt.Color(204, 204, 204));
-		SecoesCorte.setBorder(javax.swing.BorderFactory
-				.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")));
+		SecoesCorte.setBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")));
 		SecoesCorte.setMaximumSize(new java.awt.Dimension(40000, 40000));
 		SecoesCorte.setPreferredSize(new java.awt.Dimension(770, 625));
 
 		GroupSecoesCorte.add(btn1SecaoCorte);
 		btn1SecaoCorte.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-		btn1SecaoCorte.setIcon(
-				new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/BotaoPregoSimples.png"))); // NOI18N
+		btn1SecaoCorte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/BotaoPregoSimples.png"))); // NOI18N
 		btn1SecaoCorte.setText("Corte Simples ");
 		btn1SecaoCorte.setToolTipText("Escolha esta opção se a ligação apresentar apenas uma seção de corte no prego.");
 		btn1SecaoCorte.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 		btn1SecaoCorte.setInheritsPopupMenu(true);
 		btn1SecaoCorte.setName(""); // NOI18N
 		btn1SecaoCorte.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		btn1SecaoCorte.addActionListener(new java.awt.event.ActionListener() {
+		btn1SecaoCorte.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				btn1SecaoCorteActionPerformed(evt);
 			}
@@ -668,13 +513,12 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 		GroupSecoesCorte.add(jToggleButton1);
 		jToggleButton1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-		jToggleButton1.setIcon(
-				new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/BotaoPregoSimples2.png"))); // NOI18N
+		jToggleButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/BotaoPregoSimples2.png"))); // NOI18N
 		jToggleButton1.setText("Corte Simples");
 		jToggleButton1.setToolTipText("Escolha esta opção se a ligação apresentar apenas uma seção de corte no prego.");
 		jToggleButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 		jToggleButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+		jToggleButton1.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jToggleButton1ActionPerformed(evt);
 			}
@@ -684,11 +528,10 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		jToggleButton2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
 		jToggleButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/Duplo.png"))); // NOI18N
 		jToggleButton2.setText("Corte Duplo");
-		jToggleButton2
-				.setToolTipText("Escolha esta opção se a ligação apresentar apenas duas seções de corte no prego.");
+		jToggleButton2.setToolTipText("Escolha esta opção se a ligação apresentar apenas duas seções de corte no prego.");
 		jToggleButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 		jToggleButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+		jToggleButton2.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jToggleButton2ActionPerformed(evt);
 			}
@@ -697,23 +540,22 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		Next.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/Next.png"))); // NOI18N
 		Next.setToolTipText("Clique para avançar.");
 		Next.setEnabled(false);
-		Next.addActionListener(new java.awt.event.ActionListener() {
+		Next.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				NextActionPerformed(evt);
 			}
 		});
 
 		PainelTipoMadeira.setBackground(new java.awt.Color(204, 204, 204));
-		PainelTipoMadeira.setBorder(javax.swing.BorderFactory.createTitledBorder(
-				new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true), "Tipo da Madeira",
-				javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP,
-				new java.awt.Font("Arial", 0, 12))); // NOI18N
+		PainelTipoMadeira
+		        .setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true), "Tipo da Madeira",
+		                                                                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Arial", 0, 12))); // NOI18N
 		PainelTipoMadeira.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 
 		SerradaButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 		SerradaButton.setText("Serrada/Roliça/MLC/Compensado");
 		SerradaButton.setToolTipText("");
-		SerradaButton.addActionListener(new java.awt.event.ActionListener() {
+		SerradaButton.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				SerradaButtonActionPerformed(evt);
 			}
@@ -721,7 +563,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 		RecompostaButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 		RecompostaButton.setText("Recomposta");
-		RecompostaButton.addActionListener(new java.awt.event.ActionListener() {
+		RecompostaButton.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				RecompostaButtonActionPerformed(evt);
 			}
@@ -729,33 +571,26 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 		javax.swing.GroupLayout PainelTipoMadeiraLayout = new javax.swing.GroupLayout(PainelTipoMadeira);
 		PainelTipoMadeira.setLayout(PainelTipoMadeiraLayout);
-		PainelTipoMadeiraLayout.setHorizontalGroup(PainelTipoMadeiraLayout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(PainelTipoMadeiraLayout.createSequentialGroup().addContainerGap(83, Short.MAX_VALUE)
-						.addGroup(PainelTipoMadeiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-								.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-										PainelTipoMadeiraLayout.createSequentialGroup().addComponent(RecompostaButton)
-												.addGap(135, 135, 135))
-								.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelTipoMadeiraLayout
-										.createSequentialGroup().addComponent(SerradaButton).addGap(74, 74, 74)))));
-		PainelTipoMadeiraLayout
-				.setVerticalGroup(PainelTipoMadeiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(PainelTipoMadeiraLayout.createSequentialGroup().addGap(45, 45, 45)
-								.addComponent(SerradaButton).addGap(58, 58, 58).addComponent(RecompostaButton)
-								.addContainerGap(49, Short.MAX_VALUE)));
+		PainelTipoMadeiraLayout.setHorizontalGroup(PainelTipoMadeiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+		        .addGroup(PainelTipoMadeiraLayout.createSequentialGroup().addContainerGap(83, Short.MAX_VALUE)
+		                .addGroup(PainelTipoMadeiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+		                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+		                                  PainelTipoMadeiraLayout.createSequentialGroup().addComponent(RecompostaButton).addGap(135, 135, 135))
+		                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelTipoMadeiraLayout.createSequentialGroup().addComponent(SerradaButton).addGap(74, 74, 74)))));
+		PainelTipoMadeiraLayout.setVerticalGroup(PainelTipoMadeiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(PainelTipoMadeiraLayout.createSequentialGroup()
+		        .addGap(45, 45, 45).addComponent(SerradaButton).addGap(58, 58, 58).addComponent(RecompostaButton).addContainerGap(49, Short.MAX_VALUE)));
 
 		PainelEspecieMadeira.setBackground(new java.awt.Color(204, 204, 204));
-		PainelEspecieMadeira.setBorder(javax.swing.BorderFactory.createTitledBorder(
-				new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true), "Espécie da Madeira",
-				javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP,
-				new java.awt.Font("Arial", 0, 12))); // NOI18N
+		PainelEspecieMadeira
+		        .setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true), "Espécie da Madeira",
+		                                                                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Arial", 0, 12))); // NOI18N
 		PainelEspecieMadeira.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 		PainelEspecieMadeira.setName(""); // NOI18N
 
 		ConiferasButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 		ConiferasButton.setText("Coníferas");
 		ConiferasButton.setToolTipText("Alguns exemplos: Pinho-Bravo, Pinho-do-Paraná, Pinus (em geral).");
-		ConiferasButton.addActionListener(new java.awt.event.ActionListener() {
+		ConiferasButton.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ConiferasButtonActionPerformed(evt);
 			}
@@ -763,9 +598,8 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 		FolhosasButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 		FolhosasButton.setText("Folhosas");
-		FolhosasButton.setToolTipText(
-				"Alguns exemplos: Peroba-Rosa, Angico, Imbuia, Jatobá, Mogno, Cerejeira, Cedro, Freijó, Aroeira, Ipê, Pau-Marfim.");
-		FolhosasButton.addActionListener(new java.awt.event.ActionListener() {
+		FolhosasButton.setToolTipText("Alguns exemplos: Peroba-Rosa, Angico, Imbuia, Jatobá, Mogno, Cerejeira, Cedro, Freijó, Aroeira, Ipê, Pau-Marfim.");
+		FolhosasButton.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				FolhosasButtonActionPerformed(evt);
 			}
@@ -773,68 +607,39 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 		javax.swing.GroupLayout PainelEspecieMadeiraLayout = new javax.swing.GroupLayout(PainelEspecieMadeira);
 		PainelEspecieMadeira.setLayout(PainelEspecieMadeiraLayout);
-		PainelEspecieMadeiraLayout.setHorizontalGroup(
-				PainelEspecieMadeiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(PainelEspecieMadeiraLayout.createSequentialGroup().addGap(127, 127, 127)
-								.addGroup(PainelEspecieMadeiraLayout
-										.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-										.addComponent(FolhosasButton).addComponent(ConiferasButton))
-								.addContainerGap(142, Short.MAX_VALUE)));
-		PainelEspecieMadeiraLayout.setVerticalGroup(
-				PainelEspecieMadeiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(PainelEspecieMadeiraLayout.createSequentialGroup().addGap(44, 44, 44)
-								.addComponent(ConiferasButton)
-								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-										javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(FolhosasButton).addGap(50, 50, 50)));
+		PainelEspecieMadeiraLayout.setHorizontalGroup(PainelEspecieMadeiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+		        .addGroup(PainelEspecieMadeiraLayout.createSequentialGroup().addGap(127, 127, 127)
+		                .addGroup(PainelEspecieMadeiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(FolhosasButton).addComponent(ConiferasButton))
+		                .addContainerGap(142, Short.MAX_VALUE)));
+		PainelEspecieMadeiraLayout.setVerticalGroup(PainelEspecieMadeiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+		        .addGroup(PainelEspecieMadeiraLayout.createSequentialGroup().addGap(44, 44, 44).addComponent(ConiferasButton)
+		                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(FolhosasButton).addGap(50, 50, 50)));
 
 		javax.swing.GroupLayout SecoesCorteLayout = new javax.swing.GroupLayout(SecoesCorte);
 		SecoesCorte.setLayout(SecoesCorteLayout);
-		SecoesCorteLayout
-				.setHorizontalGroup(SecoesCorteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(SecoesCorteLayout.createSequentialGroup().addGap(6, 6, 6)
-								.addComponent(btn1SecaoCorte, javax.swing.GroupLayout.PREFERRED_SIZE, 250,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-								.addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 250,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-								.addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 250,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addGroup(SecoesCorteLayout.createSequentialGroup()
-								.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(PainelEspecieMadeira, javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-								.addComponent(PainelTipoMadeira, javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-								SecoesCorteLayout.createSequentialGroup()
-										.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(Next, javax.swing.GroupLayout.PREFERRED_SIZE, 40,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addContainerGap()));
-		SecoesCorteLayout.setVerticalGroup(SecoesCorteLayout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(SecoesCorteLayout.createSequentialGroup().addGap(18, 18, 18)
-						.addGroup(SecoesCorteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-								.addComponent(btn1SecaoCorte, javax.swing.GroupLayout.PREFERRED_SIZE, 300,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 300,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 300,
-										javax.swing.GroupLayout.PREFERRED_SIZE))
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-						.addGroup(
-								SecoesCorteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-										.addComponent(PainelTipoMadeira, javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(PainelEspecieMadeira, javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(Next)
-						.addContainerGap(41, Short.MAX_VALUE)));
+		SecoesCorteLayout.setHorizontalGroup(SecoesCorteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(SecoesCorteLayout.createSequentialGroup().addGap(6, 6, 6)
+		        .addComponent(btn1SecaoCorte, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+		        .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+		        .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+		        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		        .addGroup(SecoesCorteLayout.createSequentialGroup().addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+		                .addComponent(PainelEspecieMadeira, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+		                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+		                .addComponent(PainelTipoMadeira, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+		                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SecoesCorteLayout.createSequentialGroup().addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+		                .addComponent(Next, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE).addContainerGap()));
+		SecoesCorteLayout.setVerticalGroup(SecoesCorteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+		        .addGroup(SecoesCorteLayout.createSequentialGroup().addGap(18, 18, 18)
+		                .addGroup(SecoesCorteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+		                        .addComponent(btn1SecaoCorte, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+		                        .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+		                        .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+		                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+		                .addGroup(SecoesCorteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+		                        .addComponent(PainelTipoMadeira, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+		                        .addComponent(PainelEspecieMadeira, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(Next).addContainerGap(41, Short.MAX_VALUE)));
 
 		jTabbedPane1.addTab("Modelos de Ligação", SecoesCorte);
 
@@ -848,21 +653,10 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 		ComboElem1ClasseMadeira.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 		ComboElem1ClasseMadeira.setModel(new javax.swing.DefaultComboBoxModel<ClasseMadeira>(ClasseMadeira.values()));
-		ComboElem1ClasseMadeira.setToolTipText(
-				"Defina a classe de madeira do elemento 1, baseado nas tabelas 2 e 3 da revisão da norma ABNT NBR 7190 (2011).");
-		ComboElem1ClasseMadeira.addFocusListener(new java.awt.event.FocusAdapter() {
+		ComboElem1ClasseMadeira.setToolTipText("Defina a classe de madeira do elemento 1, baseado nas tabelas 2 e 3 da revisão da norma ABNT NBR 7190 (2011).");
+		ComboElem1ClasseMadeira.addFocusListener(new java.awt.event.FocusAdapter(){
 			public void focusLost(java.awt.event.FocusEvent evt) {
 				ComboElem1ClasseMadeiraFocusLost(evt);
-			}
-		});
-		ComboElem1ClasseMadeira.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ComboElem1ClasseMadeiraActionPerformed(evt);
-			}
-		});
-		ComboElem1ClasseMadeira.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-			public void propertyChange(java.beans.PropertyChangeEvent evt) {
-				ComboElem1ClasseMadeiraPropertyChange(evt);
 			}
 		});
 		jPanel7.add(ComboElem1ClasseMadeira, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 35, 211, 29));
@@ -951,7 +745,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		InclinacaoSim1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 		InclinacaoSim1.setText("Sim");
 		InclinacaoSim1.setToolTipText("Se existir inclinação, indique qual elemento está inclinado. ");
-		InclinacaoSim1.addActionListener(new java.awt.event.ActionListener() {
+		InclinacaoSim1.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				InclinacaoSim1ActionPerformed(evt);
 			}
@@ -970,26 +764,17 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		Espessura1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 		Espessura1.setText("Digite a espessura");
 		Espessura1.setToolTipText("Insira a espessura do elemento 1. O elemento 1 está indicado na imagem.");
-		Espessura1.addFocusListener(new java.awt.event.FocusAdapter() {
+		Espessura1.addFocusListener(new java.awt.event.FocusAdapter(){
 			public void focusGained(java.awt.event.FocusEvent evt) {
 				LimparExpessura(evt);
 			}
-
-			public void focusLost(java.awt.event.FocusEvent evt) {
-				Espessura1LostFocus(evt);
-			}
 		});
-		Espessura1.addActionListener(new java.awt.event.ActionListener() {
+		Espessura1.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				Espessura1ActionPerformed(evt);
 			}
 		});
-		Espessura1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-			public void propertyChange(java.beans.PropertyChangeEvent evt) {
-				Espessura1PropertyChange(evt);
-			}
-		});
-		Espessura1.addKeyListener(new java.awt.event.KeyAdapter() {
+		Espessura1.addKeyListener(new java.awt.event.KeyAdapter(){
 			public void keyTyped(java.awt.event.KeyEvent evt) {
 				Espessura1KeyTyped(evt);
 			}
@@ -1000,7 +785,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		ValorAngulo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 		ValorAngulo.setText("0");
 		ValorAngulo.setToolTipText("Insira o ângulo entre os elementos 1 e 2 de madeira.");
-		ValorAngulo.addFocusListener(new java.awt.event.FocusAdapter() {
+		ValorAngulo.addFocusListener(new java.awt.event.FocusAdapter(){
 			public void focusGained(java.awt.event.FocusEvent evt) {
 				ValorAngulo(evt);
 			}
@@ -1009,22 +794,17 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 				ValorAnguloFocusLost(evt);
 			}
 		});
-		ValorAngulo.addMouseListener(new java.awt.event.MouseAdapter() {
+		ValorAngulo.addMouseListener(new java.awt.event.MouseAdapter(){
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
 				ValorAnguloMouseClicked(evt);
 			}
 		});
-		ValorAngulo.addActionListener(new java.awt.event.ActionListener() {
+		ValorAngulo.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ValorAnguloActionPerformed(evt);
 			}
 		});
-		ValorAngulo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-			public void propertyChange(java.beans.PropertyChangeEvent evt) {
-				ValorAnguloPropertyChange(evt);
-			}
-		});
-		ValorAngulo.addKeyListener(new java.awt.event.KeyAdapter() {
+		ValorAngulo.addKeyListener(new java.awt.event.KeyAdapter(){
 			public void keyTyped(java.awt.event.KeyEvent evt) {
 				ValorAnguloKeyTyped(evt);
 			}
@@ -1044,25 +824,12 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 		ComboElem2ClasseMadeira.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 		ComboElem2ClasseMadeira.setModel(new javax.swing.DefaultComboBoxModel<ClasseMadeira>(ClasseMadeira.values()));
-		ComboElem2ClasseMadeira.setToolTipText(
-				"Defina a classe de madeira do elemento 2, baseado nas tabelas 2 e 3 da revisão da norma ABNT NBR 7190 (2011).");
-		// ComboElem2ClasseMadeira.addActionListener(new
-		// java.awt.event.ActionListener() {
-		// public void actionPerformed(java.awt.event.ActionEvent evt) {
-		// ComboElem2ClasseMadeiraActionPerformed(evt);
-		// }
-		// });
-		ComboElem2ClasseMadeira.addFocusListener(new java.awt.event.FocusAdapter() {
+		ComboElem2ClasseMadeira.setToolTipText("Defina a classe de madeira do elemento 2, baseado nas tabelas 2 e 3 da revisão da norma ABNT NBR 7190 (2011).");
+		ComboElem2ClasseMadeira.addFocusListener(new java.awt.event.FocusAdapter(){
 			public void focusLost(java.awt.event.FocusEvent evt) {
 				ComboElem2ClasseMadeiraFocusLost(evt);
 			}
 		});
-		// ComboElem2ClasseMadeira.addPropertyChangeListener(new
-		// java.beans.PropertyChangeListener() {
-		// public void propertyChange(java.beans.PropertyChangeEvent evt) {
-		// ComboElem2ClasseMadeiraPropertyChange(evt);
-		// }
-		// });
 		jPanel13.add(ComboElem2ClasseMadeira, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 30, 211, 29));
 
 		jLabel_classe_madeira_2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -1081,7 +848,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		Espessura2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 		Espessura2.setText("Digite a espessura");
 		Espessura2.setToolTipText("Insira a espessura do elemento 2. O elemento 2 está indicado na imagem.");
-		Espessura2.addFocusListener(new java.awt.event.FocusAdapter() {
+		Espessura2.addFocusListener(new java.awt.event.FocusAdapter(){
 			public void focusGained(java.awt.event.FocusEvent evt) {
 				LimparExpessura2(evt);
 			}
@@ -1090,12 +857,12 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 				Espessura2FocusLost(evt);
 			}
 		});
-		Espessura2.addActionListener(new java.awt.event.ActionListener() {
+		Espessura2.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				Espessura2ActionPerformed(evt);
 			}
 		});
-		Espessura2.addKeyListener(new java.awt.event.KeyAdapter() {
+		Espessura2.addKeyListener(new java.awt.event.KeyAdapter(){
 			public void keyTyped(java.awt.event.KeyEvent evt) {
 				Espessura2KeyTyped(evt);
 			}
@@ -1168,7 +935,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		InclinacaoSim2.setSelected(true);
 		InclinacaoSim2.setText("Sim");
 		InclinacaoSim2.setToolTipText("Se existir inclinação, indique qual elemento está inclinado.");
-		InclinacaoSim2.addActionListener(new java.awt.event.ActionListener() {
+		InclinacaoSim2.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				InclinacaoSim2ActionPerformed(evt);
 			}
@@ -1187,11 +954,6 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 		MadeiraFigura.setToolTipText("Esta imagem caracteriza os elementos de madeira.");
 		MadeiraFigura.setContentAreaFilled(false);
-		MadeiraFigura.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MadeiraFiguraActionPerformed(evt);
-			}
-		});
 		ElementosMadeira.add(MadeiraFigura, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 80, 350, 280));
 
 		jPanel12.setBackground(new java.awt.Color(153, 153, 153));
@@ -1216,9 +978,8 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 		ComboKmod1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 		ComboKmod1.setModel(new javax.swing.DefaultComboBoxModel<Kmod1>(Kmod1.values()));
-		ComboKmod1.setToolTipText(
-				"Insira o valor do Kmod 1, o qual é definido pela tabela 4 da revisão da norma ABNT NBR 7190 (2011).");
-		ComboKmod1.addActionListener(new java.awt.event.ActionListener() {
+		ComboKmod1.setToolTipText("Insira o valor do Kmod 1, o qual é definido pela tabela 4 da revisão da norma ABNT NBR 7190 (2011).");
+		ComboKmod1.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ComboKmod1ActionPerformed(evt);
 			}
@@ -1227,9 +988,8 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 		ComboKmod3.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 		ComboKmod3.setModel(new javax.swing.DefaultComboBoxModel<Kmod3>(Kmod3.values()));
-		ComboKmod3.setToolTipText(
-				"Insira o valor do Kmod 3, o qual é definido pelas tabelas 6 e 7 da revisão da norma ABNT NBR 7190 (2011).");
-		ComboKmod3.addActionListener(new java.awt.event.ActionListener() {
+		ComboKmod3.setToolTipText("Insira o valor do Kmod 3, o qual é definido pelas tabelas 6 e 7 da revisão da norma ABNT NBR 7190 (2011).");
+		ComboKmod3.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ComboKmod3ActionPerformed(evt);
 			}
@@ -1238,9 +998,8 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 		ComboKmod2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 		ComboKmod2.setModel(new javax.swing.DefaultComboBoxModel<Kmod2>(Kmod2.values()));
-		ComboKmod2.setToolTipText(
-				"Insira o valor do Kmod 2, o qual é definido pela tabela 5 da revisão da norma ABNT NBR 7190 (2011).");
-		ComboKmod2.addActionListener(new java.awt.event.ActionListener() {
+		ComboKmod2.setToolTipText("Insira o valor do Kmod 2, o qual é definido pela tabela 5 da revisão da norma ABNT NBR 7190 (2011).");
+		ComboKmod2.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ComboKmod2ActionPerformed(evt);
 			}
@@ -1267,7 +1026,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		Next2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/Next.png"))); // NOI18N
 		Next2.setToolTipText("Clique para avançar.");
 		Next2.setEnabled(false);
-		Next2.addActionListener(new java.awt.event.ActionListener() {
+		Next2.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				Next2ActionPerformed(evt);
 			}
@@ -1295,7 +1054,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		ComboTipoPrego.setModel(new javax.swing.DefaultComboBoxModel<TipoPrego>(TipoPrego.values()));
 		ComboTipoPrego.setToolTipText("Escolha o tipo de parafuso utilizado, baseado na norma ISO 4016 (2001).");
 		ComboTipoPrego.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-		ComboTipoPrego.addActionListener(new java.awt.event.ActionListener() {
+		ComboTipoPrego.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ComboTipoPregoActionPerformed(evt);
 			}
@@ -1331,7 +1090,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		ComboAco.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 		ComboAco.setModel(new javax.swing.DefaultComboBoxModel<ClasseAcoPrego>(ClasseAcoPrego.values()));
 		ComboAco.setToolTipText("Defina a classe do aço do parafuso, baseado revisão da norma ABNT NBR 7190 (2011).");
-		ComboAco.addActionListener(new java.awt.event.ActionListener() {
+		ComboAco.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ComboAcoActionPerformed(evt);
 			}
@@ -1366,16 +1125,14 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 		TesteParafuso.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 		TesteParafuso.setText("Foram realizados ensaios na ligação em estudo que comprovem que o");
-		TesteParafuso.setToolTipText(
-				"Considera-se ou não a força de arrancamento causada pelo parafuso na madeira. EUROCODE 5 (2004);");
+		TesteParafuso.setToolTipText("Considera-se ou não a força de arrancamento causada pelo parafuso na madeira. EUROCODE 5 (2004);");
 		jPanel10.add(TesteParafuso, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, -1, -1));
 
 		GroupTesteParafuso.add(TesteParafusoSim);
 		TesteParafusoSim.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 		TesteParafusoSim.setText("Sim");
-		TesteParafusoSim.setToolTipText(
-				"Escolha se a ligação considera ou não a força de arrancamento causada pelo parafuso na madeira.");
-		TesteParafusoSim.addActionListener(new java.awt.event.ActionListener() {
+		TesteParafusoSim.setToolTipText("Escolha se a ligação considera ou não a força de arrancamento causada pelo parafuso na madeira.");
+		TesteParafusoSim.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				TesteParafusoSimActionPerformed(evt);
 			}
@@ -1385,9 +1142,8 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		GroupTesteParafuso.add(TesteParafusoNao);
 		TesteParafusoNao.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 		TesteParafusoNao.setText("Não");
-		TesteParafusoNao.setToolTipText(
-				"Escolha se a ligação considera ou não a força de arrancamento causada pelo parafuso na madeira.\n");
-		TesteParafusoNao.addActionListener(new java.awt.event.ActionListener() {
+		TesteParafusoNao.setToolTipText("Escolha se a ligação considera ou não a força de arrancamento causada pelo parafuso na madeira.\n");
+		TesteParafusoNao.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				TesteParafusoNaoActionPerformed(evt);
 			}
@@ -1395,9 +1151,8 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		jPanel10.add(TesteParafusoNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(675, 215, 50, -1));
 
 		ComboQuantPregos.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		ComboQuantPregos.setModel(
-				new javax.swing.DefaultComboBoxModel<ClasseQuantidadePregos>(ClasseQuantidadePregos.values()));
-		ComboQuantPregos.addActionListener(new java.awt.event.ActionListener() {
+		ComboQuantPregos.setModel(new javax.swing.DefaultComboBoxModel<ClasseQuantidadePregos>(ClasseQuantidadePregos.values()));
+		ComboQuantPregos.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ComboQuantPregosActionPerformed(evt);
 			}
@@ -1424,9 +1179,8 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 		ButtonCalcular.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
 		ButtonCalcular.setText("CALCULAR LIGAÇÃO");
-		ButtonCalcular.setToolTipText(
-				"Clique aqui para calcular sua ligação. Fique atento! Caso haja informações faltantes ou inconsistentes, o cálculo não será realizado e aparecerá uma mensagem.");
-		ButtonCalcular.addActionListener(new java.awt.event.ActionListener() {
+		ButtonCalcular.setToolTipText("Clique aqui para calcular sua ligação. Fique atento! Caso haja informações faltantes ou inconsistentes, o cálculo não será realizado e aparecerá uma mensagem.");
+		ButtonCalcular.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ButtonCalcularActionPerformed(evt);
 			}
@@ -1435,13 +1189,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 		FiguraTipoParafuso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/Imagens/Prego.png"))); // NOI18N
 		FiguraTipoParafuso.setContentAreaFilled(false);
-		FiguraTipoParafuso.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				FiguraTipoParafusoActionPerformed(evt);
-			}
-		});
-		ElementosMetalicos.add(FiguraTipoParafuso,
-				new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 340, 160));
+		ElementosMetalicos.add(FiguraTipoParafuso, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 340, 160));
 		ElementosMetalicos.add(ImagemTipoArruela, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 300, 150));
 
 		jTabbedPane1.addTab("Conectores", ElementosMetalicos);
@@ -1465,7 +1213,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		Resultado.add(ResultadoFvk, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 360, 80, 20));
 
 		FiguraResultadoModoFalha.setContentAreaFilled(false);
-		FiguraResultadoModoFalha.addActionListener(new java.awt.event.ActionListener() {
+		FiguraResultadoModoFalha.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				FiguraResultadoModoFalhaActionPerformed(evt);
 			}
@@ -1505,8 +1253,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		Resultado.add(jLabel98, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 450, -1));
 
 		jLabel99.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		jLabel99.setText(
-				"*Rk = resistência característica da ligação considerando as quantidades de seções de corte e pregos. ");
+		jLabel99.setText("*Rk = resistência característica da ligação considerando as quantidades de seções de corte e pregos. ");
 		Resultado.add(jLabel99, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, 670, -1));
 
 		jLabel100.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -1516,7 +1263,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		Next3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/Next.png"))); // NOI18N
 		Next3.setToolTipText("Clique para avançar.");
 		Next3.setEnabled(false);
-		Next3.addActionListener(new java.awt.event.ActionListener() {
+		Next3.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				Next3ActionPerformed(evt);
 			}
@@ -1779,8 +1526,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		jLabel81.setText("1,4");
 		RelatorioCoeficientes.add(jLabel81, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 125, -1, -1));
 
-		RelatorioFinal.add(RelatorioCoeficientes,
-				new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 175, 180, 150));
+		RelatorioFinal.add(RelatorioCoeficientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 175, 180, 150));
 
 		jLabel17.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
 		jLabel17.setText("ELEMENTOS METÁLICOS");
@@ -1799,9 +1545,8 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		RelatorioParafuso.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 110, 14));
 
 		RelatorioTipoParafuso.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		RelatorioTipoParafuso.setText("jLabel35");
-		RelatorioParafuso.add(RelatorioTipoParafuso,
-				new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, 230, -1));
+		RelatorioTipoParafuso.setText("");
+		RelatorioParafuso.add(RelatorioTipoParafuso, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, 230, -1));
 
 		jLabel36.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 		jLabel36.setText("d:");
@@ -2109,8 +1854,8 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		Consideracao1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 		Consideracao1.setLineWrap(true);
 		Consideracao1.setRows(5);
-		Consideracao1.setText(
-				"*Fv,Rk = resistência característica de uma seção de corte por prego.\n*Rk = resistência característica da ligação considerando as quantidades de seções de corte e pregos.\n*Rd = resistência de cálculo da ligação.");
+		Consideracao1
+		        .setText("*Fv,Rk = resistência característica de uma seção de corte por prego.\n*Rk = resistência característica da ligação considerando as quantidades de seções de corte e pregos.\n*Rd = resistência de cálculo da ligação.");
 		Consideracao1.setWrapStyleWord(true);
 		Consideracao1.setBorder(null);
 		jScrollPane2.setViewportView(Consideracao1);
@@ -2133,7 +1878,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		RelatorioFinal.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 660, 310, 30));
 
 		Hora.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-		Hora.setText("jLabel65");
+		Hora.setText("");
 		RelatorioFinal.add(Hora, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 870, -1, -1));
 		RelatorioFinal.add(RLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 120, 80));
 
@@ -2172,7 +1917,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 		jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/Print.png"))); // NOI18N
 		jButton1.setToolTipText("Clique para imprimir o relatório.");
-		jButton1.addActionListener(new java.awt.event.ActionListener() {
+		jButton1.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jButton1ActionPerformed(evt);
 			}
@@ -2181,7 +1926,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		jButton2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
 		jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/New.png"))); // NOI18N
 		jButton2.setToolTipText("Clique para realizar novo cálculo.");
-		jButton2.addActionListener(new java.awt.event.ActionListener() {
+		jButton2.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jButton2ActionPerformed(evt);
 			}
@@ -2190,7 +1935,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		jButton3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 		jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/Return.png"))); // NOI18N
 		jButton3.setToolTipText("Clique para retornar a tela inicial.");
-		jButton3.addActionListener(new java.awt.event.ActionListener() {
+		jButton3.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jButton3ActionPerformed(evt);
 			}
@@ -2198,36 +1943,21 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 		javax.swing.GroupLayout RelatorioLayout = new javax.swing.GroupLayout(Relatorio);
 		Relatorio.setLayout(RelatorioLayout);
-		RelatorioLayout.setHorizontalGroup(RelatorioLayout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(RelatorioLayout.createSequentialGroup()
-						.addGroup(RelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-								.addGroup(RelatorioLayout.createSequentialGroup()
-										.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 70,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 70,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 70,
-												javax.swing.GroupLayout.PREFERRED_SIZE))
-								.addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 790,
-										javax.swing.GroupLayout.PREFERRED_SIZE))
-						.addGap(0, 0, Short.MAX_VALUE)));
+		RelatorioLayout.setHorizontalGroup(RelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(RelatorioLayout.createSequentialGroup().addGroup(RelatorioLayout
+		        .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+		        .addGroup(RelatorioLayout.createSequentialGroup().addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+		                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+		                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+		                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+		        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 790, javax.swing.GroupLayout.PREFERRED_SIZE)).addGap(0, 0, Short.MAX_VALUE)));
 		RelatorioLayout.setVerticalGroup(RelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(RelatorioLayout.createSequentialGroup()
-						.addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 450,
-								javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-						.addGroup(RelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-								.addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 40,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40,
-										javax.swing.GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(107, Short.MAX_VALUE)));
+		        .addGroup(RelatorioLayout.createSequentialGroup().addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+		                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+		                .addGroup(RelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+		                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+		                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+		                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+		                .addContainerGap(107, Short.MAX_VALUE)));
 
 		jTabbedPane1.addTab("Relatório", Relatorio);
 
@@ -2236,22 +1966,22 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 		getContentPane().add(jTabbedPane1, java.awt.BorderLayout.PAGE_START);
 
-		jLabelStatusPrego.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-		jLabelStatusPrego.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		jLabelStatusPrego.setText("Clique em \"Iniciar Cálculo\" para começar o dimensionamento.");
-		jLabelStatusPrego.setBorder(javax.swing.BorderFactory
-				.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")));
-		jLabelStatusPrego.setPreferredSize(new java.awt.Dimension(34, 30));
-		getContentPane().add(jLabelStatusPrego, java.awt.BorderLayout.PAGE_END);
-
+		jProgressBarPrego.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+//		jProgressBarPrego.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		jProgressBarPrego.setString("Clique em \"Iniciar Cálculo\" para começar o dimensionamento.");
+		jProgressBarPrego.setBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")));
+		jProgressBarPrego.setPreferredSize(new java.awt.Dimension(34, 30));
+		jProgressBarPrego.setStringPainted(true);
+		getContentPane().add(jProgressBarPrego, java.awt.BorderLayout.PAGE_END);
+		
 		getAccessibleContext().setAccessibleName("ProgramaMarcos");
 
 		pack();
 	}// </editor-fold>//GEN-END:initComponents
 
 	private void ButtonCalcularActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ButtonCalcularActionPerformed
-		if (ButtonCalcular.hasFocus()) {
-			jLabelStatusPrego.setText("Clique em avançar para continuar.");
+		if(ButtonCalcular.hasFocus()) {
+			jProgressBarPrego.setString("Clique em avançar para continuar.");
 			jTabbedPane1.setSelectedComponent(Resultado);
 			jTabbedPane1.setEnabledAt(4, true);
 			Next3.setEnabled(true);
@@ -2285,30 +2015,24 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			String ImagemFalha = "";
 			String Tipo = "";
 
-			if ((modeloLigacao == ModeloLigacao.CORTE_SIMPLES || modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES)
-					&& modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PARALELO) {
+			if((modeloLigacao == ModeloLigacao.CORTE_SIMPLES || modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES) && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PARALELO) {
 
 				Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
 				ImagemFalha = "1.1P.png";
 
-				if (calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+				if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
 					ImagemFalha = "1.2P.png";
-				} else if (calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Embutimento do pino metálico nas duas peças, devido ao giro do pino metálico.";
 					ImagemFalha = "1.3P.png";
-				} else if (calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+				} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
 					ImagemFalha = "1.4P.png";
-				} else if (calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd5() == calculoModeloLigacao.getRdmin()) {
+				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd5() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 1.";
 					ImagemFalha = "1.5P.png";
-				} else if (calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd6() == calculoModeloLigacao.getRdmin()) {
+				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd6() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
 					ImagemFalha = "1.6P.png";
 				}
@@ -2329,31 +2053,25 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 				RelatorioRd24.setVisible(false);
 
 				teste.setText(Tipo);
-			} else if ((modeloLigacao == ModeloLigacao.CORTE_SIMPLES
-					|| modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES)
-					&& modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
+			} else if((modeloLigacao == ModeloLigacao.CORTE_SIMPLES || modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES)
+			          && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
 
 				Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
 				ImagemFalha = "1.1P.png";
 
-				if (calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+				if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
 					ImagemFalha = "1.2P.png";
-				} else if (calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Embutimento do pino metálico nas duas peças, devido ao giro do pino metálico.";
 					ImagemFalha = "1.3P.png";
-				} else if (calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+				} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
 					ImagemFalha = "1.4P.png";
-				} else if (calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd5() == calculoModeloLigacao.getRdmin()) {
+				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd5() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 1.";
 					ImagemFalha = "1.5P.png";
-				} else if (calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd6() == calculoModeloLigacao.getRdmin()) {
+				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd6() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
 					ImagemFalha = "1.6P.png";
 				}
@@ -2375,31 +2093,25 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 				RelatorioRd24.setVisible(false);
 
 				teste.setText(Tipo);
-			} else if ((modeloLigacao == ModeloLigacao.CORTE_SIMPLES
-					|| modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES)
-					&& modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
+			} else if((modeloLigacao == ModeloLigacao.CORTE_SIMPLES || modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES)
+			          && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
 
 				Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
 				ImagemFalha = "1.1P.png";
 
-				if (calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+				if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
 					ImagemFalha = "1.2P.png";
-				} else if (calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Embutimento do pino metálico nas duas peças, devido ao giro do pino metálico.";
 					ImagemFalha = "1.3P.png";
-				} else if (calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+				} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
 					ImagemFalha = "1.4P.png";
-				} else if (calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd5() == calculoModeloLigacao.getRdmin()) {
+				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd5() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 1.";
 					ImagemFalha = "1.5P.png";
-				} else if (calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd6() == calculoModeloLigacao.getRdmin()) {
+				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd6() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
 					ImagemFalha = "1.6P.png";
 				}
@@ -2419,31 +2131,25 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 				RelatorioRd24.setVisible(false);
 
 				teste.setText(Tipo);
-			} else if ((modeloLigacao == ModeloLigacao.CORTE_SIMPLES
-					|| modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES)
-					&& modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
+			} else if((modeloLigacao == ModeloLigacao.CORTE_SIMPLES || modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES)
+			          && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
 
 				Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
 				ImagemFalha = "1.1P.png";
 
-				if (calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+				if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
 					ImagemFalha = "1.2P.png";
-				} else if (calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Embutimento do pino metálico nas duas peças, devido ao giro do pino metálico.";
 					ImagemFalha = "1.3P.png";
-				} else if (calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+				} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
 					ImagemFalha = "1.4P.png";
-				} else if (calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd5() == calculoModeloLigacao.getRdmin()) {
+				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd5() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 1.";
 					ImagemFalha = "1.5P.png";
-				} else if (calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd6() == calculoModeloLigacao.getRdmin()) {
+				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd6() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
 					ImagemFalha = "1.6P.png";
 				}
@@ -2463,22 +2169,18 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 				RelatorioRd24.setVisible(false);
 
 				teste.setText(Tipo);
-			} else if (modeloLigacao == ModeloLigacao.CORTE_DUPLO
-					&& modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PARALELO) {
+			} else if(modeloLigacao == ModeloLigacao.CORTE_DUPLO && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PARALELO) {
 
 				Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
 				ImagemFalha = "2.1P.png";
 
-				if (calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+				if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
 					ImagemFalha = "2.2P.png";
-				} else if (calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
 					ImagemFalha = "2.3P.png";
-				} else if (calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+				} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
 					ImagemFalha = "2.4P.png";
 				}
@@ -2500,22 +2202,18 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 				Inclinado2.setVisible(false);
 
 				teste.setText(Tipo);
-			} else if (modeloLigacao == ModeloLigacao.CORTE_DUPLO
-					&& modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
+			} else if(modeloLigacao == ModeloLigacao.CORTE_DUPLO && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
 
 				Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
 				ImagemFalha = "2.1P.png";
 
-				if (calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+				if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
 					ImagemFalha = "2.2P.png";
-				} else if (calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
 					ImagemFalha = "2.3P.png";
-				} else if (calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+				} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
 					ImagemFalha = "2.4P.png";
 				}
@@ -2533,20 +2231,17 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 				RelatorioRd24.setVisible(true);
 
 				teste.setText(Tipo);
-			} else if (modeloLigacao == ModeloLigacao.CORTE_DUPLO
-					&& modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
+			} else if(modeloLigacao == ModeloLigacao.CORTE_DUPLO && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
 				Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
 				ImagemFalha = "2.1P.png";
 
-				if (calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+				if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
 					ImagemFalha = "2.2P.png";
-				} else if (calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()) {
+				} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()) {
 					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
 					ImagemFalha = "2.3P.png";
-				} else if (calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin()
-						|| calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+				} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
 					Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
 					ImagemFalha = "2.4P.png";
 				}
@@ -2569,36 +2264,30 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			}
 
 			// COM ESSAS FUNÇÕES ALTERAM-SE AS IMAGENS DO RELATÓRIO
-			FiguraResultadoModoFalha.setIcon(
-					new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensFalhas/" + ImagemFalha))); // NOI18N
-			FiguraParafuso.setIcon(new ImageIcon(((ImageIcon) FiguraTipoParafuso.getIcon()).getImage()
-					.getScaledInstance(110, 25, Image.SCALE_SMOOTH)));
-			FiguraParafuso.setIcon(new ImageIcon(((ImageIcon) FiguraTipoParafuso.getIcon()).getImage()
-					.getScaledInstance(110, 25, Image.SCALE_SMOOTH)));
-			ModoFalha.setIcon(new ImageIcon(((ImageIcon) FiguraResultadoModoFalha.getIcon()).getImage()
-					.getScaledInstance(84, 120, Image.SCALE_SMOOTH)));
-			RLogo.setIcon(new ImageIcon(
-					((ImageIcon) LogoPrograma.getIcon()).getImage().getScaledInstance(125, 80, Image.SCALE_SMOOTH)));
+			FiguraResultadoModoFalha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensFalhas/" + ImagemFalha))); // NOI18N
+			FiguraParafuso.setIcon(new ImageIcon(((ImageIcon)FiguraTipoParafuso.getIcon()).getImage().getScaledInstance(110, 25, Image.SCALE_SMOOTH)));
+			FiguraParafuso.setIcon(new ImageIcon(((ImageIcon)FiguraTipoParafuso.getIcon()).getImage().getScaledInstance(110, 25, Image.SCALE_SMOOTH)));
+			ModoFalha.setIcon(new ImageIcon(((ImageIcon)FiguraResultadoModoFalha.getIcon()).getImage().getScaledInstance(84, 120, Image.SCALE_SMOOTH)));
+			RLogo.setIcon(new ImageIcon(((ImageIcon)LogoPrograma.getIcon()).getImage().getScaledInstance(125, 80, Image.SCALE_SMOOTH)));
 		}
 
+		jProgressBarPrego.setValue(3);
 	}// GEN-LAST:event_ButtonCalcularActionPerformed
 
 	private void TesteParafusoNaoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_TesteParafusoNaoActionPerformed
-		// TODO add your handling code here:
 		Relatoriofaxrk.setText("Não");
 	}// GEN-LAST:event_TesteParafusoNaoActionPerformed
 
 	private void TesteParafusoSimActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_TesteParafusoSimActionPerformed
-		JOptionPane.showMessageDialog(this,
-				"Será considerado no cálculo o efeito não linear de compressão provocado pela arruela devido a rotação\n do pino metálico e de tração do pino metálico, conhecido como efeito de corda (Fax,rk). ");
-		// TODO add your handling code here:
+		JOptionPane
+		        .showMessageDialog(this,
+		                           "Será considerado no cálculo o efeito não linear de compressão provocado pela arruela devido a rotação\n do pino metálico e de tração do pino metálico, conhecido como efeito de corda (Fax,rk). ");
 		m = true;
 		Relatoriofaxrk.setText("Sim");
 	}// GEN-LAST:event_TesteParafusoSimActionPerformed
 
 	private void ComboAcoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ComboAcoActionPerformed
-		// TODO add your handling code here:
-		if (((VerificadoresPrego) ComboAco.getInputVerifier()).verify(ComboAco)) {
+		if(((VerificadoresPrego)ComboAco.getInputVerifier()).verify(ComboAco)) {
 			ValorFyk.setText(modeloLigacao.getConectores().getClasseAcoPrego().getFyk() + "");
 			ValorFuk.setText(modeloLigacao.getConectores().getClasseAcoPrego().getFuk() + "");
 			RelatorioClasseAco.setText(modeloLigacao.getConectores().getClasseAcoPrego().getNome() + "");
@@ -2607,29 +2296,10 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		}
 
 		atualizaButtonCalcular();
-
-		// switch (ComboAco.getSelectedIndex()) {
-		// case 0:
-		// ValorFyk.setText("-");
-		// ValorFuk.setText("-");
-		// break;
-		// case 1:
-		// ValorFyk.setText("600");
-		// ValorFuk.setText("600");
-		// RelatorioClasseAco.setText("Aço de Baixo Teor de Carbono");
-		// Relatoriofyk.setText("600");
-		// Relatoriofuk.setText("600");
-		// break;
-		//
-		// }
 	}// GEN-LAST:event_ComboAcoActionPerformed
 
 	private void ComboTipoPregoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ComboTipoPregoActionPerformed
-		// TODO add your handling code here:
-		// ERRO!!!!
-		// if (((VerificadoresPrego)
-		// ComboElem2ClasseMadeira.getInputVerifier()).isVerified()) {
-		if (((VerificadoresPrego) ComboTipoPrego.getInputVerifier()).verify(ComboTipoPrego)) {
+		if(((VerificadoresPrego)ComboTipoPrego.getInputVerifier()).verify(ComboTipoPrego)) {
 			ValorDiametro.setText(modeloLigacao.getConectores().getTipoPrego().getDiametro() + "");
 			ValorComprimento.setText(modeloLigacao.getConectores().getTipoPrego().getComprimento() + "");
 			RelatorioTipoParafuso.setText(modeloLigacao.getConectores().getTipoPrego().getNome() + "");
@@ -2638,497 +2308,22 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		}
 
 		atualizaButtonCalcular();
-
-		// switch (ComboTipoPrego.getSelectedIndex()) {
-		// case 0: //Escolha o tipo de Prego
-		// ValorDiametro.setText("-");
-		// ValorComprimento.setText("-");
-		// d = 0.0;
-		// break;
-		// case 1:
-		// ValorDiametro.setText("3,0");
-		// ValorComprimento.setText("48,3");
-		// RelatorioTipoParafuso.setText("17 x 21");
-		// RelatorioDiametro.setText("3,0");
-		// RelatorioComprimento.setText("48,3");
-		// d = 3.0;
-		// c = 48.3;
-		// alfa = 2.5;
-		// break;
-		// case 2:
-		// ValorDiametro.setText("3,0");
-		// ValorComprimento.setText("55,2");
-		// RelatorioTipoParafuso.setText("17 x 24");
-		// RelatorioDiametro.setText("3,0");
-		// RelatorioComprimento.setText("55,2");
-		// d = 3.0;
-		// c = 55.2;
-		// alfa = 2.5;
-		// break;
-		// case 3:
-		// ValorDiametro.setText("3,0");
-		// ValorComprimento.setText("62,1");
-		// RelatorioTipoParafuso.setText("17 x 27");
-		// RelatorioDiametro.setText("3,0");
-		// RelatorioComprimento.setText("62,1");
-		// d = 3.0;
-		// c = 62.1;
-		// alfa = 2.5;
-		// break;
-		// case 4:
-		// ValorDiametro.setText("3,0");
-		// ValorComprimento.setText("69,0");
-		// RelatorioTipoParafuso.setText("17 x 30");
-		// RelatorioDiametro.setText("3,0");
-		// RelatorioComprimento.setText("69,0");
-		// d = 3.0;
-		// c = 69.0;
-		// alfa = 2.5;
-		// break;
-		// case 5:
-		// ValorDiametro.setText("3,4");
-		// ValorComprimento.setText("25,3");
-		// RelatorioTipoParafuso.setText("18 x 11");
-		// RelatorioDiametro.setText("3,4");
-		// RelatorioComprimento.setText("25,3");
-		// d = 3.4;
-		// c = 25.3;
-		// alfa = 2.5;
-		// break;
-		// case 6:
-		// ValorDiametro.setText("3,4");
-		// ValorComprimento.setText("48,3");
-		// RelatorioTipoParafuso.setText("18 x 21");
-		// RelatorioDiametro.setText("3,4");
-		// RelatorioComprimento.setText("48,3");
-		// d = 3.4;
-		// c = 48.3;
-		// alfa = 2.5;
-		// break;
-		// case 7:
-		// ValorDiametro.setText("3,4");
-		// ValorComprimento.setText("55,2");
-		// RelatorioTipoParafuso.setText("18 x 24");
-		// RelatorioDiametro.setText("3,4");
-		// RelatorioComprimento.setText("55,2");
-		// d = 3.4;
-		// c = 55.2;
-		// alfa = 2.5;
-		// break;
-		// case 8:
-		// ValorDiametro.setText("3,4");
-		// ValorComprimento.setText("62,1");
-		// RelatorioTipoParafuso.setText("18 x 27");
-		// RelatorioDiametro.setText("3,4");
-		// RelatorioComprimento.setText("62,1");
-		// d = 3.4;
-		// c = 62.1;
-		// alfa = 2.5;
-		// break;
-		// case 9:
-		// ValorDiametro.setText("3,4");
-		// ValorComprimento.setText("69,0");
-		// RelatorioTipoParafuso.setText("18 x 30");
-		// RelatorioDiametro.setText("3,4");
-		// RelatorioComprimento.setText("69,0");
-		// d = 3.4;
-		// c = 69.0;
-		// alfa = 2.5;
-		// break;
-		// case 10:
-		// ValorDiametro.setText("3,4");
-		// ValorComprimento.setText("75,9");
-		// RelatorioTipoParafuso.setText("18 x 33");
-		// RelatorioDiametro.setText("3,4");
-		// RelatorioComprimento.setText("75,9");
-		// d = 3.4;
-		// c = 75.9;
-		// alfa = 2.5;
-		// break;
-		// case 11:
-		// ValorDiametro.setText("3,4");
-		// ValorComprimento.setText("82,8");
-		// RelatorioTipoParafuso.setText("18 x 36");
-		// RelatorioDiametro.setText("3,4");
-		// RelatorioComprimento.setText("82,8");
-		// d = 3.4;
-		// c = 82.8;
-		// alfa = 2.5;
-		// break;
-		// case 12:
-		// ValorDiametro.setText("3,9");
-		// ValorComprimento.setText("34,5");
-		// RelatorioTipoParafuso.setText("19 x 15");
-		// RelatorioDiametro.setText("3,9");
-		// RelatorioComprimento.setText("34,5");
-		// d = 3.9;
-		// c = 34.5;
-		// alfa = 2.5;
-		// break;
-		// case 13:
-		// ValorDiametro.setText("3,9");
-		// ValorComprimento.setText("48,3");
-		// RelatorioTipoParafuso.setText("19 x 21");
-		// RelatorioDiametro.setText("36,0");
-		// RelatorioComprimento.setText("48,3");
-		// d = 3.9;
-		// c = 48.3;
-		// alfa = 2.5;
-		// break;
-		// case 14:
-		// ValorDiametro.setText("3,9");
-		// ValorComprimento.setText("62,1");
-		// RelatorioTipoParafuso.setText("19 x 27");
-		// RelatorioDiametro.setText("3,9");
-		// RelatorioComprimento.setText("62,1");
-		// d = 3.9;
-		// c = 62.1;
-		// alfa = 2.5;
-		// break;
-		// case 15:
-		// ValorDiametro.setText("3,9");
-		// ValorComprimento.setText("69,0");
-		// RelatorioTipoParafuso.setText("19 x 30");
-		// RelatorioDiametro.setText("3,9");
-		// RelatorioComprimento.setText("69,0");
-		// d = 3.9;
-		// c = 69.0;
-		// alfa = 2.5;
-		// break;
-		// case 16:
-		// ValorDiametro.setText("3,9");
-		// ValorComprimento.setText("75,9");
-		// RelatorioTipoParafuso.setText("19 x 33");
-		// RelatorioDiametro.setText("3,9");
-		// RelatorioComprimento.setText("75,9");
-		// d = 3.9;
-		// c = 75.9;
-		// alfa = 2.5;
-		// break;
-		// case 17:
-		// ValorDiametro.setText("3,9");
-		// ValorComprimento.setText("82,8");
-		// RelatorioTipoParafuso.setText("19 x 36");
-		// RelatorioDiametro.setText("3,9");
-		// RelatorioComprimento.setText("82,8");
-		// d = 3.9;
-		// c = 82.8;
-		// alfa = 2.5;
-		// break;
-		// case 18:
-		// ValorDiametro.setText("3,9");
-		// ValorComprimento.setText("89,7");
-		// RelatorioTipoParafuso.setText("19 x 39");
-		// RelatorioDiametro.setText("3,9");
-		// RelatorioComprimento.setText("89,7");
-		// d = 3.9;
-		// c = 89.7;
-		// alfa = 2.5;
-		// break;
-		// case 19:
-		// ValorDiametro.setText("3,9");
-		// ValorComprimento.setText("96,6");
-		// RelatorioTipoParafuso.setText("19 x 42");
-		// RelatorioDiametro.setText("3,9");
-		// RelatorioComprimento.setText("96,6");
-		// d = 3.9;
-		// c = 96.6;
-		// alfa = 2.5;
-		// break;
-		// case 20:
-		// ValorDiametro.setText("4,4");
-		// ValorComprimento.setText("69,0");
-		// RelatorioTipoParafuso.setText("20 x 30");
-		// RelatorioDiametro.setText("4,4");
-		// RelatorioComprimento.setText("69,0");
-		// d = 4.4;
-		// c = 69.0;
-		// alfa = 2.5;
-		// break;
-		// case 21:
-		// ValorDiametro.setText("4,4");
-		// ValorComprimento.setText("75,9");
-		// RelatorioTipoParafuso.setText("20 x 33");
-		// RelatorioDiametro.setText("4,4");
-		// RelatorioComprimento.setText("75,9");
-		// d = 4.4;
-		// c = 75.9;
-		// alfa = 2.5;
-		// break;
-		// case 22:
-		// ValorDiametro.setText("4,4");
-		// ValorComprimento.setText("82,8");
-		// RelatorioTipoParafuso.setText("20 x 36");
-		// RelatorioDiametro.setText("4,4");
-		// RelatorioComprimento.setText("82,8");
-		// d = 4.4;
-		// c = 82.8;
-		// alfa = 2.5;
-		// break;
-		// case 23:
-		// ValorDiametro.setText("4,4");
-		// ValorComprimento.setText("89,7");
-		// RelatorioTipoParafuso.setText("20 x 39");
-		// RelatorioDiametro.setText("4,4");
-		// RelatorioComprimento.setText("89,7");
-		// d = 4.4;
-		// c = 89.7;
-		// alfa = 2.5;
-		// break;
-		// case 24:
-		// ValorDiametro.setText("4,4");
-		// ValorComprimento.setText("96,6");
-		// RelatorioTipoParafuso.setText("20 x 42");
-		// RelatorioDiametro.setText("4,4");
-		// RelatorioComprimento.setText("96,6");
-		// d = 4.4;
-		// c = 96.6;
-		// alfa = 2.5;
-		// break;
-		// case 25:
-		// ValorDiametro.setText("4,4");
-		// ValorComprimento.setText("110,4");
-		// RelatorioTipoParafuso.setText("20 x 48");
-		// RelatorioDiametro.setText("4,4");
-		// RelatorioComprimento.setText("110,4");
-		// d = 4.4;
-		// c = 110.4;
-		// alfa = 2.5;
-		// break;
-		// case 26:
-		// ValorDiametro.setText("4,9");
-		// ValorComprimento.setText("75,9");
-		// RelatorioTipoParafuso.setText("21 x 33");
-		// RelatorioDiametro.setText("4,9");
-		// RelatorioComprimento.setText("75,9");
-		// d = 4.9;
-		// c = 75.9;
-		// alfa = 2.5;
-		// break;
-		// case 27:
-		// ValorDiametro.setText("4,9");
-		// ValorComprimento.setText("82,8");
-		// RelatorioTipoParafuso.setText("21 x 36");
-		// RelatorioDiametro.setText("4,9");
-		// RelatorioComprimento.setText("82,8");
-		// d = 4.9;
-		// c = 82.8;
-		// alfa = 2.5;
-		// break;
-		// case 28:
-		// ValorDiametro.setText("4,9");
-		// ValorComprimento.setText("96,6");
-		// RelatorioTipoParafuso.setText("21 x 42");
-		// RelatorioDiametro.setText("4,9");
-		// RelatorioComprimento.setText("96,6");
-		// d = 4.9;
-		// c = 96.6;
-		// alfa = 2.5;
-		// break;
-		// case 29:
-		// ValorDiametro.setText("4,9");
-		// ValorComprimento.setText("103,5");
-		// RelatorioTipoParafuso.setText("21 x 45");
-		// RelatorioDiametro.setText("4,9");
-		// RelatorioComprimento.setText("103,5");
-		// d = 4.9;
-		// c = 103.5;
-		// alfa = 2.5;
-		// break;
-		// case 30:
-		// ValorDiametro.setText("4,9");
-		// ValorComprimento.setText("110,4");
-		// RelatorioTipoParafuso.setText("21 x 48");
-		// RelatorioDiametro.setText("4,9");
-		// RelatorioComprimento.setText("110,4");
-		// d = 4.9;
-		// c = 110.4;
-		// alfa = 2.5;
-		// break;
-		// case 31:
-		// ValorDiametro.setText("4,9");
-		// ValorComprimento.setText("124,2");
-		// RelatorioTipoParafuso.setText("21 x 54");
-		// RelatorioDiametro.setText("4,9");
-		// RelatorioComprimento.setText("124,2");
-		// d = 4.9;
-		// c = 124.2;
-		// alfa = 2.5;
-		// break;
-		// case 32:
-		// ValorDiametro.setText("5,4");
-		// ValorComprimento.setText("96,6");
-		// RelatorioTipoParafuso.setText("22 x 42");
-		// RelatorioDiametro.setText("5,4");
-		// RelatorioComprimento.setText("96,6");
-		// d = 5.4;
-		// c = 96.6;
-		// alfa = 2.5;
-		// break;
-		// case 33:
-		// ValorDiametro.setText("5,4");
-		// ValorComprimento.setText("103,5");
-		// RelatorioTipoParafuso.setText("22 x 45");
-		// RelatorioDiametro.setText("5,4");
-		// RelatorioComprimento.setText("103,5");
-		// d = 5.4;
-		// c = 103.5;
-		// alfa = 2.5;
-		// break;
-		// case 34:
-		// ValorDiametro.setText("5,4");
-		// ValorComprimento.setText("110,4");
-		// RelatorioTipoParafuso.setText("22 x 48");
-		// RelatorioDiametro.setText("5,4");
-		// RelatorioComprimento.setText("110,4");
-		// d = 5.4;
-		// c = 110.4;
-		// alfa = 2.5;
-		// break;
-		// case 35:
-		// ValorDiametro.setText("5,4");
-		// ValorComprimento.setText("124,2");
-		// RelatorioTipoParafuso.setText("22 x 54");
-		// RelatorioDiametro.setText("5,4");
-		// RelatorioComprimento.setText("124,2");
-		// d = 5.4;
-		// c = 124.2;
-		// alfa = 2.5;
-		// break;
-		// case 36:
-		// ValorDiametro.setText("5,9");
-		// ValorComprimento.setText("103,5");
-		// RelatorioTipoParafuso.setText("23 x 45");
-		// RelatorioDiametro.setText("5,9");
-		// RelatorioComprimento.setText("103,5");
-		// d = 5.9;
-		// c = 103.5;
-		// alfa = 2.5;
-		// break;
-		// case 37:
-		// ValorDiametro.setText("5,9");
-		// ValorComprimento.setText("124,2");
-		// RelatorioTipoParafuso.setText("23 x 54");
-		// RelatorioDiametro.setText("5,9");
-		// RelatorioComprimento.setText("124,2");
-		// d = 5.9;
-		// c = 124.2;
-		// alfa = 2.5;
-		// break;
-		// case 38:
-		// ValorDiametro.setText("5,9");
-		// ValorComprimento.setText("138,0");
-		// RelatorioTipoParafuso.setText("23 x 60");
-		// RelatorioDiametro.setText("5,9");
-		// RelatorioComprimento.setText("138,0");
-		// d = 5.9;
-		// c = 138.0;
-		// alfa = 2.5;
-		// break;
-		// case 39:
-		// ValorDiametro.setText("5,9");
-		// ValorComprimento.setText("151,8");
-		// RelatorioTipoParafuso.setText("23 x 66");
-		// RelatorioDiametro.setText("5,9");
-		// RelatorioComprimento.setText("151,8");
-		// d = 5.9;
-		// c = 151.8;
-		// alfa = 2.5;
-		// break;
-		// case 40:
-		// ValorDiametro.setText("6,4");
-		// ValorComprimento.setText("138,0");
-		// RelatorioTipoParafuso.setText("24 x 60");
-		// RelatorioDiametro.setText("6,4");
-		// RelatorioComprimento.setText("138,0");
-		// d = 6.4;
-		// c = 138.0;
-		// alfa = 2.5;
-		// break;
-		// case 41:
-		// ValorDiametro.setText("6,4");
-		// ValorComprimento.setText("151,8");
-		// RelatorioTipoParafuso.setText("24 x 66");
-		// RelatorioDiametro.setText("6,4");
-		// RelatorioComprimento.setText("151,8");
-		// d = 6.4;
-		// c = 151.8;
-		// alfa = 2.5;
-		// break;
-		// case 42:
-		// ValorDiametro.setText("7,0");
-		// ValorComprimento.setText("165,6");
-		// RelatorioTipoParafuso.setText("25 x 72");
-		// RelatorioDiametro.setText("7,0");
-		// RelatorioComprimento.setText("165,6");
-		// d = 7.0;
-		// c = 165.6;
-		// alfa = 2.39;
-		// break;
-		// case 43:
-		// ValorDiametro.setText("7,6");
-		// ValorComprimento.setText("165,6");
-		// RelatorioTipoParafuso.setText("26 x 72");
-		// RelatorioDiametro.setText("7,6");
-		// RelatorioComprimento.setText("165,6");
-		// d = 7.6;
-		// c = 165.6;
-		// alfa = 2.29;
-		// break;
-		// case 44:
-		// ValorDiametro.setText("7,6");
-		// ValorComprimento.setText("179,4");
-		// RelatorioTipoParafuso.setText("26 x 78");
-		// RelatorioDiametro.setText("7,6");
-		// RelatorioComprimento.setText("179,4");
-		// d = 7.6;
-		// c = 179.4;
-		// alfa = 2.29;
-		// break;
-		// case 45:
-		// ValorDiametro.setText("7,6");
-		// ValorComprimento.setText("193,2");
-		// RelatorioTipoParafuso.setText("26 x 84");
-		// RelatorioDiametro.setText("7,6");
-		// RelatorioComprimento.setText("193,2");
-		// d = 7.6;
-		// c = 193.2;
-		// alfa = 2.29;
-		// break;
-		//
-		// }
 	}// GEN-LAST:event_ComboTipoPregoActionPerformed
 
 	private void LimparExpessura(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_LimparExpessura2
-		// TODO add your handling code here:
-		if (Espessura1.getText().length() > 4) {
+		if(Espessura1.getText().length() > 4) {
 			Espessura1.setText("");
 		}
 	}// GEN-LAST:event_LimparExpessura2
 
 	private void LimparExpessura2(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_LimparExpessura2
-		// TODO add your handling code here:
-		if (Espessura2.getText().length() > 4) {
+		if(Espessura2.getText().length() > 4) {
 			Espessura2.setText("");
 		}
 	}// GEN-LAST:event_LimparExpessura2
 
-	private void ComboElem2ClasseMadeiraPropertyChange(java.beans.PropertyChangeEvent evt) {// GEN-FIRST:event_ComboElem2ClasseMadeiraPropertyChange
-		// TODO add your handling code here:
-	}// GEN-LAST:event_ComboElem2ClasseMadeiraPropertyChange
-
 	private void ComboElem2ClasseMadeiraFocusLost(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_ComboElem2ClasseMadeiraActionPerformed
-		// TODO add your handling code here:
-		// switch (ComboElem2ClasseMadeira.getSelectedIndex()) {
-		// case 0:
-		// modeloLigacao.getElementoLigação2().setClasseMadeira(null);
-		// ValorFc01.setText("-");
-		// ValorDensidade1.setText("-");
-		// ValorFvok1.setText("-");
-		// ValorEc0m1.setText("-");
-		// break;
-		// default:
-		if (((VerificadoresPrego) ComboElem2ClasseMadeira.getInputVerifier()).isVerified()) {
+		if(((VerificadoresPrego)ComboElem2ClasseMadeira.getInputVerifier()).isVerified()) {
 			ValorFc2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getfc0k() + "");
 			ValorDensidade2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getDensidade() + "");
 			ValorFvok2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getfv0k() + "");
@@ -3140,64 +2335,40 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			RelatorioEc0m2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getec0m() + "");
 		}
 
-		// TODO add your handling code here:
-
 		atualizaNextElementosLigacao(); // TODO add your handling code here:
 	}// GEN-LAST:event_ComboElem2ClasseMadeiraActionPerformed
 
 	private void ValorAngulo(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_ValorAngulo
-		// TODO add your handling code here:
-		if (ValorAngulo.getText().length() > 4) {
+		if(ValorAngulo.getText().length() > 4) {
 			ValorAngulo.setText("0");
 		}
 	}// GEN-LAST:event_ValorAngulo
 
-	private void ComboElem1ClasseMadeiraPropertyChange(java.beans.PropertyChangeEvent evt) {// GEN-FIRST:event_ComboElem1ClasseMadeiraPropertyChange
-
-	}// GEN-LAST:event_ComboElem1ClasseMadeiraPropertyChange
-
-	private void ComboElem1ClasseMadeiraActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ComboElem1ClasseMadeiraActionPerformed
-
-	}// GEN-LAST:event_ComboElem1ClasseMadeiraActionPerformed
-
 	private void btn1SecaoCorteActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn1SecaoCorteActionPerformed
-		// TODO add your handling code here:
 		modeloLigacao = ModeloLigacao.CORTE_SIMPLES;
 		MadeiraFigura.setVisible(true);
 		InclinacaoSim1.setEnabled(true);
 		InclinacaoSim2.setEnabled(true);
-		jLabelStatusPrego.setText("Escolha a espécie da madeira para continuar.");
+		jProgressBarPrego.setString("Escolha a espécie da madeira para continuar.");
 		ConiferasButton.setEnabled(true);
 		FolhosasButton.setEnabled(true);
 
 		RelatorioSecaoCorte.setText("Ligação com Corte Simples");
-		MadeiraFigura
-				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/2Paralelo.png"))); // NOI18N
-		FiguraSecoes.setIcon(new ImageIcon(
-				((ImageIcon) btn1SecaoCorte.getIcon()).getImage().getScaledInstance(55, 60, Image.SCALE_SMOOTH)));
+		MadeiraFigura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/2Paralelo.png"))); // NOI18N
+		FiguraSecoes.setIcon(new ImageIcon(((ImageIcon)btn1SecaoCorte.getIcon()).getImage().getScaledInstance(55, 60, Image.SCALE_SMOOTH)));
 
 		System.out.println("modeloLigacao =" + modeloLigacao);
 		System.out.println("NumSecao =" + modeloLigacao.getNumSecao());
-
-		// double x = valor_faxrk(1, 250, Double.parseDouble("6.5"), 12, 250);
-		// JOptionPane.showMessageDialog(this, "Esta habilitado a=
-		// ["+a.booleanValue()+"] b=["+b.booleanValue()+"]
-		// c=["+c.booleanValue()+"]");
-		// JOptionPane.showMessageDialog(this, "Kmod1 da função=
-		// ["+Double.toString(x)+"");
-
 	}// GEN-LAST:event_btn1SecaoCorteActionPerformed
 
 	private void InclinacaoSim1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_InclinacaoSim1ActionPerformed
-		// TODO add your handling code here:
 		IncSim1 = false;
 		IncSim2 = true;
 
 		MadeiraFigura.setVisible(true);
 		String TrocaFigura = "";
 
-		if (modeloLigacao == ModeloLigacao.CORTE_SIMPLES
-				&& modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
+		if(modeloLigacao == ModeloLigacao.CORTE_SIMPLES && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
 			CalculoForca01.setVisible(true);
 			CalculoForca02.setVisible(false);
 			CalculoForca901.setVisible(false);
@@ -3206,11 +2377,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			CalculoForcaAlfa2.setVisible(true);
 
 			TrocaFigura = "1InclinadoElem2P.png"; // NOI18N
-
-		}
-
-		if (modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES
-				&& modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
+		} else if(modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
 			CalculoForca01.setVisible(true);
 			CalculoForca02.setVisible(false);
 			CalculoForca901.setVisible(false);
@@ -3219,11 +2386,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			CalculoForcaAlfa2.setVisible(true);
 
 			TrocaFigura = "2InclinadoElem2P.png"; // NOI18N
-
-		}
-
-		if (modeloLigacao == ModeloLigacao.CORTE_SIMPLES
-				&& modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
+		} else if(modeloLigacao == ModeloLigacao.CORTE_SIMPLES && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
 			CalculoForca01.setVisible(true);
 			CalculoForca02.setVisible(false);
 			CalculoForca901.setVisible(false);
@@ -3232,11 +2395,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			CalculoForcaAlfa2.setVisible(false);
 
 			TrocaFigura = "1PerpendicularElem2P.png"; // NOI18N
-
-		}
-
-		if (modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES
-				&& modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
+		} else if(modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
 			CalculoForca01.setVisible(true);
 			CalculoForca02.setVisible(false);
 			CalculoForca901.setVisible(false);
@@ -3245,11 +2404,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			CalculoForcaAlfa2.setVisible(false);
 
 			TrocaFigura = "2PerpendicularElem2P.png"; // NOI18N
-
-		}
-
-		if (modeloLigacao == ModeloLigacao.CORTE_DUPLO
-				&& modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
+		} else if(modeloLigacao == ModeloLigacao.CORTE_DUPLO && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
 			CalculoForca01.setVisible(true);
 			CalculoForca02.setVisible(false);
 			CalculoForca901.setVisible(false);
@@ -3258,10 +2413,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			CalculoForcaAlfa2.setVisible(true);
 
 			TrocaFigura = "2InclinadoElem2P.png"; // NOI18N
-
-		}
-		if (modeloLigacao == ModeloLigacao.CORTE_DUPLO
-				&& modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
+		} else if(modeloLigacao == ModeloLigacao.CORTE_DUPLO && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
 			CalculoForca01.setVisible(true);
 			CalculoForca02.setVisible(false);
 			CalculoForca901.setVisible(false);
@@ -3270,23 +2422,19 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			CalculoForcaAlfa2.setVisible(false);
 
 			TrocaFigura = "2PerpendicularElem2P.png"; // NOI18N
-
 		}
-		MadeiraFigura.setIcon(
-				new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/" + TrocaFigura))); // NOI18N
 
+		MadeiraFigura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/" + TrocaFigura))); // NOI18N
 	}// GEN-LAST:event_InclinacaoSim1ActionPerformed
 
 	private void InclinacaoSim2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_InclinacaoSim2ActionPerformed
-		// TODO add your handling code here:
 		IncSim1 = true;
 		IncSim2 = false;
 
 		MadeiraFigura.setVisible(true);
 		String TrocaFigura = "";
 
-		if (modeloLigacao == ModeloLigacao.CORTE_SIMPLES
-				&& modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
+		if(modeloLigacao == ModeloLigacao.CORTE_SIMPLES && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
 			CalculoForca01.setVisible(false);
 			CalculoForca02.setVisible(true);
 			CalculoForca901.setVisible(false);
@@ -3295,11 +2443,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			CalculoForcaAlfa2.setVisible(false);
 
 			TrocaFigura = "1InclinadoElem1P.png"; // NOI18N
-
-		}
-
-		if (modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES
-				&& modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
+		} else if(modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
 			CalculoForca01.setVisible(false);
 			CalculoForca02.setVisible(true);
 			CalculoForca901.setVisible(false);
@@ -3308,10 +2452,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			CalculoForcaAlfa2.setVisible(false);
 
 			TrocaFigura = "2InclinadoElem1P.png"; // NOI18N
-
-		}
-		if (modeloLigacao == ModeloLigacao.CORTE_SIMPLES
-				&& modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
+		} else if(modeloLigacao == ModeloLigacao.CORTE_SIMPLES && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
 			CalculoForca01.setVisible(false);
 			CalculoForca02.setVisible(true);
 			CalculoForca901.setVisible(true);
@@ -3320,11 +2461,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			CalculoForcaAlfa2.setVisible(false);
 
 			TrocaFigura = "1PerpendicularElem1P.png"; // NOI18N
-
-		}
-
-		if (modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES
-				&& modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
+		} else if(modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
 			CalculoForca01.setVisible(false);
 			CalculoForca02.setVisible(true);
 			CalculoForca901.setVisible(true);
@@ -3333,10 +2470,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			CalculoForcaAlfa2.setVisible(false);
 
 			TrocaFigura = "2PerpendicularElem1P.png"; // NOI18N
-
-		}
-		if (modeloLigacao == ModeloLigacao.CORTE_DUPLO
-				&& modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
+		} else if(modeloLigacao == ModeloLigacao.CORTE_DUPLO && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
 			CalculoForca01.setVisible(false);
 			CalculoForca02.setVisible(true);
 			CalculoForca901.setVisible(false);
@@ -3345,10 +2479,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			CalculoForcaAlfa2.setVisible(false);
 
 			TrocaFigura = "2InclinadoElem1P.png"; // NOI18N
-
-		}
-		if (modeloLigacao == ModeloLigacao.CORTE_DUPLO
-				&& modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
+		} else if(modeloLigacao == ModeloLigacao.CORTE_DUPLO && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
 			CalculoForca01.setVisible(false);
 			CalculoForca02.setVisible(true);
 			CalculoForca901.setVisible(true);
@@ -3357,250 +2488,181 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			CalculoForcaAlfa2.setVisible(false);
 
 			TrocaFigura = "2PerpendicularElem1P.png"; // NOI18N
-
 		}
-		MadeiraFigura.setIcon(
-				new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/" + TrocaFigura))); // NOI18N
 
+		MadeiraFigura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/" + TrocaFigura))); // NOI18N
 	}// GEN-LAST:event_InclinacaoSim2ActionPerformed
 
 	private void ValorAnguloKeyTyped(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_ValorAnguloKeyTyped
-		// TODO add your handling code here:
-		if ((evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') || evt.getKeyChar() == ',') {
+		if((evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') || evt.getKeyChar() == ',') {
 			return;
 		}
 		evt.consume();
-
 	}// GEN-LAST:event_ValorAnguloKeyTyped
 
 	private void Espessura2KeyTyped(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_Espessura2KeyTyped
-		// TODO add your handling code here:
-		if ((evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') || evt.getKeyChar() == ',') {
+		if((evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') || evt.getKeyChar() == ',') {
 			return;
 		}
 		evt.consume();
-
 	}// GEN-LAST:event_Espessura2KeyTyped
 
 	private void ValorAnguloActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ValorAnguloActionPerformed
-		// TODO add your handling code here:
-		// modeloLigacao.getAngulo().setValorGrau(Double.parseDouble(ValorAngulo.getText().replace(",",
-		// ".")));
 		RelatorioAngulo.setText(modeloLigacao.getAngulo().getValorGrau() + "");
 		atualizaNextElementosLigacao();
 	}// GEN-LAST:event_ValorAnguloActionPerformed
 
 	private void formWindowActivated(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_formWindowActivated
-		// TODO add your handling code here:
 		Relatorio.setVisible(false);
 	}// GEN-LAST:event_formWindowActivated
 
-	private void FiguraTipoParafusoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_FiguraTipoParafusoActionPerformed
-		// TODO add your handling code here:
-	}// GEN-LAST:event_FiguraTipoParafusoActionPerformed
-
-	private void MadeiraFiguraActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_MadeiraFiguraActionPerformed
-		// TODO add your handling code here:
-	}// GEN-LAST:event_MadeiraFiguraActionPerformed
-
 	private void jTabbedPane1FocusGained(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_jTabbedPane1FocusGained
-		// TODO add your handling code here:
+		switch(jTabbedPane1.getSelectedIndex()){
+			case 2:
+				ValorAngulo.setText("0");
+				MadeiraFigura.setVisible(true);
+				String FiguraMadeira = "";
 
-		switch (jTabbedPane1.getSelectedIndex()) {
-		case 2:
+				if(modeloLigacao == ModeloLigacao.CORTE_SIMPLES) {
 
-			ValorAngulo.setText("0");
-			MadeiraFigura.setVisible(true);
-			String FiguraMadeira = "";
+					FiguraMadeira = "1ParaleloP.png";
 
-			if (modeloLigacao == ModeloLigacao.CORTE_SIMPLES) {
-
-				FiguraMadeira = "1ParaleloP.png";
-
-			}
-			if (modeloLigacao == ModeloLigacao.CORTE_DUPLO) {
-
-				FiguraMadeira = "2ParaleloP.png";
-
-			}
-			if (modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES) {
-				FiguraMadeira = "2ParaleloP.png";
-
-			}
-
-			MadeiraFigura.setIcon(
-					new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/" + FiguraMadeira))); // NOI18N
-
-			// Remove todos os elementos a partir do segundo
-			while (ComboKmod1.getModel().getSize() > 1) {
-				ComboKmod1.removeItemAt(1);
-			}
-
-			for (Kmod1 kmod1 : Kmod1.values()) {
-				if (kmod1.getTipoMadeira() == modeloLigacao.getTipoMadeira()) {
-					ComboKmod1.addItem(kmod1);
 				}
-			}
-			ComboKmod1.addItem(Kmod1.OUTRO);
+				if(modeloLigacao == ModeloLigacao.CORTE_DUPLO) {
 
-			while (ComboKmod2.getModel().getSize() > 1) {
-				ComboKmod2.removeItemAt(1);
-			}
+					FiguraMadeira = "2ParaleloP.png";
 
-			for (Kmod2 kmod2 : Kmod2.values()) {
-				if (kmod2.getTipoMadeira() == modeloLigacao.getTipoMadeira()) {
-					ComboKmod2.addItem(kmod2);
 				}
-			}
-			ComboKmod2.addItem(Kmod2.OUTRO);
+				if(modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES) {
+					FiguraMadeira = "2ParaleloP.png";
 
-			while (ComboKmod3.getModel().getSize() > 1) {
-				ComboKmod3.removeItemAt(1);
-			}
-
-			for (Kmod3 kmod3 : Kmod3.values()) {
-				if (kmod3.getEspecieMadeira() == modeloLigacao.getEspecieMadeira()) {
-					ComboKmod3.addItem(kmod3);
 				}
-			}
-			ComboKmod3.addItem(Kmod3.OUTRO);
 
-			break;
+				MadeiraFigura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/" + FiguraMadeira))); // NOI18N
 
-		case 3:
-			// TODO add your handling code here:
-			double t1 = modeloLigacao.getElementoLigação1().getEspessura();
-			double t2 = modeloLigacao.getElementoLigação2().getEspessura();
+				// Remove todos os elementos a partir do segundo
+				while(ComboKmod1.getModel().getSize() > 1) {
+					ComboKmod1.removeItemAt(1);
+				}
 
-			while (ComboTipoPrego.getModel().getSize() > 1) {
-				ComboTipoPrego.removeItemAt(1);
-			}
-
-			boolean entrouDiametro = false;
-
-			for (TipoPrego tipoPrego : TipoPrego.values()) {
-				boolean passou = false;
-
-				if (tipoPrego.getDiametro() < t1 / 5) {
-					entrouDiametro = true;
-					double tp;
-					switch (modeloLigacao) {
-					case CORTE_SIMPLES:
-						tp = tipoPrego.getComprimento() - t1;
-						if (tp > 12 * tipoPrego.getDiametro()) {
-							passou = true;
-						}
-						break;
-					case DUPLO_CORTE_SIMPLES:
-						tp = tipoPrego.getComprimento() - t1;
-						if (tp > 12 * tipoPrego.getDiametro() && tp < t2) {
-							passou = true;
-						}
-						break;
-
-					case CORTE_DUPLO:
-						tp = tipoPrego.getComprimento() - (t1 + t2);
-						if (tp > 12 * tipoPrego.getDiametro()) {
-							passou = true;
-						}
-						break;
+				for(Kmod1 kmod1 : Kmod1.values()) {
+					if(kmod1.getTipoMadeira() == modeloLigacao.getTipoMadeira()) {
+						ComboKmod1.addItem(kmod1);
 					}
 				}
+				ComboKmod1.addItem(Kmod1.OUTRO);
 
-				if (passou) {
-					ComboTipoPrego.addItem(tipoPrego);
+				while(ComboKmod2.getModel().getSize() > 1) {
+					ComboKmod2.removeItemAt(1);
 				}
-			}
-			if (ComboTipoPrego.getItemCount() == 1 && !entrouDiametro) {
-				jLabelStatusPrego.setText(
-						"Nenhum prego é compatível com as espessuras inseridas, experimente aumentar as espessuras.");
-			}
-			if (ComboTipoPrego.getItemCount() == 1 && entrouDiametro) {
-				jLabelStatusPrego.setText(
-						"Nenhum prego é compatível com as espessuras inseridas, experimente diminuir as espessuras.");
-			}
 
-			break;
+				for(Kmod2 kmod2 : Kmod2.values()) {
+					if(kmod2.getTipoMadeira() == modeloLigacao.getTipoMadeira()) {
+						ComboKmod2.addItem(kmod2);
+					}
+				}
+				ComboKmod2.addItem(Kmod2.OUTRO);
 
+				while(ComboKmod3.getModel().getSize() > 1) {
+					ComboKmod3.removeItemAt(1);
+				}
+
+				for(Kmod3 kmod3 : Kmod3.values()) {
+					if(kmod3.getEspecieMadeira() == modeloLigacao.getEspecieMadeira()) {
+						ComboKmod3.addItem(kmod3);
+					}
+				}
+				ComboKmod3.addItem(Kmod3.OUTRO);
+
+				break;
+			case 3:
+				double t1 = modeloLigacao.getElementoLigação1().getEspessura();
+				double t2 = modeloLigacao.getElementoLigação2().getEspessura();
+
+				while(ComboTipoPrego.getModel().getSize() > 1) {
+					ComboTipoPrego.removeItemAt(1);
+				}
+
+				boolean entrouDiametro = false;
+
+				for(TipoPrego tipoPrego : TipoPrego.values()) {
+					boolean passou = false;
+
+					if(tipoPrego.getDiametro() < t1 / 5) {
+						entrouDiametro = true;
+						double tp;
+						switch(modeloLigacao){
+							case CORTE_SIMPLES:
+								tp = tipoPrego.getComprimento() - t1;
+								if(tp > 12 * tipoPrego.getDiametro()) {
+									passou = true;
+								}
+								break;
+							case DUPLO_CORTE_SIMPLES:
+								tp = tipoPrego.getComprimento() - t1;
+								if(tp > 12 * tipoPrego.getDiametro() && tp < t2) {
+									passou = true;
+								}
+								break;
+
+							case CORTE_DUPLO:
+								tp = tipoPrego.getComprimento() - (t1 + t2);
+								if(tp > 12 * tipoPrego.getDiametro()) {
+									passou = true;
+								}
+								break;
+						}
+					}
+
+					if(passou) {
+						ComboTipoPrego.addItem(tipoPrego);
+					}
+				}
+				if(ComboTipoPrego.getItemCount() == 1 && !entrouDiametro) {
+					jProgressBarPrego.setString("Nenhum prego é compatível com as espessuras inseridas, experimente aumentar as espessuras.");
+				}
+				if(ComboTipoPrego.getItemCount() == 1 && entrouDiametro) {
+					jProgressBarPrego.setString("Nenhum prego é compatível com as espessuras inseridas, experimente diminuir as espessuras.");
+				}
+				break;
 		}
-
 	}// GEN-LAST:event_jTabbedPane1FocusGained
 
 	private void ComboQuantPregosActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ComboQuantPregosActionPerformed
-		// TODO add your handling code here:
-		if (((VerificadoresPrego) ComboQuantPregos.getInputVerifier()).verify(ComboQuantPregos)) {
+		if(((VerificadoresPrego)ComboQuantPregos.getInputVerifier()).verify(ComboQuantPregos)) {
 			RelatorioNParafusos.setText(modeloLigacao.getConectores().getQuantidadePrego().getNome() + "");
 		}
 
 		atualizaButtonCalcular();
-
-		// switch (ComboQuantPregos.getSelectedIndex()) {
-		// case 0:
-		// npar = 0;
-		// RelatorioNParafusos.setText("0");
-		// case 1:
-		// npar = 2;
-		// RelatorioNParafusos.setText("2");
-		// break;
-		// case 2:
-		// npar = 4;
-		// RelatorioNParafusos.setText("4");
-		// break;
-		// case 3:
-		// npar = 5;
-		// RelatorioNParafusos.setText("5");
-		// break;
-		// case 4:
-		// npar = 6;
-		// RelatorioNParafusos.setText("6");
-		// break;
-		// case 5:
-		// npar = 8;
-		// RelatorioNParafusos.setText("8");
-		// break;
-		// case 6:
-		// npar = 10;
-		// RelatorioNParafusos.setText("10");
-		// break;
-		// case 7:
-		// npar = 12;
-		// RelatorioNParafusos.setText("12");
-		// break;
-		// case 8:
-		// npar = 14;
-		// RelatorioNParafusos.setText("14");
-		// break;
-		// }
 	}// GEN-LAST:event_ComboQuantPregosActionPerformed
 
 	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
-		// TODO add your handling code here:
-		Printable p = new Printable() {
+		Printable p = new Printable(){
 
 			public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-				if (pageIndex > 0) {
+				if(pageIndex > 0) {
 					/* We have only one page, and 'page' is zero-based */
 					return NO_SUCH_PAGE;
 				}
 
 				// pageFormat.setOrientation(pageIndex);
-				Graphics2D g2d = (Graphics2D) graphics;
+				Graphics2D g2d = (Graphics2D)graphics;
 				g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
 
 				g2d.transform(AffineTransform.getScaleInstance(0.9, 0.9)); // Reduz
-																			// a
-																			// forma
-																			// em
-																			// 90%
-																			// para
-																			// dar
-																			// certo
-																			// no
-																			// tamanho
-																			// da
-																			// página
+				                                                           // a
+				                                                           // forma
+				                                                           // em
+				                                                           // 90%
+				                                                           // para
+				                                                           // dar
+				                                                           // certo
+				                                                           // no
+				                                                           // tamanho
+				                                                           // da
+				                                                           // página
 				RelatorioFinal.printAll(g2d);
-				// jPanel1.printComponents(g2d);
+
 				return PAGE_EXISTS;
 			}
 		};
@@ -3610,137 +2672,50 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 		boolean ok = job.printDialog();
 
-		if (ok) {
+		if(ok) {
 			try {
 				job.print();
 			} catch (PrinterException ex) {
 				/* The job did not successfully complete */
 			}
 		}
-
 	}// GEN-LAST:event_jButton1ActionPerformed
 
 	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton2ActionPerformed
-		// TODO add your handling code here:
-		jTabbedPane1.setSelectedComponent(Inicio);
-		GroupSecoesCorte.clearSelection();
-		GroupTesteParafuso.clearSelection();
-		Espessura1.setText("Digite a espessura");
-		ValorAngulo.setText("0");
-		ComboQuantPregos.setSelectedIndex(0);
-		ComboTipoPrego.setSelectedIndex(0);
-		ComboAco.setSelectedIndex(0);
-		ComboElem1ClasseMadeira.setSelectedIndex(0);
-		ComboElem2ClasseMadeira.setSelectedIndex(0);
-		ComboKmod1.setSelectedIndex(0);
-		ComboKmod2.setSelectedIndex(0);
-		ComboKmod3.setSelectedIndex(0);
-		jLabelStatusPrego.setText("Clique em \"Iniciar Cálculo\" para começar o dimensionamento.");
-		modeloLigacao.getAngulo().setValorGrau(0);
-		m = false;
-		alfa = 0;
-		d = 0;
-		c = 0;
-		tp = 0;
-		d1 = 0;
-		d2 = 0;
-		forcaaplicada = 0;
-		nparafusos = 0.0;
-		// kmod1 = 0;
-		// kmod2 = 0;
-		// kmod3 = 0;
-		rd1 = 0;
-		rd2 = 0;
-		rd3 = 0;
-		rd4 = 0;
-		rd5 = 0;
-		rd6 = 0;
-		Rdmin = 0;
-		Rdlig = 0;
-		Rvd = 0;
-		valorFaxrk = 0;
-		valorFaxrkPrego = 0;
-		valorFaxrkFinal = 0;
-		npar = 0;
-		IncSim1 = false;
-		IncSim2 = true;
-
-		ImagemTipoArruela.setVisible(false);
-		CalculoForca01.setVisible(true);
-		CalculoForca02.setVisible(true);
-		CalculoForca901.setVisible(false);
-		CalculoForca902.setVisible(false);
-		CalculoForcaAlfa1.setVisible(false);
-		CalculoForcaAlfa2.setVisible(false);
-		Inclinado2.setVisible(false);
-		Inclinado2.setVisible(false);
-
-		MadeiraFigura.setVisible(true);
-
-		RelatorioRd13.setVisible(true);
-		RelatorioRd14.setVisible(true);
-		RelatorioRd3.setVisible(true);
-		RelatorioRd4.setVisible(true);
-		jLabel60.setVisible(true);
-		jLabel62.setVisible(true);
-
-		jTabbedPane1.setEnabledAt(1, false);
-		jTabbedPane1.setEnabledAt(2, false);
-		jTabbedPane1.setEnabledAt(3, false);
-		jTabbedPane1.setEnabledAt(4, false);
-		jTabbedPane1.setEnabledAt(5, false);
-		Next.setEnabled(false);
-		Next2.setEnabled(false);
-		Next3.setEnabled(false);
-		ButtonCalcular.setEnabled(false);
-		SerradaButton.setEnabled(false);
-		RecompostaButton.setEnabled(false);
-		btn1SecaoCorte.setEnabled(false);
-		jToggleButton1.setEnabled(false);
-		jToggleButton2.setEnabled(false);
-		ConiferasButton.setEnabled(false);
-		FolhosasButton.setEnabled(false);
-		SerradaButton.setEnabled(false);
-		RecompostaButton.setEnabled(false);
-
+        TelaPrego telaprego = new TelaPrego();
+        telaprego.setVisible(true);
+        this.dispose();
 	}// GEN-LAST:event_jButton2ActionPerformed
 
-	private void ValorAnguloPropertyChange(java.beans.PropertyChangeEvent evt) {// GEN-FIRST:event_ValorAnguloPropertyChange
-		// TODO add your handling code here:
-	}// GEN-LAST:event_ValorAnguloPropertyChange
-
 	private void VoltarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_VoltarActionPerformed
-		// TODO add your handling code here:
 		this.dispose();
 		TelaInicial2 telainicial = new TelaInicial2();
 		telainicial.setVisible(true);
 	}// GEN-LAST:event_VoltarActionPerformed
 
 	private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton3ActionPerformed
-		// TODO add your handling code here:
 		this.dispose();
 		TelaInicial2 telainicial = new TelaInicial2();
 		telainicial.setVisible(true);
 	}// GEN-LAST:event_jButton3ActionPerformed
 
 	private void ComboKmod1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ComboKmod1ActionPerformed
-		if (((VerificadoresPrego) ComboKmod1.getInputVerifier()).verify(ComboKmod1)) {
-			if (modeloLigacao.getKmod1() == Kmod1.OUTRO) {
+		if(((VerificadoresPrego)ComboKmod1.getInputVerifier()).verify(ComboKmod1)) {
+			if(modeloLigacao.getKmod1() == Kmod1.OUTRO) {
 
 				double kmod1 = -1;
 
 				do {
-					String value = (String) JOptionPane.showInputDialog(this, "Entre com um valor entre 0 e 1.",
-							"Kmod 1", JOptionPane.INFORMATION_MESSAGE, null, null, "Digite o valor");
+					String value = (String)JOptionPane.showInputDialog(this, "Entre com um valor entre 0 e 1.", "Kmod 1", JOptionPane.INFORMATION_MESSAGE, null, null, "Digite o valor");
 					try {
 						kmod1 = Double.parseDouble(value.replace(",", "."));
 					} catch (RuntimeException e) {
 
 					}
-					jLabelStatusPrego.setText("Entre com um valor válido, entre 0 e 1.");
-				} while (kmod1 > 1 || kmod1 <= 0);
+					jProgressBarPrego.setString("Entre com um valor válido, entre 0 e 1.");
+				} while(kmod1 > 1 || kmod1 <= 0);
 				modeloLigacao.getKmod1().setValor(kmod1);
-				jLabelStatusPrego.setText("");
+				jProgressBarPrego.setString("");
 			}
 			Textkmod1.setText(modeloLigacao.getKmod1().getValor() + "");
 			RelatorioKmod1.setText(modeloLigacao.getKmod1().getValor() + "");
@@ -3750,32 +2725,22 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 	}// GEN-LAST:event_ComboKmod1ActionPerformed
 
 	private void ComboKmod3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ComboKmod3ActionPerformed
-		// TODO add your handling code here:
-		// switch (ComboKmod3.getSelectedIndex()) {
-		// case 0:
-		// modeloLigacao.setKmod3(null);
-		// Textkmod3.setText("-");
-		// break;
-		// default:
-		// modeloLigacao.setKmod3((Kmod3) ComboKmod3.getSelectedItem());
-
-		if (((VerificadoresPrego) ComboKmod3.getInputVerifier()).verify(ComboKmod3)) {
-			if (modeloLigacao.getKmod3() == Kmod3.OUTRO) {
+		if(((VerificadoresPrego)ComboKmod3.getInputVerifier()).verify(ComboKmod3)) {
+			if(modeloLigacao.getKmod3() == Kmod3.OUTRO) {
 
 				double kmod3 = -1;
 
 				do {
-					String value = (String) JOptionPane.showInputDialog(this, "Entre com um valor entre 0 e 1.",
-							"Kmod 3", JOptionPane.INFORMATION_MESSAGE, null, null, "Digite o valor");
+					String value = (String)JOptionPane.showInputDialog(this, "Entre com um valor entre 0 e 1.", "Kmod 3", JOptionPane.INFORMATION_MESSAGE, null, null, "Digite o valor");
 					try {
 						kmod3 = Double.parseDouble(value.replace(",", "."));
 					} catch (NumberFormatException e) {
 
 					}
-					jLabelStatusPrego.setText("Entre com um valor válido, entre 0 e 1.");
-				} while (kmod3 > 1 || kmod3 <= 0);
+					jProgressBarPrego.setString("Entre com um valor válido, entre 0 e 1.");
+				} while(kmod3 > 1 || kmod3 <= 0);
 				modeloLigacao.getKmod3().setValor(kmod3);
-				jLabelStatusPrego.setText("");
+				jProgressBarPrego.setString("");
 			}
 			Textkmod3.setText(modeloLigacao.getKmod3().getValor() + "");
 			Relatoriokmod3.setText(modeloLigacao.getKmod3().getValor() + "");
@@ -3785,32 +2750,22 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 	}// GEN-LAST:event_ComboKmod3ActionPerformed
 
 	private void ComboKmod2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ComboKmod2ActionPerformed
-		// TODO add your handling code here:
-		// switch (ComboKmod2.getSelectedIndex()) {
-		// case 0:
-		// modeloLigacao.setKmod2(null);
-		// Textkmod2.setText("-");
-		// break;
-		// default:
-		// modeloLigacao.setKmod2((Kmod2) ComboKmod2.getSelectedItem());
-
-		if (((VerificadoresPrego) ComboKmod2.getInputVerifier()).verify(ComboKmod2)) {
-			if (modeloLigacao.getKmod2() == Kmod2.OUTRO) {
+		if(((VerificadoresPrego)ComboKmod2.getInputVerifier()).verify(ComboKmod2)) {
+			if(modeloLigacao.getKmod2() == Kmod2.OUTRO) {
 
 				double kmod2 = -1;
 
 				do {
-					String value = (String) JOptionPane.showInputDialog(this, "Entre com um valor entre 0 e 1.",
-							"Kmod 2", JOptionPane.INFORMATION_MESSAGE, null, null, "Digite o valor");
+					String value = (String)JOptionPane.showInputDialog(this, "Entre com um valor entre 0 e 1.", "Kmod 2", JOptionPane.INFORMATION_MESSAGE, null, null, "Digite o valor");
 					try {
 						kmod2 = Double.parseDouble(value.replace(",", "."));
 					} catch (NumberFormatException e) {
 
 					}
-					jLabelStatusPrego.setText("Entre com um valor válido, entre 0 e 1.");
-				} while (kmod2 > 1 || kmod2 <= 0);
+					jProgressBarPrego.setString("Entre com um valor válido, entre 0 e 1.");
+				} while(kmod2 > 1 || kmod2 <= 0);
 				modeloLigacao.getKmod2().setValor(kmod2);
-				jLabelStatusPrego.setText("");
+				jProgressBarPrego.setString("");
 			}
 			Textkmod2.setText(modeloLigacao.getKmod2().getValor() + "");
 			Relatoriokmod2.setText(modeloLigacao.getKmod2().getValor() + "");
@@ -3819,71 +2774,44 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		atualizaNextElementosLigacao();
 	}// GEN-LAST:event_ComboKmod2ActionPerformed
 
-	private void Espessura1(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_Espessura1
-	}// GEN-LAST:event_Espessura1
-
-	private void Espessura1LostFocus(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_Espessura1
-	}// GEN-LAST:event_Espessura1
-
 	private void Espessura1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_Espessura1ActionPerformed
-		// TODO add your handling code here:
 		RelatorioEspessura1.setText(modeloLigacao.getElementoLigação1().getEspessura() + "");
 		atualizaNextElementosLigacao();
 	}// GEN-LAST:event_Espessura1ActionPerformed
 
-	private void Espessura1PropertyChange(java.beans.PropertyChangeEvent evt) {// GEN-FIRST:event_Espessura1PropertyChange
-		// TODO add your handling code here:
-	}// GEN-LAST:event_Espessura1PropertyChange
-
 	private void Espessura1KeyTyped(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_Espessura1KeyTyped
-		// TODO add your handling code here:
-		if (evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') {
+		if(evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') {
 			return;
 		}
 		evt.consume();
 	}// GEN-LAST:event_Espessura1KeyTyped
 
 	private void Espessura2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_Espessura2ActionPerformed
-		// TODO add your handling code here:
 		RelatorioEspessura2.setText(modeloLigacao.getElementoLigação2().getEspessura() + "");
 		atualizaNextElementosLigacao();
 	}// GEN-LAST:event_Espessura2ActionPerformed
 
 	private void FiguraResultadoModoFalhaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_FiguraResultadoModoFalhaActionPerformed
-		// TODO add your handling code here:
 		atualizaNextElementosLigacao();
 	}// GEN-LAST:event_FiguraResultadoModoFalhaActionPerformed
 
 	private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jToggleButton1ActionPerformed
-		// TODO add your handling code here:
 		modeloLigacao = ModeloLigacao.DUPLO_CORTE_SIMPLES;
 		MadeiraFigura.setVisible(true);
 		InclinacaoSim1.setEnabled(true);
 		InclinacaoSim2.setEnabled(true);
-		jLabelStatusPrego.setText("Escolha a espécie da madeira para continuar.");
+		jProgressBarPrego.setString("Escolha a espécie da madeira para continuar.");
 		ConiferasButton.setEnabled(true);
 		FolhosasButton.setEnabled(true);
 
 		Next.setEnabled(true);
 		RelatorioSecaoCorte.setText("Ligação com Corte Simples");
-		MadeiraFigura.setIcon(
-				new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/2ParaleloP.png"))); // NOI18N
-		FiguraSecoes.setIcon(new ImageIcon(
-				((ImageIcon) btn1SecaoCorte.getIcon()).getImage().getScaledInstance(55, 60, Image.SCALE_SMOOTH)));
-
-		// double x = valor_faxrk(1, 250, Double.parseDouble("6.5"), 12, 250);
-		// JOptionPane.showMessageDialog(this, "Esta habilitado a=
-		// ["+a.booleanValue()+"] b=["+b.booleanValue()+"]
-		// c=["+c.booleanValue()+"]");
-		// JOptionPane.showMessageDialog(this, "Kmod1 da função=
-		// ["+Double.toString(x)+"");
-
+		MadeiraFigura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/2ParaleloP.png"))); // NOI18N
+		FiguraSecoes.setIcon(new ImageIcon(((ImageIcon)btn1SecaoCorte.getIcon()).getImage().getScaledInstance(55, 60, Image.SCALE_SMOOTH)));
 	}// GEN-LAST:event_jToggleButton1ActionPerformed
 
 	private void Espessura2FocusLost(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_Espessura2FocusLost
-		// TODO add your handling code here:
-		if (Espessura1.getText() == null || Espessura1.getText().equals("") || Espessura2.getText() == null
-				|| Espessura2.getText().equals("")) {
+		if(Espessura1.getText() == null || Espessura1.getText().equals("") || Espessura2.getText() == null || Espessura2.getText().equals("")) {
 			ComboKmod1.setEnabled(false);
 			ComboKmod2.setEnabled(false);
 			ComboKmod3.setEnabled(false);
@@ -3891,14 +2819,13 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			double t1 = Integer.parseInt(Espessura1.getText());
 			double t2 = Integer.parseInt(Espessura2.getText());
 
-			if (t2 < t1) {
+			if(t2 < t1) {
 				String msg = "";
 
 				msg += ".";
 
-				if (!msg.isEmpty()) {
-					JOptionPane.showMessageDialog(this,
-							"- A espessura do Elemento 1 deve ser menor ou igual a espessura do Elemento 2\n" + msg);
+				if(!msg.isEmpty()) {
+					JOptionPane.showMessageDialog(this, "- A espessura do Elemento 1 deve ser menor ou igual a espessura do Elemento 2\n" + msg);
 				}
 				t1 = 0;
 				t2 = 0;
@@ -3913,164 +2840,144 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		}
 	}// GEN-LAST:event_Espessura2FocusLost
 
-	private boolean verificaprego(double espessuraElemento1, double espessuraElemento2, double comprimentoPrego,
-			double diametroPrego) {
-		return true;
-	}
-
 	private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton4ActionPerformed
-		// TODO add your handling code here:
 		jTabbedPane1.setEnabledAt(1, true);
 		jTabbedPane1.setSelectedComponent(SecoesCorte);
-		jLabelStatusPrego.setText("Escolha a quantidade de seções de corte no prego.");
+		jProgressBarPrego.setString("Escolha a quantidade de seções de corte no prego.");
 		btn1SecaoCorte.setEnabled(true);
 		jToggleButton1.setEnabled(true);
 		jToggleButton2.setEnabled(true);
-
 	}// GEN-LAST:event_jButton4ActionPerformed
 
 	private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jToggleButton2ActionPerformed
-		// TODO add your handling code here:
 		modeloLigacao = ModeloLigacao.CORTE_DUPLO;
 		MadeiraFigura.setVisible(true);
 		InclinacaoSim1.setEnabled(true);
 		InclinacaoSim2.setEnabled(true);
-		jLabelStatusPrego.setText("Escolha a espécie da madeira para continuar.");
+		jProgressBarPrego.setString("Escolha a espécie da madeira para continuar.");
 		ConiferasButton.setEnabled(true);
 		FolhosasButton.setEnabled(true);
 
 		Next.setEnabled(true);
 		RelatorioSecaoCorte.setText("Ligação com Corte Duplo");
-		MadeiraFigura
-				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/2Paralelo.png"))); // NOI18N
-		FiguraSecoes.setIcon(new ImageIcon(
-				((ImageIcon) btn1SecaoCorte.getIcon()).getImage().getScaledInstance(55, 60, Image.SCALE_SMOOTH)));
-
-		// double x = valor_faxrk(1, 250, Double.parseDouble("6.5"), 12, 250);
-		// JOptionPane.showMessageDialog(this, "Esta habilitado a=
-		// ["+a.booleanValue()+"] b=["+b.booleanValue()+"]
-		// c=["+c.booleanValue()+"]");
-		// JOptionPane.showMessageDialog(this, "Kmod1 da função=
-		// ["+Double.toString(x)+"");
+		MadeiraFigura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/2Paralelo.png"))); // NOI18N
+		FiguraSecoes.setIcon(new ImageIcon(((ImageIcon)btn1SecaoCorte.getIcon()).getImage().getScaledInstance(55, 60, Image.SCALE_SMOOTH)));
 	}// GEN-LAST:event_jToggleButton2ActionPerformed
 
 	private void ValorAnguloFocusLost(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_ValorAnguloFocusLost
-		// TODO add your handling code here:
 		modeloLigacao.getAngulo().setValorGrau(Double.parseDouble(ValorAngulo.getText().replace(",", ".")));
 
 		MadeiraFigura.setVisible(true);
 		String FiguraMadeira = "";
 
-		switch (modeloLigacao) {
-		case CORTE_SIMPLES:
-			switch (modeloLigacao.getAngulo().getTipoAngulo()) {
-			case PARALELO:
-				FiguraMadeira = "1ParaleloP.png";
-				InclinacaoSim1.setEnabled(false);
-				InclinacaoSim2.setEnabled(false);
-				RelatorioAngulacao.setText("Direção Paralela");
-				CalculoForca01.setVisible(true);
-				CalculoForca901.setVisible(false);// excluído o boolean
-													// paralelo, inclinado ou
-													// perpendicular recebe true
-				CalculoForcaAlfa1.setVisible(false);
+		switch(modeloLigacao){
+			case CORTE_SIMPLES:
+				switch(modeloLigacao.getAngulo().getTipoAngulo()){
+					case PARALELO:
+						FiguraMadeira = "1ParaleloP.png";
+						InclinacaoSim1.setEnabled(false);
+						InclinacaoSim2.setEnabled(false);
+						RelatorioAngulacao.setText("Direção Paralela");
+						CalculoForca01.setVisible(true);
+						CalculoForca901.setVisible(false);// excluído o boolean
+						                                  // paralelo, inclinado ou
+						                                  // perpendicular recebe true
+						CalculoForcaAlfa1.setVisible(false);
+						break;
+					case PERPENDICULAR:
+						FiguraMadeira = "1PerpendicularElem1P.png";
+						InclinacaoSim1.setEnabled(true);
+						InclinacaoSim2.setEnabled(true);
+						RelatorioAngulacao.setText("Direção Perpendicular");
+						CalculoForca01.setVisible(false);
+						CalculoForca901.setVisible(true);
+						CalculoForcaAlfa1.setVisible(false);
+						break;
+					case INCLINADO:
+						InclinacaoSim1.setEnabled(true);
+						InclinacaoSim2.setEnabled(true);
+						RelatorioAngulacao.setText("Direção Inclinada");
+						CalculoForca01.setVisible(false);
+						CalculoForca901.setVisible(false);
+						CalculoForcaAlfa1.setVisible(true);
+						break;
+				}
 				break;
-			case PERPENDICULAR:
-				FiguraMadeira = "1PerpendicularElem1P.png";
-				InclinacaoSim1.setEnabled(true);
-				InclinacaoSim2.setEnabled(true);
-				RelatorioAngulacao.setText("Direção Perpendicular");
-				CalculoForca01.setVisible(false);
-				CalculoForca901.setVisible(true);
-				CalculoForcaAlfa1.setVisible(false);
+			case CORTE_DUPLO:
+				switch(modeloLigacao.getAngulo().getTipoAngulo()){
+					case PARALELO:
+						FiguraMadeira = "2ParaleloP.png";
+						InclinacaoSim1.setEnabled(false);
+						InclinacaoSim2.setEnabled(false);
+						RelatorioAngulacao.setText("Direção Paralela");
+						CalculoForca01.setVisible(true);
+						CalculoForca901.setVisible(false);
+						CalculoForcaAlfa1.setVisible(false);
+						break;
+					case PERPENDICULAR:
+						FiguraMadeira = "2PerpendicularElem1P.png";
+						InclinacaoSim1.setEnabled(true);
+						InclinacaoSim2.setEnabled(true);
+						RelatorioAngulacao.setText("Direção Perpendicular");
+						CalculoForca01.setVisible(false);
+						CalculoForca901.setVisible(true);
+						CalculoForcaAlfa1.setVisible(false);
+						break;
+					case INCLINADO:
+						FiguraMadeira = "2InclinadoElem1P.png";
+						InclinacaoSim1.setEnabled(true);
+						InclinacaoSim2.setEnabled(true);
+						RelatorioAngulacao.setText("Direção Inclinada");
+						CalculoForca01.setVisible(false);
+						CalculoForca901.setVisible(false);
+						CalculoForcaAlfa1.setVisible(true);
+						break;
+				}
 				break;
-			case INCLINADO:
-				InclinacaoSim1.setEnabled(true);
-				InclinacaoSim2.setEnabled(true);
-				RelatorioAngulacao.setText("Direção Inclinada");
-				CalculoForca01.setVisible(false);
-				CalculoForca901.setVisible(false);
-				CalculoForcaAlfa1.setVisible(true);
+			case DUPLO_CORTE_SIMPLES:
+				switch(modeloLigacao.getAngulo().getTipoAngulo()){
+					case PARALELO:
+						FiguraMadeira = "2ParaleloP.png";
+						InclinacaoSim1.setEnabled(false);
+						InclinacaoSim2.setEnabled(false);
+						RelatorioAngulacao.setText("Direção Paralela");
+						CalculoForca01.setVisible(true);
+						CalculoForca901.setVisible(false);
+						CalculoForcaAlfa1.setVisible(false);
+						break;
+					case PERPENDICULAR:
+						FiguraMadeira = "2PerpendicularElem1P.png";
+						InclinacaoSim1.setEnabled(true);
+						InclinacaoSim2.setEnabled(true);
+						RelatorioAngulacao.setText("Direção Perpendicular");
+						CalculoForca01.setVisible(false);
+						CalculoForca901.setVisible(true);
+						CalculoForcaAlfa1.setVisible(false);
+						break;
+					case INCLINADO:
+						FiguraMadeira = "2InclinadoElem1P.png";
+						InclinacaoSim1.setEnabled(true);
+						InclinacaoSim2.setEnabled(true);
+						RelatorioAngulacao.setText("Direção Inclinada");
+						CalculoForca01.setVisible(false);
+						CalculoForca901.setVisible(false);
+						CalculoForcaAlfa1.setVisible(true);
+						break;
+				}
 				break;
-			}
-			break;
-		case CORTE_DUPLO:
-			switch (modeloLigacao.getAngulo().getTipoAngulo()) {
-			case PARALELO:
-				FiguraMadeira = "2ParaleloP.png";
-				InclinacaoSim1.setEnabled(false);
-				InclinacaoSim2.setEnabled(false);
-				RelatorioAngulacao.setText("Direção Paralela");
-				CalculoForca01.setVisible(true);
-				CalculoForca901.setVisible(false);
-				CalculoForcaAlfa1.setVisible(false);
-				break;
-			case PERPENDICULAR:
-				FiguraMadeira = "2PerpendicularElem1P.png";
-				InclinacaoSim1.setEnabled(true);
-				InclinacaoSim2.setEnabled(true);
-				RelatorioAngulacao.setText("Direção Perpendicular");
-				CalculoForca01.setVisible(false);
-				CalculoForca901.setVisible(true);
-				CalculoForcaAlfa1.setVisible(false);
-				break;
-			case INCLINADO:
-				FiguraMadeira = "2InclinadoElem1P.png";
-				InclinacaoSim1.setEnabled(true);
-				InclinacaoSim2.setEnabled(true);
-				RelatorioAngulacao.setText("Direção Inclinada");
-				CalculoForca01.setVisible(false);
-				CalculoForca901.setVisible(false);
-				CalculoForcaAlfa1.setVisible(true);
-				break;
-			}
-			break;
-		case DUPLO_CORTE_SIMPLES:
-			switch (modeloLigacao.getAngulo().getTipoAngulo()) {
-			case PARALELO:
-				FiguraMadeira = "2ParaleloP.png";
-				InclinacaoSim1.setEnabled(false);
-				InclinacaoSim2.setEnabled(false);
-				RelatorioAngulacao.setText("Direção Paralela");
-				CalculoForca01.setVisible(true);
-				CalculoForca901.setVisible(false);
-				CalculoForcaAlfa1.setVisible(false);
-				break;
-			case PERPENDICULAR:
-				FiguraMadeira = "2PerpendicularElem1P.png";
-				InclinacaoSim1.setEnabled(true);
-				InclinacaoSim2.setEnabled(true);
-				RelatorioAngulacao.setText("Direção Perpendicular");
-				CalculoForca01.setVisible(false);
-				CalculoForca901.setVisible(true);
-				CalculoForcaAlfa1.setVisible(false);
-				break;
-			case INCLINADO:
-				FiguraMadeira = "2InclinadoElem1P.png";
-				InclinacaoSim1.setEnabled(true);
-				InclinacaoSim2.setEnabled(true);
-				RelatorioAngulacao.setText("Direção Inclinada");
-				CalculoForca01.setVisible(false);
-				CalculoForca901.setVisible(false);
-				CalculoForcaAlfa1.setVisible(true);
-				break;
-			}
-			break;
 		}
-		MadeiraFigura.setIcon(
-				new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/" + FiguraMadeira))); // NOI18N
+		MadeiraFigura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/" + FiguraMadeira))); // NOI18N
 		MadeiraFigura.doClick();
 	}// GEN-LAST:event_ValorAnguloFocusLost
 
 	private void NextActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_NextActionPerformed
-		// TODO add your handling code here:
 		jTabbedPane1.setEnabledAt(2, true);
 		jTabbedPane1.setSelectedComponent(ElementosMadeira);
-		jLabelStatusPrego.setText("Preencha todos os campos sem exceção.");
+		jProgressBarPrego.setString("Preencha todos os campos sem exceção.");
+		jProgressBarPrego.setValue(1);
 	}// GEN-LAST:event_NextActionPerformed
 
 	private void Next2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_Next2ActionPerformed
-		// TODO add your handling code here:
 		Espessura1.getInputVerifier().shouldYieldFocus(Espessura1);
 		Espessura2.getInputVerifier().shouldYieldFocus(Espessura2);
 		ValorAngulo.getInputVerifier().shouldYieldFocus(ValorAngulo);
@@ -4082,31 +2989,29 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 		modeloLigacao.setConectores(new Conectores());
 
-		if (Next2.hasFocus()) {
+		if(Next2.hasFocus()) {
 			jTabbedPane1.setEnabledAt(3, true);
 			jTabbedPane1.setSelectedComponent(ElementosMetalicos);
-			jLabelStatusPrego.setText("Preencha todos os campos sem exceção.");
+			jProgressBarPrego.setString("Preencha todos os campos sem exceção.");
+			jProgressBarPrego.setValue(2);
 		}
 	}// GEN-LAST:event_Next2ActionPerformed
 
 	private void Next3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_Next3ActionPerformed
-		// TODO add your handling code here:
 		jTabbedPane1.setEnabledAt(5, true);
 		jTabbedPane1.setSelectedComponent(Relatorio);
-		jLabelStatusPrego.setText(
-				"Verifique o relatório do dimensionamento. Fique atento para as opções fornecidas nos botões.");
-
+		jProgressBarPrego.setString("Verifique o relatório do dimensionamento. Fique atento para as opções fornecidas nos botões.");
+		jProgressBarPrego.setValue(4);
 	}// GEN-LAST:event_Next3ActionPerformed
 
 	private void ValorAnguloMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_ValorAnguloMouseClicked
-		// TODO add your handling code here:
-		jLabelStatusPrego.setText("Digite o ângulo entre as peças e aperte a tecla TAB.");
+		jProgressBarPrego.setString("Digite o ângulo entre as peças e aperte a tecla TAB.");
 	}// GEN-LAST:event_ValorAnguloMouseClicked
 
 	private void ConiferasButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ConiferasButtonActionPerformed
-		if (ConiferasButton.isSelected()) {
+		if(ConiferasButton.isSelected()) {
 			modeloLigacao.setEspecieMadeira(EspecieMadeira.CONIFERA);
-			jLabelStatusPrego.setText("Escolha o tipo de madeira para continuar.");
+			jProgressBarPrego.setString("Escolha o tipo de madeira para continuar.");
 			SerradaButton.setEnabled(true);
 			RecompostaButton.setEnabled(true);
 			FolhosasButton.setSelected(false);
@@ -4120,9 +3025,9 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 	}// GEN-LAST:event_ConiferasButtonActionPerformed
 
 	private void FolhosasButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_FolhosasButtonActionPerformed
-		if (FolhosasButton.isSelected()) {
+		if(FolhosasButton.isSelected()) {
 			modeloLigacao.setEspecieMadeira(EspecieMadeira.FOLHOSA);
-			jLabelStatusPrego.setText("Escolha o tipo de madeira para continuar.");
+			jProgressBarPrego.setString("Escolha o tipo de madeira para continuar.");
 			SerradaButton.setEnabled(true);
 			RecompostaButton.setEnabled(true);
 			ConiferasButton.setSelected(false);
@@ -4136,10 +3041,9 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 	}// GEN-LAST:event_FolhosasButtonActionPerformed
 
 	private void SerradaButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_SerradaButtonActionPerformed
-		// TODO add your handling code here:
-		if (SerradaButton.isSelected()) {
+		if(SerradaButton.isSelected()) {
 			modeloLigacao.setTipoMadeira(TipoMadeira.SERRADA);
-			jLabelStatusPrego.setText("Clique em avançar para continuar.");
+			jProgressBarPrego.setString("Clique em avançar para continuar.");
 			RecompostaButton.setSelected(false);
 			Next.setEnabled(true);
 		} else {
@@ -4148,10 +3052,9 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 	}// GEN-LAST:event_SerradaButtonActionPerformed
 
 	private void RecompostaButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_RecompostaButtonActionPerformed
-		// TODO add your handling code here:
-		if (RecompostaButton.isSelected()) {
+		if(RecompostaButton.isSelected()) {
 			modeloLigacao.setTipoMadeira(TipoMadeira.SERRADA);
-			jLabelStatusPrego.setText("Clique em avançar para continuar.");
+			jProgressBarPrego.setString("Clique em avançar para continuar.");
 			SerradaButton.setSelected(false);
 			Next.setEnabled(true);
 		} else {
@@ -4159,12 +3062,8 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		}
 	}// GEN-LAST:event_RecompostaButtonActionPerformed
 
-	private void jTabbedPane1FocusLost(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_jTabbedPane1FocusLost
-		// TODO add your handling code here:
-	}// GEN-LAST:event_jTabbedPane1FocusLost
-
 	private void ComboElem1ClasseMadeiraFocusLost(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_ComboElem1ClasseMadeiraFocusLost
-		if (((VerificadoresPrego) ComboElem1ClasseMadeira.getInputVerifier()).isVerified()) {
+		if(((VerificadoresPrego)ComboElem1ClasseMadeira.getInputVerifier()).isVerified()) {
 
 			ValorFc01.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getfc0k() + "");
 			ValorDensidade1.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getDensidade() + "");
@@ -4177,63 +3076,43 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			RelatorioEc0m1.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getec0m() + "");
 		}
 
-		// TODO add your handling code here:
-
 		atualizaNextElementosLigacao(); // TODO add your handling code here:
 	}// GEN-LAST:event_ComboElem1ClasseMadeiraFocusLost
 	/**/
 
 	/**
 	 * @param args
-	 *            the command line arguments
+	 *        the command line arguments
 	 */
 	public static void main(String args[]) {
-
-		/* Set the Nimbus look and feel */
-		// <editor-fold defaultstate="collapsed" desc=" Look and feel setting
-		// code (optional) ">
-		/*
-		 * If Nimbus (introduced in Java SE 6) is not available, stay with the
-		 * default look and feel. For details see
-		 * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.
-		 * html
-		 */
 		try {
-			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
+			for(javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+				if("Nimbus".equals(info.getName())) {
 					javax.swing.UIManager.setLookAndFeel(info.getClassName());
 					break;
 
 				}
 			}
 		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null,
-					ex);
+			java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
 		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null,
-					ex);
+			java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
 		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null,
-					ex);
+			java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null,
-					ex);
+			java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		}
 		// </editor-fold>
 
 		/* Create and display the form */
-		java.awt.EventQueue.invokeLater(new Runnable() {
+		java.awt.EventQueue.invokeLater(new Runnable(){
 			public void run() {
 				new TelaPrego().setVisible(true);
 			}
 		});
-
-		// Date sysDate = new Date();
-		// SimpleDateFormat dt = new SimpleDateFormat("dd/mm/yyyy hh:mm:ss");
-		// dateFormat.format(sysDate);
 	}
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
@@ -4276,7 +3155,6 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 	private javax.swing.JLabel Fv0k1;
 	private javax.swing.JLabel Fv0k2;
 	private javax.swing.JLabel Fyk;
-	private javax.swing.ButtonGroup GroupAngulacao;
 	private javax.swing.ButtonGroup GroupInclinacaoSim;
 	private javax.swing.ButtonGroup GroupSecoesCorte;
 	private javax.swing.ButtonGroup GroupTesteParafuso;
@@ -4497,7 +3375,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 	private javax.swing.JLabel jLabel97;
 	private javax.swing.JLabel jLabel98;
 	private javax.swing.JLabel jLabel99;
-	private javax.swing.JLabel jLabelStatusPrego;
+	private javax.swing.JProgressBar jProgressBarPrego;
 	private javax.swing.JLabel jLabelUnEspessura;
 	private javax.swing.JLabel jLabelUnEspessura1;
 	private javax.swing.JLabel jLabel_classe_madeira_1;
@@ -4540,29 +3418,18 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 	private void atualizaNextElementosLigacao() {
 
-		Next2.setEnabled(((VerificadoresPrego) Espessura1.getInputVerifier()).isVerified()
-				&& ((VerificadoresPrego) Espessura2.getInputVerifier()).isVerified()
-				&& ((VerificadoresPrego) ValorAngulo.getInputVerifier()).isVerified()
-				&& ((VerificadoresPrego) ComboElem1ClasseMadeira.getInputVerifier()).isVerified()
-				&& ((VerificadoresPrego) ComboElem2ClasseMadeira.getInputVerifier()).isVerified()
-				&& ((VerificadoresPrego) ComboKmod1.getInputVerifier()).isVerified()
-				&& ((VerificadoresPrego) ComboKmod2.getInputVerifier()).isVerified()
-				&& ((VerificadoresPrego) ComboKmod3.getInputVerifier()).isVerified());
-
-		// throw new UnsupportedOperationException("Not supported yet."); //To
-		// change body of generated methods, choose Tools | Templates.
+		Next2.setEnabled(((VerificadoresPrego)Espessura1.getInputVerifier()).isVerified() && ((VerificadoresPrego)Espessura2.getInputVerifier()).isVerified()
+		                 && ((VerificadoresPrego)ValorAngulo.getInputVerifier()).isVerified() && ((VerificadoresPrego)ComboElem1ClasseMadeira.getInputVerifier()).isVerified()
+		                 && ((VerificadoresPrego)ComboElem2ClasseMadeira.getInputVerifier()).isVerified() && ((VerificadoresPrego)ComboKmod1.getInputVerifier()).isVerified()
+		                 && ((VerificadoresPrego)ComboKmod2.getInputVerifier()).isVerified() && ((VerificadoresPrego)ComboKmod3.getInputVerifier()).isVerified());
 	}
 
 	private void atualizaButtonCalcular() {
 
-		ButtonCalcular.setEnabled(((VerificadoresPrego) ComboTipoPrego.getInputVerifier()).isVerified()
-				&& ((VerificadoresPrego) ComboQuantPregos.getInputVerifier()).isVerified()
-				&& ((VerificadoresPrego) ComboAco.getInputVerifier()).isVerified()
+		ButtonCalcular.setEnabled(((VerificadoresPrego)ComboTipoPrego.getInputVerifier()).isVerified() && ((VerificadoresPrego)ComboQuantPregos.getInputVerifier()).isVerified()
+		                          && ((VerificadoresPrego)ComboAco.getInputVerifier()).isVerified()
 
 		);
-
-		// throw new UnsupportedOperationException("Not supported yet."); //To
-		// change body of generated methods, choose Tools | Templates.
 	}
 
 	public ModeloLigacao getModeloLigacao() {
