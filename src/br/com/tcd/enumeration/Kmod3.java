@@ -3,9 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.tcd.modelo;
-
-import br.com.tcd.modelo.EspecieMadeira;
+package br.com.tcd.enumeration;
 
 /**
  *

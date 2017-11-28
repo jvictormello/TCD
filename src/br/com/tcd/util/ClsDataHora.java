@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.tcd.telas;
+package br.com.tcd.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,7 +13,7 @@ import java.util.Date;
  * @author MarcosVinicius
  */
 public class ClsDataHora {
-	
+
 	public String MostraData() {
 		//pega data do computador
 		Date data = new Date();

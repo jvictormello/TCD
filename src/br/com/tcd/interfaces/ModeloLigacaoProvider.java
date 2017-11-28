@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.tcd.controller;
+package br.com.tcd.interfaces;
 
-import br.com.tcd.modelo.ModeloLigacao;
+import br.com.tcd.enumeration.ModeloLigacao;
 
 /**
  *
@@ -13,6 +13,6 @@ import br.com.tcd.modelo.ModeloLigacao;
  */
 public interface ModeloLigacaoProvider {
 
-    public ModeloLigacao getModeloLigacao();
-    
+	public ModeloLigacao getModeloLigacao();
+
 }

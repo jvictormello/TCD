@@ -17,21 +17,33 @@ import java.awt.print.PrinterJob;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-import br.com.tcd.controller.ModeloLigacaoProvider;
-import br.com.tcd.controller.VerificadoresPrego;
+import br.com.tcd.enumeration.ClasseAcoPrego;
+import br.com.tcd.enumeration.ClasseMadeira;
+import br.com.tcd.enumeration.ClasseQuantidadePregos;
+import br.com.tcd.enumeration.EspecieMadeira;
+import br.com.tcd.enumeration.Kmod1;
+import br.com.tcd.enumeration.Kmod2;
+import br.com.tcd.enumeration.Kmod3;
+import br.com.tcd.enumeration.ModeloLigacao;
+import br.com.tcd.enumeration.TipoMadeira;
+import br.com.tcd.enumeration.TipoPrego;
+import br.com.tcd.interfaces.ModeloLigacaoProvider;
 import br.com.tcd.modelo.Angulo;
 import br.com.tcd.modelo.CalculoModeloLigacao;
-import br.com.tcd.modelo.ClasseAcoPrego;
-import br.com.tcd.modelo.ClasseMadeira;
-import br.com.tcd.modelo.ClasseQuantidadePregos;
 import br.com.tcd.modelo.Conectores;
-import br.com.tcd.modelo.EspecieMadeira;
-import br.com.tcd.modelo.Kmod1;
-import br.com.tcd.modelo.Kmod2;
-import br.com.tcd.modelo.Kmod3;
-import br.com.tcd.modelo.ModeloLigacao;
-import br.com.tcd.modelo.TipoMadeira;
-import br.com.tcd.modelo.TipoPrego;
+import br.com.tcd.util.ClsDataHora;
+import br.com.tcd.verifier.VerificadorComboAcoPrego;
+import br.com.tcd.verifier.VerificadorComboClasseElem1;
+import br.com.tcd.verifier.VerificadorComboClasseElem2;
+import br.com.tcd.verifier.VerificadorComboQuantPrego;
+import br.com.tcd.verifier.VerificadorComboTipoPrego;
+import br.com.tcd.verifier.VerificadorEspessura1;
+import br.com.tcd.verifier.VerificadorEspessura2;
+import br.com.tcd.verifier.VerificadorKmod1;
+import br.com.tcd.verifier.VerificadorKmod2;
+import br.com.tcd.verifier.VerificadorKmod3;
+import br.com.tcd.verifier.VerificadorValorAngulo;
+import br.com.tcd.verifier.VerificadoresPrego;
 
 /**
  *
@@ -105,17 +117,17 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			comboKmod2.setEnabled(false);
 			comboKmod3.setEnabled(false);
 
-			espessura1.setInputVerifier(new VerificadoresPrego.VerificadorEspessura1(this.jProgressBarPrego, this));
-			valorAngulo.setInputVerifier(new VerificadoresPrego.VerificadorValorAngulo(this.jProgressBarPrego, this));
-			espessura2.setInputVerifier(new VerificadoresPrego.VerificadorEspessura2(this.jProgressBarPrego, this));
-			comboElem1ClasseMadeira.setInputVerifier(new VerificadoresPrego.VerificadorComboClasseElem1(this.jProgressBarPrego, this));
-			comboElem2ClasseMadeira.setInputVerifier(new VerificadoresPrego.VerificadorComboClasseElem2(this.jProgressBarPrego, this));
-			comboKmod1.setInputVerifier(new VerificadoresPrego.VerificadorKmod1(this.jProgressBarPrego, this));
-			comboKmod2.setInputVerifier(new VerificadoresPrego.VerificadorKmod2(this.jProgressBarPrego, this));
-			comboKmod3.setInputVerifier(new VerificadoresPrego.VerificadorKmod3(this.jProgressBarPrego, this));
-			comboQuantPregos.setInputVerifier(new VerificadoresPrego.VerificadorComboQuantPrego(this.jProgressBarPrego, this));
-			comboTipoPrego.setInputVerifier(new VerificadoresPrego.VerificadorComboTipoPrego(this.jProgressBarPrego, this));
-			comboAco.setInputVerifier(new VerificadoresPrego.VerificadorComboAcoPrego(this.jProgressBarPrego, this));
+			espessura1.setInputVerifier(new VerificadorEspessura1(this.jProgressBarPrego, this));
+			valorAngulo.setInputVerifier(new VerificadorValorAngulo(this.jProgressBarPrego, this));
+			espessura2.setInputVerifier(new VerificadorEspessura2(this.jProgressBarPrego, this));
+			comboElem1ClasseMadeira.setInputVerifier(new VerificadorComboClasseElem1(this.jProgressBarPrego, this));
+			comboElem2ClasseMadeira.setInputVerifier(new VerificadorComboClasseElem2(this.jProgressBarPrego, this));
+			comboKmod1.setInputVerifier(new VerificadorKmod1(this.jProgressBarPrego, this));
+			comboKmod2.setInputVerifier(new VerificadorKmod2(this.jProgressBarPrego, this));
+			comboKmod3.setInputVerifier(new VerificadorKmod3(this.jProgressBarPrego, this));
+			comboQuantPregos.setInputVerifier(new VerificadorComboQuantPrego(this.jProgressBarPrego, this));
+			comboTipoPrego.setInputVerifier(new VerificadorComboTipoPrego(this.jProgressBarPrego, this));
+			comboAco.setInputVerifier(new VerificadorComboAcoPrego(this.jProgressBarPrego, this));
 		} catch (Exception e) {
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
@@ -875,7 +887,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			});
 			espessura2.addActionListener(new java.awt.event.ActionListener(){
 				public void actionPerformed(java.awt.event.ActionEvent evt) {
-					espessura2ActionPerformed(evt);
+					Espessura2ActionPerformed(evt);
 				}
 			});
 			espessura2.addKeyListener(new java.awt.event.KeyAdapter(){
@@ -2016,8 +2028,8 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 				relatorioKmod1.setText(modeloLigacao.getKmod1().getValor() + "");
 				relatoriokmod2.setText(modeloLigacao.getKmod2().getValor() + "");
 				relatoriokmod3.setText(modeloLigacao.getKmod3().getValor() + "");
-				relatorioEspessura1.setText(modeloLigacao.getElementoLigação1().getEspessura() + "");
-				relatorioEspessura2.setText(modeloLigacao.getElementoLigação2().getEspessura() + "");
+				relatorioEspessura1.setText(modeloLigacao.getElementoLigacao1().getEspessura() + "");
+				relatorioEspessura2.setText(modeloLigacao.getElementoLigacao2().getEspessura() + "");
 				relatorioAngulo.setText(modeloLigacao.getAngulo().getValorGrau() + "");
 				relatorioFc0d1.setText(String.format("%.1f", calculoModeloLigacao.getFe0d1()));
 				relatorioFc0d2.setText(String.format("%.1f", calculoModeloLigacao.getFe0d2()));
@@ -2048,16 +2060,16 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 					if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
 						Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
 						ImagemFalha = "1.2P.png";
-					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()) {
 						Tipo = "Embutimento do pino metálico nas duas peças, devido ao giro do pino metálico.";
 						ImagemFalha = "1.3P.png";
-					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin()) {
 						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
 						ImagemFalha = "1.4P.png";
-					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd5() == calculoModeloLigacao.getRdmin()) {
+					} else if(calculoModeloLigacao.getRd5() < calculoModeloLigacao.getRdmin()) {
 						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 1.";
 						ImagemFalha = "1.5P.png";
-					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd6() == calculoModeloLigacao.getRdmin()) {
+					} else if(calculoModeloLigacao.getRd6() < calculoModeloLigacao.getRdmin()) {
 						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
 						ImagemFalha = "1.6P.png";
 					}
@@ -2087,16 +2099,16 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 					if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
 						Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
 						ImagemFalha = "1.2P.png";
-					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()) {
 						Tipo = "Embutimento do pino metálico nas duas peças, devido ao giro do pino metálico.";
 						ImagemFalha = "1.3P.png";
-					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin()) {
 						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
 						ImagemFalha = "1.4P.png";
-					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd5() == calculoModeloLigacao.getRdmin()) {
+					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin()) {
 						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 1.";
 						ImagemFalha = "1.5P.png";
-					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd6() == calculoModeloLigacao.getRdmin()) {
+					} else if(calculoModeloLigacao.getRd5() < calculoModeloLigacao.getRdmin()) {
 						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
 						ImagemFalha = "1.6P.png";
 					}
@@ -2127,16 +2139,16 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 					if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
 						Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
 						ImagemFalha = "1.2P.png";
-					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()) {
 						Tipo = "Embutimento do pino metálico nas duas peças, devido ao giro do pino metálico.";
 						ImagemFalha = "1.3P.png";
-					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin()) {
 						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
 						ImagemFalha = "1.4P.png";
-					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd5() == calculoModeloLigacao.getRdmin()) {
+					} else if(calculoModeloLigacao.getRd5() < calculoModeloLigacao.getRdmin()) {
 						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 1.";
 						ImagemFalha = "1.5P.png";
-					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd6() == calculoModeloLigacao.getRdmin()) {
+					} else if(calculoModeloLigacao.getRd6() < calculoModeloLigacao.getRdmin()) {
 						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
 						ImagemFalha = "1.6P.png";
 					}
@@ -2165,16 +2177,16 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 					if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
 						Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
 						ImagemFalha = "1.2P.png";
-					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()) {
 						Tipo = "Embutimento do pino metálico nas duas peças, devido ao giro do pino metálico.";
 						ImagemFalha = "1.3P.png";
-					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin()) {
 						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
 						ImagemFalha = "1.4P.png";
-					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd5() == calculoModeloLigacao.getRdmin()) {
+					} else if(calculoModeloLigacao.getRd5() < calculoModeloLigacao.getRdmin()) {
 						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 1.";
 						ImagemFalha = "1.5P.png";
-					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd6() == calculoModeloLigacao.getRdmin()) {
+					} else if(calculoModeloLigacao.getRd6() < calculoModeloLigacao.getRdmin()) {
 						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
 						ImagemFalha = "1.6P.png";
 					}
@@ -2202,10 +2214,10 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 					if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
 						Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
 						ImagemFalha = "2.2P.png";
-					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()) {
 						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
 						ImagemFalha = "2.3P.png";
-					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin()) {
 						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
 						ImagemFalha = "2.4P.png";
 					}
@@ -2235,10 +2247,10 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 					if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
 						Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
 						ImagemFalha = "2.2P.png";
-					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()) {
 						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
 						ImagemFalha = "2.3P.png";
-					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin()) {
 						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
 						ImagemFalha = "2.4P.png";
 					}
@@ -2266,7 +2278,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()) {
 						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
 						ImagemFalha = "2.3P.png";
-					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
+					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin()) {
 						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
 						ImagemFalha = "2.4P.png";
 					}
@@ -2344,7 +2356,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 				valorDiametro.setText(modeloLigacao.getConectores().getTipoPrego().getDiametro() + "");
 				valorComprimento.setText(modeloLigacao.getConectores().getTipoPrego().getComprimento() + "");
 				relatorioTipoParafuso.setText(modeloLigacao.getConectores().getTipoPrego().getNome() + "");
-				relatorioDiametro.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getfc0k() + "");
+				relatorioDiametro.setText(modeloLigacao.getElementoLigacao2().getClasseMadeira().getfc0k() + "");
 				relatorioComprimento.setText(modeloLigacao.getConectores().getTipoPrego().getComprimento() + "");
 			}
 
@@ -2377,15 +2389,15 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 	private void comboElem2ClasseMadeiraFocusLost(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_comboElem2ClasseMadeiraActionPerformed
 		try {
 			if(((VerificadoresPrego)comboElem2ClasseMadeira.getInputVerifier()).isVerified()) {
-				valorFc2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getfc0k() + "");
-				valorDensidade2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getDensidade() + "");
-				valorFvok2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getfv0k() + "");
-				valorEc0m2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getec0m() + "");
-				relatorioClasseElem2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().name());
-				relatoriofcok2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getfc0k() + "");
-				relatorioDensidade2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getDensidade() + "");
-				relatoriofv0k2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getfv0k() + "");
-				relatorioEc0m2.setText(modeloLigacao.getElementoLigação2().getClasseMadeira().getec0m() + "");
+				valorFc2.setText(modeloLigacao.getElementoLigacao2().getClasseMadeira().getfc0k() + "");
+				valorDensidade2.setText(modeloLigacao.getElementoLigacao2().getClasseMadeira().getDensidade() + "");
+				valorFvok2.setText(modeloLigacao.getElementoLigacao2().getClasseMadeira().getfv0k() + "");
+				valorEc0m2.setText(modeloLigacao.getElementoLigacao2().getClasseMadeira().getec0m() + "");
+				relatorioClasseElem2.setText(modeloLigacao.getElementoLigacao2().getClasseMadeira().name());
+				relatoriofcok2.setText(modeloLigacao.getElementoLigacao2().getClasseMadeira().getfc0k() + "");
+				relatorioDensidade2.setText(modeloLigacao.getElementoLigacao2().getClasseMadeira().getDensidade() + "");
+				relatoriofv0k2.setText(modeloLigacao.getElementoLigacao2().getClasseMadeira().getfv0k() + "");
+				relatorioEc0m2.setText(modeloLigacao.getElementoLigacao2().getClasseMadeira().getec0m() + "");
 			}
 
 			atualizanextElementosLigacao();
@@ -2427,8 +2439,8 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 	private void inclinacaoSim1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_inclinacaoSim1ActionPerformed
 		try {
-			incSim1 = false;
-			incSim2 = true;
+			incSim1 = true;
+			incSim2 = false;
 
 			madeiraFigura.setVisible(true);
 			String TrocaFigura = "";
@@ -2497,8 +2509,8 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 	private void inclinacaoSim2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_inclinacaoSim2ActionPerformed
 		try {
-			incSim1 = true;
-			incSim2 = false;
+			incSim1 = false;
+			incSim2 = true;
 
 			madeiraFigura.setVisible(true);
 			String TrocaFigura = "";
@@ -2665,8 +2677,8 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 					break;
 				case 3:
-					double t1 = modeloLigacao.getElementoLigação1().getEspessura();
-					double t2 = modeloLigacao.getElementoLigação2().getEspessura();
+					double t1 = modeloLigacao.getElementoLigacao1().getEspessura();
+					double t2 = modeloLigacao.getElementoLigacao2().getEspessura();
 
 					while(comboTipoPrego.getModel().getSize() > 1) {
 						comboTipoPrego.removeItemAt(1);
@@ -2683,20 +2695,27 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 							switch(modeloLigacao){
 								case CORTE_SIMPLES:
 									tp = tipoPrego.getComprimento() - t1;
-									if(tp > 12 * tipoPrego.getDiametro()) {
+									if(tp >= 12 * tipoPrego.getDiametro()) {
 										passou = true;
 									}
 									break;
 								case DUPLO_CORTE_SIMPLES:
 									tp = tipoPrego.getComprimento() - t1;
-									if(tp > 12 * tipoPrego.getDiametro() && tp < t2) {
-										passou = true;
+									if(tp <= t2) {
+										if(tp > 12 * tipoPrego.getDiametro()) {
+											passou = true;
+										}
+									}
+									if(tp > t2) {
+										tp = tipoPrego.getComprimento() - (t1 + t2);
+										if(tp < 12 * tipoPrego.getDiametro()) {
+											passou = true;
+										}
 									}
 									break;
-
 								case CORTE_DUPLO:
 									tp = tipoPrego.getComprimento() - (t1 + t2);
-									if(tp > 12 * tipoPrego.getDiametro()) {
+									if(tp >= 12 * tipoPrego.getDiametro()) {
 										passou = true;
 									}
 									break;
@@ -2794,7 +2813,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 	private void voltarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_VoltarActionPerformed
 		try {
 			this.dispose();
-			TelaInicial2 telainicial = new TelaInicial2();
+			TelaInicial telainicial = new TelaInicial();
 			telainicial.setVisible(true);
 		} catch (Exception e) {
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
@@ -2804,7 +2823,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 	private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton3ActionPerformed
 		try {
 			this.dispose();
-			TelaInicial2 telainicial = new TelaInicial2();
+			TelaInicial telainicial = new TelaInicial();
 			telainicial.setVisible(true);
 		} catch (Exception e) {
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
@@ -2900,7 +2919,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 	private void espessura1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_Espessura1ActionPerformed
 		try {
-			relatorioEspessura1.setText(modeloLigacao.getElementoLigação1().getEspessura() + "");
+			relatorioEspessura1.setText(modeloLigacao.getElementoLigacao1().getEspessura() + "");
 			atualizanextElementosLigacao();
 		} catch (Exception e) {
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
@@ -2918,9 +2937,9 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		}
 	}// GEN-LAST:event_Espessura1KeyTyped
 
-	private void espessura2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_Espessura2ActionPerformed
+	private void Espessura2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_Espessura2ActionPerformed
 		try {
-			relatorioEspessura2.setText(modeloLigacao.getElementoLigação2().getEspessura() + "");
+			relatorioEspessura2.setText(modeloLigacao.getElementoLigacao2().getEspessura() + "");
 			atualizanextElementosLigacao();
 		} catch (Exception e) {
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
@@ -3258,15 +3277,15 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		try {
 			if(((VerificadoresPrego)comboElem1ClasseMadeira.getInputVerifier()).isVerified()) {
 
-				valorFc01.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getfc0k() + "");
-				valorDensidade1.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getDensidade() + "");
-				valorFvok1.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getfv0k() + "");
-				valorEc0m1.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getec0m() + "");
-				relatorioClasseElem1.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().name());
-				relatoriofcok1.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getfc0k() + "");
-				relatorioDensidade1.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getDensidade() + "");
-				relatoriofv0k1.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getfv0k() + "");
-				relatorioEc0m1.setText(modeloLigacao.getElementoLigação1().getClasseMadeira().getec0m() + "");
+				valorFc01.setText(modeloLigacao.getElementoLigacao1().getClasseMadeira().getfc0k() + "");
+				valorDensidade1.setText(modeloLigacao.getElementoLigacao1().getClasseMadeira().getDensidade() + "");
+				valorFvok1.setText(modeloLigacao.getElementoLigacao1().getClasseMadeira().getfv0k() + "");
+				valorEc0m1.setText(modeloLigacao.getElementoLigacao1().getClasseMadeira().getec0m() + "");
+				relatorioClasseElem1.setText(modeloLigacao.getElementoLigacao1().getClasseMadeira().name());
+				relatoriofcok1.setText(modeloLigacao.getElementoLigacao1().getClasseMadeira().getfc0k() + "");
+				relatorioDensidade1.setText(modeloLigacao.getElementoLigacao1().getClasseMadeira().getDensidade() + "");
+				relatoriofv0k1.setText(modeloLigacao.getElementoLigacao1().getClasseMadeira().getfv0k() + "");
+				relatorioEc0m1.setText(modeloLigacao.getElementoLigacao1().getClasseMadeira().getec0m() + "");
 			}
 
 			atualizanextElementosLigacao();
@@ -3290,16 +3309,16 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 				}
 			}
 		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(TelaPrego.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
 		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(TelaPrego.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
 		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(TelaPrego.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(TelaPrego.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		}
 		// </editor-fold>
 

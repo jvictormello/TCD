@@ -3,7 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.tcd.modelo;
+package br.com.tcd.enumeration;
+
+import br.com.tcd.modelo.Angulo;
+import br.com.tcd.modelo.Conectores;
+import br.com.tcd.modelo.ElementoLigacao;
 
 /**
  *
@@ -12,7 +16,7 @@ package br.com.tcd.modelo;
  public enum ModeloLigacao {
     CORTE_SIMPLES(1),
     CORTE_DUPLO(2), 
-    DUPLO_CORTE_SIMPLES(3);
+    DUPLO_CORTE_SIMPLES(1);
     
     
     private ModeloLigacao(int numSecao){
@@ -22,8 +26,8 @@ package br.com.tcd.modelo;
     
     private int numSecao;
     private Angulo angulo;
-    private ElementoLigação elementoLigação1 = new ElementoLigação();
-    private ElementoLigação elementoLigação2 = new ElementoLigação();
+    private ElementoLigacao elementoLigacao1 = new ElementoLigacao();
+    private ElementoLigacao elementoLigacao2 = new ElementoLigacao();
     private EspecieMadeira especieMadeira;
     private TipoMadeira tipoMadeira;
     private Conectores conectores;    
@@ -41,12 +45,12 @@ package br.com.tcd.modelo;
         return this.angulo;
     }
 
-    public ElementoLigação getElementoLigação1() {
-        return this.elementoLigação1;
+    public ElementoLigacao getElementoLigacao1() {
+        return this.elementoLigacao1;
     }
 
-    public ElementoLigação getElementoLigação2() {
-        return this.elementoLigação2;
+    public ElementoLigacao getElementoLigacao2() {
+        return this.elementoLigacao2;
     }
 
     public EspecieMadeira getEspecieMadeira() {
@@ -102,7 +106,7 @@ package br.com.tcd.modelo;
     }
     
     public float getBeta(){
-        return this.elementoLigação2.getClasseMadeira().getfc0k()/this.elementoLigação1.getClasseMadeira().getfc0k();
+        return this.elementoLigacao2.getClasseMadeira().getfc0k()/this.elementoLigacao1.getClasseMadeira().getfc0k();
     }
     
     

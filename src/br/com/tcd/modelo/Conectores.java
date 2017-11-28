@@ -5,44 +5,41 @@
  */
 package br.com.tcd.modelo;
 
-import br.com.tcd.modelo.ClasseAcoPrego;
-import br.com.tcd.modelo.ClasseQuantidadePregos;
+import br.com.tcd.enumeration.ClasseAcoPrego;
+import br.com.tcd.enumeration.ClasseQuantidadePregos;
+import br.com.tcd.enumeration.TipoPrego;
 
 /**
  *
  * @author Gabriela Mello
  */
 public class Conectores {
-    private TipoPrego tipoPrego;
-    private ClasseQuantidadePregos quantidadePregos;
-    private ClasseAcoPrego classeAcoPrego;
+	private TipoPrego tipoPrego;
+	private ClasseQuantidadePregos quantidadePregos;
+	private ClasseAcoPrego classeAcoPrego;
 
-    public TipoPrego getTipoPrego() {
-        return tipoPrego;
-    }
+	public TipoPrego getTipoPrego() {
+		return tipoPrego;
+	}
 
-    public void setTipoPrego(TipoPrego tipoPrego) {
-        this.tipoPrego = tipoPrego;
-    }
+	public void setTipoPrego(TipoPrego tipoPrego) {
+		this.tipoPrego = tipoPrego;
+	}
 
-    public ClasseAcoPrego getClasseAcoPrego() {
-        return classeAcoPrego;
-    }
+	public ClasseAcoPrego getClasseAcoPrego() {
+		return classeAcoPrego;
+	}
 
-    public void setClasseAcoPrego(ClasseAcoPrego classeAcoPrego) {
-        this.classeAcoPrego = classeAcoPrego;
-    }
+	public void setClasseAcoPrego(ClasseAcoPrego classeAcoPrego) {
+		this.classeAcoPrego = classeAcoPrego;
+	}
 
-    public ClasseQuantidadePregos getQuantidadePrego() {
-        return quantidadePregos;
-    }
+	public ClasseQuantidadePregos getQuantidadePrego() {
+		return quantidadePregos;
+	}
 
-    public void setQuantidadePrego(ClasseQuantidadePregos quantidadePrego) {
-        this.quantidadePregos = quantidadePrego;
-    }
-    
-    
-    
-    
-    
+	public void setQuantidadePrego(ClasseQuantidadePregos quantidadePrego) {
+		this.quantidadePregos = quantidadePrego;
+	}
+
 }
