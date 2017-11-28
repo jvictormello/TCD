@@ -6,9 +6,10 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JProgressBar;
 
+import br.com.tcd.enumeration.TipoParafuso;
 import br.com.tcd.interfaces.ModeloLigacaoProvider;
 
-public class VerificadorComboTipoParafuso extends VerificadoresPrego {
+public class VerificadorComboTipoParafuso extends Verificador {
 
 	public VerificadorComboTipoParafuso(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 		super(status, modeloLigacaoProvider);
@@ -24,6 +25,7 @@ public class VerificadorComboTipoParafuso extends VerificadoresPrego {
 			status.setString("Escolha o tipo do parafuso.");
 			this.verified = false;
 		} else {
+			modeloLigacaoProvider.getModeloLigacao().getConectores().setTipoParafuso((TipoParafuso)box.getSelectedItem());
 			validateSuccess(input);
 		}
 

@@ -549,7 +549,7 @@ public class TelaAco extends javax.swing.JFrame {
 
 		GroupSecoesCorte.add(btnCorteSimples);
 		btnCorteSimples.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-		btnCorteSimples.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/telas/ImagensBotao/UmaSecaoAco.png"))); // NOI18N
+		btnCorteSimples.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/UmaSecaoAco.png"))); // NOI18N
 		btnCorteSimples.setText("Corte Simples");
 		btnCorteSimples.setToolTipText("Escolha esta opção se a ligação apresentar apenas uma seção de corte no parafuso.");
 		btnCorteSimples.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -563,7 +563,7 @@ public class TelaAco extends javax.swing.JFrame {
 
 		GroupSecoesCorte.add(btnCorteDuploAMA);
 		btnCorteDuploAMA.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-		btnCorteDuploAMA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/telas/ImagensBotao/DuasSecoesAcoFora.png"))); // NOI18N
+		btnCorteDuploAMA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/DuasSecoesAcoFora.png"))); // NOI18N
 		btnCorteDuploAMA.setText("Corte Duplo - Aço/Madeira/Aço");
 		btnCorteDuploAMA.setToolTipText("Escolha esta opção se a ligação apresentar duas seções de corte no parafuso, com chapas de aço externamente ao elemento de madeira.");
 		btnCorteDuploAMA.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -576,7 +576,7 @@ public class TelaAco extends javax.swing.JFrame {
 
 		GroupSecoesCorte.add(btnCorteDuploMAM);
 		btnCorteDuploMAM.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-		btnCorteDuploMAM.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/telas/ImagensBotao/DuasSecoesAcoDentro.png"))); // NOI18N
+		btnCorteDuploMAM.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/DuasSecoesAcoDentro.png"))); // NOI18N
 		btnCorteDuploMAM.setText("Corte Duplo - Madeira/Aço/Madeira");
 		btnCorteDuploMAM.setToolTipText("Escolha esta opção se a ligação apresentar duas seções de corte no parafuso, com chapas de aço internamente aos elementos de madeira.");
 		btnCorteDuploMAM.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -587,7 +587,7 @@ public class TelaAco extends javax.swing.JFrame {
 			}
 		});
 
-		Next.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/telas/ImagensBotao/Next.png"))); // NOI18N
+		Next.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/Next.png"))); // NOI18N
 		Next.setToolTipText("Clique para avançar.");
 		Next.setEnabled(false);
 		Next.addActionListener(new java.awt.event.ActionListener(){
@@ -945,7 +945,7 @@ public class TelaAco extends javax.swing.JFrame {
 		});
 		ElementosMadeira.add(TrocaFigura, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 40, 370, 280));
 
-		Next2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/telas/ImagensBotao/Next.png"))); // NOI18N
+		Next2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/Next.png"))); // NOI18N
 		Next2.setToolTipText("Clique para avançar.");
 		Next2.setEnabled(false);
 		Next2.addActionListener(new java.awt.event.ActionListener(){
@@ -1158,7 +1158,7 @@ public class TelaAco extends javax.swing.JFrame {
 		});
 		ElementosMetalicos.add(ButtonCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 468, 210, 41));
 
-		FiguraTipoParafuso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/telas/Imagens/Parafuso.png"))); // NOI18N
+		FiguraTipoParafuso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/Imagens/Parafuso.png"))); // NOI18N
 		FiguraTipoParafuso.setContentAreaFilled(false);
 		FiguraTipoParafuso.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1234,7 +1234,7 @@ public class TelaAco extends javax.swing.JFrame {
 		LabelEspessuraChapa.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 		Resultado.add(LabelEspessuraChapa, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 330, 20));
 
-		Next3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/telas/ImagensBotao/Next.png"))); // NOI18N
+		Next3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/Next.png"))); // NOI18N
 		Next3.setToolTipText("Clique para avançar.");
 		Next3.setEnabled(false);
 		Next3.addActionListener(new java.awt.event.ActionListener(){
@@ -1807,7 +1807,7 @@ public class TelaAco extends javax.swing.JFrame {
 		jScrollPane1.setViewportView(RelatorioFinal);
 
 		jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-		jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/telas/ImagensBotao/Print.png"))); // NOI18N
+		jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/Print.png"))); // NOI18N
 		jButton1.setToolTipText("Clique para imprimir o relatório.");
 		jButton1.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1816,7 +1816,7 @@ public class TelaAco extends javax.swing.JFrame {
 		});
 
 		jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-		jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/telas/ImagensBotao/New.png"))); // NOI18N
+		jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/New.png"))); // NOI18N
 		jButton2.setToolTipText("Clique para realizar novo cálculo.\n");
 		jButton2.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1825,7 +1825,7 @@ public class TelaAco extends javax.swing.JFrame {
 		});
 
 		jButton3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-		jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/telas/ImagensBotao/Return.png"))); // NOI18N
+		jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensBotao/Return.png"))); // NOI18N
 		jButton3.setToolTipText("Clique para retornar a tela inicial.");
 		jButton3.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -9,7 +9,7 @@ import javax.swing.JProgressBar;
 import br.com.tcd.interfaces.ModeloLigacaoProvider;
 import br.com.tcd.enumeration.TipoPrego;
 
-public class VerificadorComboTipoPrego extends VerificadoresPrego {
+public class VerificadorComboTipoPrego extends Verificador {
 
 	public VerificadorComboTipoPrego(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 		super(status, modeloLigacaoProvider);

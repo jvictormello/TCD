@@ -16,13 +16,13 @@ import br.com.tcd.interfaces.ModeloLigacaoProvider;
 /**
  * @author Gabriela Mello
  */
-public class VerificadoresPrego extends InputVerifier {
+public class Verificador extends InputVerifier {
 
 	protected JProgressBar status;
 	protected boolean verified = false;
 	protected ModeloLigacaoProvider modeloLigacaoProvider;
 
-	public VerificadoresPrego(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
+	public Verificador(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 		this.status = status;
 		this.modeloLigacaoProvider = modeloLigacaoProvider;
 	}

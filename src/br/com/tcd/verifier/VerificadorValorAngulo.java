@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 
 import br.com.tcd.interfaces.ModeloLigacaoProvider;
 
-public class VerificadorValorAngulo extends VerificadoresPrego {
+public class VerificadorValorAngulo extends Verificador {
 
 	public VerificadorValorAngulo(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 		super(status, modeloLigacaoProvider);

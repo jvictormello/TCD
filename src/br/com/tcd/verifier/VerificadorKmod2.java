@@ -9,7 +9,7 @@ import javax.swing.JProgressBar;
 import br.com.tcd.interfaces.ModeloLigacaoProvider;
 import br.com.tcd.enumeration.Kmod2;
 
-public class VerificadorKmod2 extends VerificadoresPrego {
+public class VerificadorKmod2 extends Verificador {
 
 	public VerificadorKmod2(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 		super(status, modeloLigacaoProvider);

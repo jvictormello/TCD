@@ -8,7 +8,7 @@ import javax.swing.JProgressBar;
 
 import br.com.tcd.interfaces.ModeloLigacaoProvider;
 
-public class VerificadorComboQuantParafuso extends VerificadoresPrego {
+public class VerificadorComboQuantParafuso extends Verificador {
 
 	public VerificadorComboQuantParafuso(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 		super(status, modeloLigacaoProvider);
@@ -25,7 +25,6 @@ public class VerificadorComboQuantParafuso extends VerificadoresPrego {
 			this.verified = false;
 		} else {
 			validateSuccess(input);
-
 		}
 
 		return this.verified;

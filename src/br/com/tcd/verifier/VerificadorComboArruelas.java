@@ -8,7 +8,7 @@ import javax.swing.JProgressBar;
 
 import br.com.tcd.interfaces.ModeloLigacaoProvider;
 
-public class VerificadorComboArruelas extends VerificadoresPrego {
+public class VerificadorComboArruelas extends Verificador {
 
 	public VerificadorComboArruelas(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 		super(status, modeloLigacaoProvider);

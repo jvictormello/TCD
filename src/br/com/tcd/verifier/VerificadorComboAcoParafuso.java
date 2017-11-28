@@ -8,7 +8,7 @@ import javax.swing.JProgressBar;
 
 import br.com.tcd.interfaces.ModeloLigacaoProvider;
 
-public class VerificadorComboAcoParafuso extends VerificadoresPrego {
+public class VerificadorComboAcoParafuso extends Verificador {
 
 	public VerificadorComboAcoParafuso(JProgressBar status, ModeloLigacaoProvider modeloLigacaoProvider) {
 		super(status, modeloLigacaoProvider);

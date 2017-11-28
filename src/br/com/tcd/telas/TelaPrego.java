@@ -43,7 +43,7 @@ import br.com.tcd.verifier.VerificadorKmod1;
 import br.com.tcd.verifier.VerificadorKmod2;
 import br.com.tcd.verifier.VerificadorKmod3;
 import br.com.tcd.verifier.VerificadorValorAngulo;
-import br.com.tcd.verifier.VerificadoresPrego;
+import br.com.tcd.verifier.Verificador;
 
 /**
  *
@@ -68,6 +68,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			initComponents();
 			initVariables();
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}
@@ -129,6 +130,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			comboTipoPrego.setInputVerifier(new VerificadorComboTipoPrego(this.jProgressBarPrego, this));
 			comboAco.setInputVerifier(new VerificadorComboAcoPrego(this.jProgressBarPrego, this));
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}
@@ -2000,7 +2002,6 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			getContentPane().add(jTabbedPane1, java.awt.BorderLayout.PAGE_START);
 
 			jProgressBarPrego.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-			//		jProgressBarPrego.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 			jProgressBarPrego.setString("Clique em \"Iniciar Cálculo\" para começar o dimensionamento.");
 			jProgressBarPrego.setBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")));
 			jProgressBarPrego.setPreferredSize(new java.awt.Dimension(34, 30));
@@ -2011,6 +2012,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 			pack();
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// </editor-fold>//GEN-END:initComponents
@@ -2310,6 +2312,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 			jProgressBarPrego.setValue(3);
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_buttonCalcularActionPerformed
@@ -2318,6 +2321,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		try {
 			relatoriofaxrk.setText("Não");
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_testeParafusoNaoActionPerformed
@@ -2330,13 +2334,14 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			m = true;
 			relatoriofaxrk.setText("Sim");
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_testeParafusoSimActionPerformed
 
 	private void comboAcoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_comboAcoActionPerformed
 		try {
-			if(((VerificadoresPrego)comboAco.getInputVerifier()).verify(comboAco)) {
+			if(((Verificador)comboAco.getInputVerifier()).verify(comboAco)) {
 				valorFyk.setText(modeloLigacao.getConectores().getClasseAcoPrego().getFyk() + "");
 				valorFuk.setText(modeloLigacao.getConectores().getClasseAcoPrego().getFuk() + "");
 				relatorioClasseAco.setText(modeloLigacao.getConectores().getClasseAcoPrego().getNome() + "");
@@ -2346,13 +2351,14 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 			atualizabuttonCalcular();
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_comboAcoActionPerformed
 
 	private void comboTipoPregoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ComboTipoPregoActionPerformed
 		try {
-			if(((VerificadoresPrego)comboTipoPrego.getInputVerifier()).verify(comboTipoPrego)) {
+			if(((Verificador)comboTipoPrego.getInputVerifier()).verify(comboTipoPrego)) {
 				valorDiametro.setText(modeloLigacao.getConectores().getTipoPrego().getDiametro() + "");
 				valorComprimento.setText(modeloLigacao.getConectores().getTipoPrego().getComprimento() + "");
 				relatorioTipoParafuso.setText(modeloLigacao.getConectores().getTipoPrego().getNome() + "");
@@ -2362,6 +2368,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 			atualizabuttonCalcular();
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_ComboTipoPregoActionPerformed
@@ -2372,6 +2379,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 				espessura1.setText("");
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_LimparExpessura2
@@ -2382,13 +2390,14 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 				espessura2.setText("");
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_LimparExpessura2
 
 	private void comboElem2ClasseMadeiraFocusLost(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_comboElem2ClasseMadeiraActionPerformed
 		try {
-			if(((VerificadoresPrego)comboElem2ClasseMadeira.getInputVerifier()).isVerified()) {
+			if(((Verificador)comboElem2ClasseMadeira.getInputVerifier()).isVerified()) {
 				valorFc2.setText(modeloLigacao.getElementoLigacao2().getClasseMadeira().getfc0k() + "");
 				valorDensidade2.setText(modeloLigacao.getElementoLigacao2().getClasseMadeira().getDensidade() + "");
 				valorFvok2.setText(modeloLigacao.getElementoLigacao2().getClasseMadeira().getfv0k() + "");
@@ -2402,6 +2411,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 			atualizanextElementosLigacao();
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_comboElem2ClasseMadeiraActionPerformed
@@ -2412,6 +2422,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 				valorAngulo.setText("0");
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_valorAngulo
@@ -2433,6 +2444,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			System.out.println("modeloLigacao =" + modeloLigacao);
 			System.out.println("NumSecao =" + modeloLigacao.getNumSecao());
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_btn1SecaoCorteActionPerformed
@@ -2503,6 +2515,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 			madeiraFigura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/" + TrocaFigura))); // NOI18N
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_inclinacaoSim1ActionPerformed
@@ -2573,6 +2586,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 			madeiraFigura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/" + TrocaFigura))); // NOI18N
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_inclinacaoSim2ActionPerformed
@@ -2584,6 +2598,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			}
 			evt.consume();
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_valorAnguloKeyTyped
@@ -2595,6 +2610,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			}
 			evt.consume();
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_Espessura2KeyTyped
@@ -2604,6 +2620,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			relatorioAngulo.setText(modeloLigacao.getAngulo().getValorGrau() + "");
 			atualizanextElementosLigacao();
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_valorAnguloActionPerformed
@@ -2612,6 +2629,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		try {
 			relatorio.setVisible(false);
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_formWindowActivated
@@ -2729,24 +2747,23 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 					if(comboTipoPrego.getItemCount() == 1 && !entrouDiametro) {
 						jProgressBarPrego.setString("Nenhum prego é compatível com as espessuras inseridas, experimente aumentar as espessuras.");
 					}
-					if(comboTipoPrego.getItemCount() == 1 && entrouDiametro) {
-						jProgressBarPrego.setString("Nenhum prego é compatível com as espessuras inseridas, experimente diminuir as espessuras.");
-					}
 					break;
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_jTabbedPane1FocusGained
 
 	private void comboQuantPregosActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ComboQuantPregosActionPerformed
 		try {
-			if(((VerificadoresPrego)comboQuantPregos.getInputVerifier()).verify(comboQuantPregos)) {
+			if(((Verificador)comboQuantPregos.getInputVerifier()).verify(comboQuantPregos)) {
 				relatorioNParafusos.setText(modeloLigacao.getConectores().getQuantidadePrego().getNome() + "");
 			}
 
 			atualizabuttonCalcular();
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_ComboQuantPregosActionPerformed
@@ -2796,6 +2813,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 				}
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_jButton1ActionPerformed
@@ -2806,6 +2824,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			telaprego.setVisible(true);
 			this.dispose();
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_jButton2ActionPerformed
@@ -2816,6 +2835,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			TelaInicial telainicial = new TelaInicial();
 			telainicial.setVisible(true);
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_VoltarActionPerformed
@@ -2826,13 +2846,14 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			TelaInicial telainicial = new TelaInicial();
 			telainicial.setVisible(true);
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_jButton3ActionPerformed
 
 	private void comboKmod1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_comboKmod1ActionPerformed
 		try {
-			if(((VerificadoresPrego)comboKmod1.getInputVerifier()).verify(comboKmod1)) {
+			if(((Verificador)comboKmod1.getInputVerifier()).verify(comboKmod1)) {
 				if(modeloLigacao.getKmod1() == Kmod1.OUTRO) {
 
 					double kmod1 = -1;
@@ -2842,6 +2863,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 						try {
 							kmod1 = Double.parseDouble(value.replace(",", "."));
 						} catch (RuntimeException e) {
+							e.printStackTrace();
 
 						}
 						jProgressBarPrego.setString("Entre com um valor válido, entre 0 e 1.");
@@ -2855,13 +2877,14 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 			atualizanextElementosLigacao();
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_comboKmod1ActionPerformed
 
 	private void comboKmod3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_comboKmod3ActionPerformed
 		try {
-			if(((VerificadoresPrego)comboKmod3.getInputVerifier()).verify(comboKmod3)) {
+			if(((Verificador)comboKmod3.getInputVerifier()).verify(comboKmod3)) {
 				if(modeloLigacao.getKmod3() == Kmod3.OUTRO) {
 
 					double kmod3 = -1;
@@ -2871,6 +2894,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 						try {
 							kmod3 = Double.parseDouble(value.replace(",", "."));
 						} catch (NumberFormatException e) {
+							e.printStackTrace();
 
 						}
 						jProgressBarPrego.setString("Entre com um valor válido, entre 0 e 1.");
@@ -2884,13 +2908,14 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 			atualizanextElementosLigacao();
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_comboKmod3ActionPerformed
 
 	private void comboKmod2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_comboKmod2ActionPerformed
 		try {
-			if(((VerificadoresPrego)comboKmod2.getInputVerifier()).verify(comboKmod2)) {
+			if(((Verificador)comboKmod2.getInputVerifier()).verify(comboKmod2)) {
 				if(modeloLigacao.getKmod2() == Kmod2.OUTRO) {
 
 					double kmod2 = -1;
@@ -2900,6 +2925,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 						try {
 							kmod2 = Double.parseDouble(value.replace(",", "."));
 						} catch (NumberFormatException e) {
+							e.printStackTrace();
 
 						}
 						jProgressBarPrego.setString("Entre com um valor válido, entre 0 e 1.");
@@ -2913,6 +2939,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 			atualizanextElementosLigacao();
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_comboKmod2ActionPerformed
@@ -2922,6 +2949,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			relatorioEspessura1.setText(modeloLigacao.getElementoLigacao1().getEspessura() + "");
 			atualizanextElementosLigacao();
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_Espessura1ActionPerformed
@@ -2933,6 +2961,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			}
 			evt.consume();
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_Espessura1KeyTyped
@@ -2942,6 +2971,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			relatorioEspessura2.setText(modeloLigacao.getElementoLigacao2().getEspessura() + "");
 			atualizanextElementosLigacao();
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_Espessura2ActionPerformed
@@ -2950,6 +2980,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		try {
 			atualizanextElementosLigacao();
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_FiguraresultadoModoFalhaActionPerformed
@@ -2969,6 +3000,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			madeiraFigura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/2ParaleloP.png"))); // NOI18N
 			figuraSecoes.setIcon(new ImageIcon(((ImageIcon)btn1SecaoCorte.getIcon()).getImage().getScaledInstance(55, 60, Image.SCALE_SMOOTH)));
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_jToggleButton1ActionPerformed
@@ -3003,6 +3035,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 				}
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_Espessura2FocusLost
@@ -3016,6 +3049,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			jToggleButton1.setEnabled(true);
 			jToggleButton2.setEnabled(true);
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_jButton4ActionPerformed
@@ -3035,6 +3069,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			madeiraFigura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/2Paralelo.png"))); // NOI18N
 			figuraSecoes.setIcon(new ImageIcon(((ImageIcon)btn1SecaoCorte.getIcon()).getImage().getScaledInstance(55, 60, Image.SCALE_SMOOTH)));
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_jToggleButton2ActionPerformed
@@ -3070,6 +3105,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 							calculoForcaAlfa1.setVisible(false);
 							break;
 						case INCLINADO:
+							FiguraMadeira = "1InclinadoElem1P.png";
 							inclinacaoSim1.setEnabled(true);
 							inclinacaoSim2.setEnabled(true);
 							relatorioAngulacao.setText("Direção Inclinada");
@@ -3145,6 +3181,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			madeiraFigura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensDirecao/" + FiguraMadeira))); // NOI18N
 			madeiraFigura.doClick();
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_valorAnguloFocusLost
@@ -3156,6 +3193,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			jProgressBarPrego.setString("Preencha todos os campos sem exceção.");
 			jProgressBarPrego.setValue(1);
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_nextActionPerformed
@@ -3180,6 +3218,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 				jProgressBarPrego.setValue(2);
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_next2ActionPerformed
@@ -3191,6 +3230,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 			jProgressBarPrego.setString("Verifique o relatório do dimensionamento. Fique atento para as opções fornecidas nos botões.");
 			jProgressBarPrego.setValue(4);
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_next3ActionPerformed
@@ -3199,6 +3239,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		try {
 			jProgressBarPrego.setString("Digite o ângulo entre as peças e aperte a tecla TAB.");
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_valorAnguloMouseClicked
@@ -3219,6 +3260,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 				recompostaButton.setSelected(false);
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_ConiferasButtonActionPerformed
@@ -3239,6 +3281,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 				recompostaButton.setSelected(false);
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_FolhosasButtonActionPerformed
@@ -3254,6 +3297,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 				next.setEnabled(false);
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_SerradaButtonActionPerformed
@@ -3269,13 +3313,14 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 				next.setEnabled(false);
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_RecompostaButtonActionPerformed
 
 	private void comboElem1ClasseMadeiraFocusLost(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_comboElem1ClasseMadeiraFocusLost
 		try {
-			if(((VerificadoresPrego)comboElem1ClasseMadeira.getInputVerifier()).isVerified()) {
+			if(((Verificador)comboElem1ClasseMadeira.getInputVerifier()).isVerified()) {
 
 				valorFc01.setText(modeloLigacao.getElementoLigacao1().getClasseMadeira().getfc0k() + "");
 				valorDensidade1.setText(modeloLigacao.getElementoLigacao1().getClasseMadeira().getDensidade() + "");
@@ -3290,6 +3335,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 
 			atualizanextElementosLigacao();
 		} catch (Exception e) {
+			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}// GEN-LAST:event_comboElem1ClasseMadeiraFocusLost
@@ -3331,15 +3377,15 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 	}
 
 	private void atualizanextElementosLigacao() {
-		next2.setEnabled(((VerificadoresPrego)espessura1.getInputVerifier()).isVerified() && ((VerificadoresPrego)espessura2.getInputVerifier()).isVerified()
-		                 && ((VerificadoresPrego)valorAngulo.getInputVerifier()).isVerified() && ((VerificadoresPrego)comboElem1ClasseMadeira.getInputVerifier()).isVerified()
-		                 && ((VerificadoresPrego)comboElem2ClasseMadeira.getInputVerifier()).isVerified() && ((VerificadoresPrego)comboKmod1.getInputVerifier()).isVerified()
-		                 && ((VerificadoresPrego)comboKmod2.getInputVerifier()).isVerified() && ((VerificadoresPrego)comboKmod3.getInputVerifier()).isVerified());
+		next2.setEnabled(((Verificador)espessura1.getInputVerifier()).isVerified() && ((Verificador)espessura2.getInputVerifier()).isVerified()
+		                 && ((Verificador)valorAngulo.getInputVerifier()).isVerified() && ((Verificador)comboElem1ClasseMadeira.getInputVerifier()).isVerified()
+		                 && ((Verificador)comboElem2ClasseMadeira.getInputVerifier()).isVerified() && ((Verificador)comboKmod1.getInputVerifier()).isVerified()
+		                 && ((Verificador)comboKmod2.getInputVerifier()).isVerified() && ((Verificador)comboKmod3.getInputVerifier()).isVerified());
 	}
 
 	private void atualizabuttonCalcular() {
-		buttonCalcular.setEnabled(((VerificadoresPrego)comboTipoPrego.getInputVerifier()).isVerified() && ((VerificadoresPrego)comboQuantPregos.getInputVerifier()).isVerified()
-		                          && ((VerificadoresPrego)comboAco.getInputVerifier()).isVerified()
+		buttonCalcular.setEnabled(((Verificador)comboTipoPrego.getInputVerifier()).isVerified() && ((Verificador)comboQuantPregos.getInputVerifier()).isVerified()
+		                          && ((Verificador)comboAco.getInputVerifier()).isVerified()
 
 		);
 	}

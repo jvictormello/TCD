@@ -7,6 +7,7 @@ package br.com.tcd.modelo;
 
 import br.com.tcd.enumeration.ClasseAcoPrego;
 import br.com.tcd.enumeration.ClasseQuantidadePregos;
+import br.com.tcd.enumeration.TipoParafuso;
 import br.com.tcd.enumeration.TipoPrego;
 
 /**
@@ -14,9 +15,12 @@ import br.com.tcd.enumeration.TipoPrego;
  * @author Gabriela Mello
  */
 public class Conectores {
+	//Pregos
 	private TipoPrego tipoPrego;
 	private ClasseQuantidadePregos quantidadePregos;
 	private ClasseAcoPrego classeAcoPrego;
+	//Parafusos
+	private TipoParafuso tipoParafuso;
 
 	public TipoPrego getTipoPrego() {
 		return tipoPrego;
@@ -40,6 +44,14 @@ public class Conectores {
 
 	public void setQuantidadePrego(ClasseQuantidadePregos quantidadePrego) {
 		this.quantidadePregos = quantidadePrego;
+	}
+
+	public TipoParafuso getTipoParafuso() {
+		return tipoParafuso;
+	}
+
+	public void setTipoParafuso(TipoParafuso tipoParafuso) {
+		this.tipoParafuso = tipoParafuso;
 	}
 
 }
