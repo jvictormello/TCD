@@ -6,6 +6,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JProgressBar;
 
+import br.com.tcd.enumeration.ClasseAcoParafuso;
 import br.com.tcd.interfaces.ModeloLigacaoProvider;
 
 public class VerificadorComboAcoParafuso extends Verificador {
@@ -24,6 +25,7 @@ public class VerificadorComboAcoParafuso extends Verificador {
 			status.setString("Escolha a classe do aço do parafuso.");
 			this.verified = false;
 		} else {
+			modeloLigacaoProvider.getModeloLigacao().getConectores().setClasseAcoParafuso((ClasseAcoParafuso)box.getSelectedItem());
 			validateSuccess(input);
 		}
 

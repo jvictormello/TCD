@@ -6,6 +6,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JProgressBar;
 
+import br.com.tcd.enumeration.QuantidadeParafuso;
 import br.com.tcd.interfaces.ModeloLigacaoProvider;
 
 public class VerificadorComboQuantParafuso extends Verificador {
@@ -24,6 +25,7 @@ public class VerificadorComboQuantParafuso extends Verificador {
 			status.setString("Escolha a quantidade de parafusos.");
 			this.verified = false;
 		} else {
+			modeloLigacaoProvider.getModeloLigacao().getConectores().setQuantidadeParafuso((QuantidadeParafuso)box.getSelectedItem());
 			validateSuccess(input);
 		}
 

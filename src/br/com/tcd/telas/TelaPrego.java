@@ -2024,8 +2024,12 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 				jTabbedPane1.setSelectedComponent(resultado);
 				jTabbedPane1.setEnabledAt(4, true);
 				next3.setEnabled(true);
+				
+				data.setText(objDataHora.MostraData());
+				hora.setText(objDataHora.MostraHora());
 
-				calculoModeloLigacao = new CalculoModeloLigacao(modeloLigacao, incSim1, incSim2, m);
+				calculoModeloLigacao = CalculoModeloLigacao.getInstance();
+				calculoModeloLigacao.calcularModeloLigacaoPrego(modeloLigacao, incSim1, incSim2, m);
 
 				relatorioKmod1.setText(modeloLigacao.getKmod1().getValor() + "");
 				relatoriokmod2.setText(modeloLigacao.getKmod2().getValor() + "");
@@ -2308,9 +2312,9 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 				figuraParafuso.setIcon(new ImageIcon(((ImageIcon)figuraTipoParafuso.getIcon()).getImage().getScaledInstance(110, 25, Image.SCALE_SMOOTH)));
 				modoFalha.setIcon(new ImageIcon(((ImageIcon)figuraresultadoModoFalha.getIcon()).getImage().getScaledInstance(84, 120, Image.SCALE_SMOOTH)));
 				rLogo.setIcon(new ImageIcon(((ImageIcon)logoPrograma.getIcon()).getImage().getScaledInstance(125, 80, Image.SCALE_SMOOTH)));
+				
+				jProgressBarPrego.setValue(3);
 			}
-
-			jProgressBarPrego.setValue(3);
 		} catch (Exception e) {
 			e.printStackTrace();
 			jProgressBarPrego.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
