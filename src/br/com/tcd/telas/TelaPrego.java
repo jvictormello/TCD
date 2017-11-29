@@ -32,6 +32,7 @@ import br.com.tcd.modelo.Angulo;
 import br.com.tcd.modelo.CalculoModeloLigacao;
 import br.com.tcd.modelo.Conectores;
 import br.com.tcd.util.ClsDataHora;
+import br.com.tcd.verifier.Verificador;
 import br.com.tcd.verifier.VerificadorComboAcoPrego;
 import br.com.tcd.verifier.VerificadorComboClasseElem1;
 import br.com.tcd.verifier.VerificadorComboClasseElem2;
@@ -43,7 +44,6 @@ import br.com.tcd.verifier.VerificadorKmod1;
 import br.com.tcd.verifier.VerificadorKmod2;
 import br.com.tcd.verifier.VerificadorKmod3;
 import br.com.tcd.verifier.VerificadorValorAngulo;
-import br.com.tcd.verifier.Verificador;
 
 /**
  *
@@ -2024,7 +2024,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 				jTabbedPane1.setSelectedComponent(resultado);
 				jTabbedPane1.setEnabledAt(4, true);
 				next3.setEnabled(true);
-				
+
 				data.setText(objDataHora.MostraData());
 				hora.setText(objDataHora.MostraHora());
 
@@ -2054,33 +2054,10 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 				relatorioFaxrk.setText(String.format("%.0f", calculoModeloLigacao.getValorFaxrkFinal()));
 				relatorioRd.setText(String.format("%.0f", calculoModeloLigacao.getRvd()));
 				resultadoRd.setText(String.format("%.0f", calculoModeloLigacao.getRvd()));
-
-				String ImagemFalha = "";
-				String Tipo = "";
+				labelresultadoModeloFalha.setText(calculoModeloLigacao.getTipo());
+				teste.setText(calculoModeloLigacao.getTipo());
 
 				if((modeloLigacao == ModeloLigacao.CORTE_SIMPLES || modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES) && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PARALELO) {
-
-					Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
-					ImagemFalha = "1.1P.png";
-
-					if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-						Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
-						ImagemFalha = "1.2P.png";
-					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()) {
-						Tipo = "Embutimento do pino metálico nas duas peças, devido ao giro do pino metálico.";
-						ImagemFalha = "1.3P.png";
-					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin()) {
-						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
-						ImagemFalha = "1.4P.png";
-					} else if(calculoModeloLigacao.getRd5() < calculoModeloLigacao.getRdmin()) {
-						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 1.";
-						ImagemFalha = "1.5P.png";
-					} else if(calculoModeloLigacao.getRd6() < calculoModeloLigacao.getRdmin()) {
-						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
-						ImagemFalha = "1.6P.png";
-					}
-					labelresultadoModeloFalha.setText(Tipo);
-
 					jScrollPane2.setVisible(true);
 					inclinado1.setVisible(false);
 					inclinado2.setVisible(false);
@@ -2094,33 +2071,8 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 					relatorioRd16.setVisible(true);
 					relatorioRd23.setVisible(false);
 					relatorioRd24.setVisible(false);
-
-					teste.setText(Tipo);
 				} else if((modeloLigacao == ModeloLigacao.CORTE_SIMPLES || modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES)
 				          && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
-
-					Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
-					ImagemFalha = "1.1P.png";
-
-					if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-						Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
-						ImagemFalha = "1.2P.png";
-					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()) {
-						Tipo = "Embutimento do pino metálico nas duas peças, devido ao giro do pino metálico.";
-						ImagemFalha = "1.3P.png";
-					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin()) {
-						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
-						ImagemFalha = "1.4P.png";
-					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin()) {
-						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 1.";
-						ImagemFalha = "1.5P.png";
-					} else if(calculoModeloLigacao.getRd5() < calculoModeloLigacao.getRdmin()) {
-						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
-						ImagemFalha = "1.6P.png";
-					}
-
-					labelresultadoModeloFalha.setText(Tipo);
-
 					jScrollPane2.setVisible(true);
 					inclinado1.setVisible(false);
 					inclinado2.setVisible(false);
@@ -2134,71 +2086,8 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 					relatorioRd16.setVisible(true);
 					relatorioRd23.setVisible(false);
 					relatorioRd24.setVisible(false);
-
-					teste.setText(Tipo);
-				} else if((modeloLigacao == ModeloLigacao.CORTE_SIMPLES || modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES)
-				          && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
-
-					Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
-					ImagemFalha = "1.1P.png";
-
-					if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-						Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
-						ImagemFalha = "1.2P.png";
-					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()) {
-						Tipo = "Embutimento do pino metálico nas duas peças, devido ao giro do pino metálico.";
-						ImagemFalha = "1.3P.png";
-					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin()) {
-						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
-						ImagemFalha = "1.4P.png";
-					} else if(calculoModeloLigacao.getRd5() < calculoModeloLigacao.getRdmin()) {
-						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 1.";
-						ImagemFalha = "1.5P.png";
-					} else if(calculoModeloLigacao.getRd6() < calculoModeloLigacao.getRdmin()) {
-						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
-						ImagemFalha = "1.6P.png";
-					}
-
-					labelresultadoModeloFalha.setText(Tipo);
-
-					relatorioRd13.setVisible(true);
-					relatorioRd14.setVisible(true);
-					relatorioRd3.setVisible(true);
-					relatorioRd4.setVisible(true);
-					jLabel60.setVisible(true);
-					jLabel62.setVisible(true);
-					jScrollPane2.setVisible(true);
-					relatorioRd15.setVisible(true);
-					relatorioRd16.setVisible(true);
-					relatorioRd23.setVisible(false);
-					relatorioRd24.setVisible(false);
-
-					teste.setText(Tipo);
 				} else if((modeloLigacao == ModeloLigacao.CORTE_SIMPLES || modeloLigacao == ModeloLigacao.DUPLO_CORTE_SIMPLES)
 				          && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
-
-					Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
-					ImagemFalha = "1.1P.png";
-
-					if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-						Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
-						ImagemFalha = "1.2P.png";
-					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()) {
-						Tipo = "Embutimento do pino metálico nas duas peças, devido ao giro do pino metálico.";
-						ImagemFalha = "1.3P.png";
-					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin()) {
-						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
-						ImagemFalha = "1.4P.png";
-					} else if(calculoModeloLigacao.getRd5() < calculoModeloLigacao.getRdmin()) {
-						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 1.";
-						ImagemFalha = "1.5P.png";
-					} else if(calculoModeloLigacao.getRd6() < calculoModeloLigacao.getRdmin()) {
-						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
-						ImagemFalha = "1.6P.png";
-					}
-
-					labelresultadoModeloFalha.setText(Tipo);
-
 					relatorioRd13.setVisible(true);
 					relatorioRd14.setVisible(true);
 					relatorioRd3.setVisible(true);
@@ -2210,26 +2099,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 					relatorioRd16.setVisible(true);
 					relatorioRd23.setVisible(false);
 					relatorioRd24.setVisible(false);
-
-					teste.setText(Tipo);
 				} else if(modeloLigacao == ModeloLigacao.CORTE_DUPLO && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PARALELO) {
-
-					Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
-					ImagemFalha = "2.1P.png";
-
-					if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-						Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
-						ImagemFalha = "2.2P.png";
-					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()) {
-						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
-						ImagemFalha = "2.3P.png";
-					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin()) {
-						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
-						ImagemFalha = "2.4P.png";
-					}
-
-					labelresultadoModeloFalha.setText(Tipo);
-
 					jScrollPane2.setVisible(true);
 					relatorioRd13.setVisible(false);
 					relatorioRd14.setVisible(false);
@@ -2243,24 +2113,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 					relatorioRd24.setVisible(true);
 					inclinado1.setVisible(false);
 					inclinado2.setVisible(false);
-
-					teste.setText(Tipo);
 				} else if(modeloLigacao == ModeloLigacao.CORTE_DUPLO && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.INCLINADO) {
-
-					Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
-					ImagemFalha = "2.1P.png";
-
-					if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-						Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
-						ImagemFalha = "2.2P.png";
-					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()) {
-						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
-						ImagemFalha = "2.3P.png";
-					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin()) {
-						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
-						ImagemFalha = "2.4P.png";
-					}
-
 					jScrollPane2.setVisible(true);
 					relatorioRd13.setVisible(false);
 					relatorioRd14.setVisible(false);
@@ -2272,25 +2125,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 					relatorioRd16.setVisible(false);
 					relatorioRd23.setVisible(true);
 					relatorioRd24.setVisible(true);
-
-					teste.setText(Tipo);
 				} else if(modeloLigacao == ModeloLigacao.CORTE_DUPLO && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PERPENDICULAR) {
-					Tipo = "Embutimento do pino metálico no elemento 1 de madeira.";
-					ImagemFalha = "2.1P.png";
-
-					if(calculoModeloLigacao.getRd2() < calculoModeloLigacao.getRdmin() || calculoModeloLigacao.getRd2() == calculoModeloLigacao.getRdmin()) {
-						Tipo = "Embutimento do pino metálico no elemento 2 de madeira.";
-						ImagemFalha = "2.2P.png";
-					} else if(calculoModeloLigacao.getRd3() < calculoModeloLigacao.getRdmin()) {
-						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica no elemento 2.";
-						ImagemFalha = "2.3P.png";
-					} else if(calculoModeloLigacao.getRd4() < calculoModeloLigacao.getRdmin()) {
-						Tipo = "Flexão do pino metálico com ocorrência de rótula plástica nos dois elementos.";
-						ImagemFalha = "2.4P.png";
-					}
-
-					labelresultadoModeloFalha.setText(Tipo);
-
 					jScrollPane2.setVisible(true);
 					relatorioRd13.setVisible(false);
 					relatorioRd14.setVisible(false);
@@ -2302,17 +2137,15 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 					relatorioRd16.setVisible(false);
 					relatorioRd23.setVisible(true);
 					relatorioRd24.setVisible(true);
-
-					teste.setText(Tipo);
 				}
 
 				// COM ESSAS FUNÇÕES ALTERAM-SE AS IMAGENS DO RELATÓRIO
-				figuraresultadoModoFalha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensFalhas/" + ImagemFalha))); // NOI18N
+				figuraresultadoModoFalha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/ImagensFalhas/" + calculoModeloLigacao.getImagemFalha()))); // NOI18N
 				figuraParafuso.setIcon(new ImageIcon(((ImageIcon)figuraTipoParafuso.getIcon()).getImage().getScaledInstance(110, 25, Image.SCALE_SMOOTH)));
 				figuraParafuso.setIcon(new ImageIcon(((ImageIcon)figuraTipoParafuso.getIcon()).getImage().getScaledInstance(110, 25, Image.SCALE_SMOOTH)));
 				modoFalha.setIcon(new ImageIcon(((ImageIcon)figuraresultadoModoFalha.getIcon()).getImage().getScaledInstance(84, 120, Image.SCALE_SMOOTH)));
 				rLogo.setIcon(new ImageIcon(((ImageIcon)logoPrograma.getIcon()).getImage().getScaledInstance(125, 80, Image.SCALE_SMOOTH)));
-				
+
 				jProgressBarPrego.setValue(3);
 			}
 		} catch (Exception e) {
@@ -2638,6 +2471,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		}
 	}// GEN-LAST:event_formWindowActivated
 
+	@SuppressWarnings("incomplete-switch")
 	private void jTabbedPane1FocusGained(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_jTabbedPane1FocusGained
 		try {
 			switch(jTabbedPane1.getSelectedIndex()){
@@ -3078,6 +2912,7 @@ public class TelaPrego extends javax.swing.JFrame implements ModeloLigacaoProvid
 		}
 	}// GEN-LAST:event_jToggleButton2ActionPerformed
 
+	@SuppressWarnings("incomplete-switch")
 	private void valorAnguloFocusLost(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_valorAnguloFocusLost
 		try {
 			modeloLigacao.getAngulo().setValorGrau(Double.parseDouble(valorAngulo.getText().replace(",", ".")));

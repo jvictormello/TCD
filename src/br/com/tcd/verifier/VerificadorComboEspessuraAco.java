@@ -6,6 +6,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JProgressBar;
 
+import br.com.tcd.enumeration.EspessuraChapaAco;
 import br.com.tcd.interfaces.ModeloLigacaoProvider;
 
 public class VerificadorComboEspessuraAco extends Verificador {
@@ -24,6 +25,7 @@ public class VerificadorComboEspessuraAco extends Verificador {
 			status.setString("Escolha a espessura da chapa de aço.");
 			this.verified = false;
 		} else {
+			modeloLigacaoProvider.getModeloLigacao().getChapaAco().setEspessuraChapaAco((EspessuraChapaAco)box.getSelectedItem());
 			validateSuccess(input);
 		}
 

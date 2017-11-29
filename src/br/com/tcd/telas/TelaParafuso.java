@@ -55,9 +55,6 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 
 	private static final long serialVersionUID = 7130615706326642820L;
 
-	/**
-	 * Creates new form TelaParafuso
-	 */
 	private ModeloLigacao modeloLigacao;
 	private CalculoModeloLigacao calculoModeloLigacao;
 	private Boolean m;
@@ -71,7 +68,6 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 			iniciarVariaveis();
 		} catch (Exception e) {
 			e.printStackTrace();
-
 			jProgressBarStatus.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}
@@ -145,7 +141,6 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 	// <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
 	private void initComponents() {
 		groupSecoesCorte = new javax.swing.ButtonGroup();
-		groupAngulacao = new javax.swing.ButtonGroup();
 		groupTesteParafuso = new javax.swing.ButtonGroup();
 		groupInclinacaoSim = new javax.swing.ButtonGroup();
 		jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -708,16 +703,6 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 				valorAnguloFocusLost(evt);
 			}
 		});
-		valorAngulo.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				valorAnguloActionPerformed(evt);
-			}
-		});
-		valorAngulo.addPropertyChangeListener(new java.beans.PropertyChangeListener(){
-			public void propertyChange(java.beans.PropertyChangeEvent evt) {
-				valorAnguloPropertyChange(evt);
-			}
-		});
 		valorAngulo.addKeyListener(new java.awt.event.KeyAdapter(){
 			public void keyTyped(java.awt.event.KeyEvent evt) {
 				valorAnguloKeyTyped(evt);
@@ -798,7 +783,7 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		inclinacaoSim1.setToolTipText("Se existir inclinação, indique qual elemento está inclinado.");
 		inclinacaoSim1.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				InclinacaoSim1ActionPerformed(evt);
+				inclinacaoSim1ActionPerformed(evt);
 			}
 		});
 		jPanel7.add(inclinacaoSim1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 200, -1, -1));
@@ -817,22 +802,7 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		espessura1.setToolTipText("Insira a espessura do elemento 1. O elemento 1 está indicado na imagem.");
 		espessura1.addFocusListener(new java.awt.event.FocusAdapter(){
 			public void focusGained(java.awt.event.FocusEvent evt) {
-				Espessura1(evt);
-			}
-		});
-		espessura1.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				Espessura1ActionPerformed(evt);
-			}
-		});
-		espessura1.addPropertyChangeListener(new java.beans.PropertyChangeListener(){
-			public void propertyChange(java.beans.PropertyChangeEvent evt) {
-				Espessura1PropertyChange(evt);
-			}
-		});
-		espessura1.addKeyListener(new java.awt.event.KeyAdapter(){
-			public void keyTyped(java.awt.event.KeyEvent evt) {
-				Espessura1KeyTyped(evt);
+				espessura1(evt);
 			}
 		});
 		jPanel7.add(espessura1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 143, 130, -1));
@@ -876,7 +846,7 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		espessura2.setToolTipText("Insira a espessura do elemento 2. O elemento 2 está indicado na imagem.");
 		espessura2.addFocusListener(new java.awt.event.FocusAdapter(){
 			public void focusGained(java.awt.event.FocusEvent evt) {
-				LimparExpessura2(evt);
+				limparExpessura2(evt);
 			}
 
 			public void focusLost(java.awt.event.FocusEvent evt) {
@@ -885,7 +855,7 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		});
 		espessura2.addKeyListener(new java.awt.event.KeyAdapter(){
 			public void keyTyped(java.awt.event.KeyEvent evt) {
-				Espessura2KeyTyped(evt);
+				espessura2KeyTyped(evt);
 			}
 		});
 		jPanel13.add(espessura2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 138, 126, -1));
@@ -958,7 +928,7 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		inclinacaoSim2.setToolTipText("Se existir inclinação, indique qual elemento está inclinado.");
 		inclinacaoSim2.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				InclinacaoSim2ActionPerformed(evt);
+				inclinacaoSim2ActionPerformed(evt);
 			}
 		});
 		jPanel13.add(inclinacaoSim2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 175, -1, -1));
@@ -1002,7 +972,7 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		comboKmod1.setToolTipText("Insira o valor do Kmod 1, o qual é definido pela tabela 4 da revisão da norma ABNT NBR 7190 (2011).");
 		comboKmod1.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ComboKmod1ActionPerformed(evt);
+				comboKmod1ActionPerformed(evt);
 			}
 		});
 		jPanel12.add(comboKmod1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 40, 340, 30));
@@ -1012,7 +982,7 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		comboKmod3.setToolTipText("Insira o valor do Kmod 3, o qual é definido pelas tabelas 6 e 7 da revisão da norma ABNT NBR 7190 (2011).");
 		comboKmod3.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ComboKmod3ActionPerformed(evt);
+				comboKmod3ActionPerformed(evt);
 			}
 		});
 		jPanel12.add(comboKmod3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, 340, 30));
@@ -1022,7 +992,7 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		comboKmod2.setToolTipText("Insira o valor do Kmod 2, o qual é definido pela tabela 5 da revisão da norma ABNT NBR 7190 (2011).");
 		comboKmod2.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ComboKmod2ActionPerformed(evt);
+				comboKmod2ActionPerformed(evt);
 			}
 		});
 		jPanel12.add(comboKmod2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 80, 340, 30));
@@ -1077,12 +1047,12 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		comboTipoParafuso.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 		comboTipoParafuso.addFocusListener(new java.awt.event.FocusAdapter(){
 			public void focusLost(java.awt.event.FocusEvent evt) {
-				ComboTipoParafusoFocusLost(evt);
+				comboTipoParafusoFocusLost(evt);
 			}
 		});
 		comboTipoParafuso.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ComboTipoParafusoActionPerformed(evt);
+				comboTipoParafusoActionPerformed(evt);
 			}
 		});
 		jPanel10.add(comboTipoParafuso, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 41, 252, -1));
@@ -1118,7 +1088,7 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		comboAco.setToolTipText("Defina a classe do aço do parafuso, baseado na norma ABNT NBR 8800 (2008).");
 		comboAco.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ComboAcoActionPerformed(evt);
+				comboAcoActionPerformed(evt);
 			}
 		});
 		jPanel10.add(comboAco, new org.netbeans.lib.awtextra.AbsoluteConstraints(172, 139, 221, -1));
@@ -1160,7 +1130,7 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		testeParafusoSim.setToolTipText("Escolha se a ligação considera ou não a força de arrancamento causada pelo parafuso na madeira.");
 		testeParafusoSim.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				TesteParafusoSimActionPerformed(evt);
+				testeParafusoSimActionPerformed(evt);
 			}
 		});
 		jPanel10.add(testeParafusoSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 235, 50, -1));
@@ -1171,7 +1141,7 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		testeParafusoNao.setToolTipText("Escolha se a ligação considera ou não a força de arrancamento causada pelo parafuso na madeira.");
 		testeParafusoNao.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				TesteParafusoNaoActionPerformed(evt);
+				testeParafusoNaoActionPerformed(evt);
 			}
 		});
 		jPanel10.add(testeParafusoNao, new org.netbeans.lib.awtextra.AbsoluteConstraints(225, 235, 50, -1));
@@ -1180,7 +1150,7 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		comboQuantParafuso.setModel(new javax.swing.DefaultComboBoxModel<QuantidadeParafuso>(QuantidadeParafuso.values()));
 		comboQuantParafuso.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ComboQuantParafusoActionPerformed(evt);
+				comboQuantParafusoActionPerformed(evt);
 			}
 		});
 		jPanel10.add(comboQuantParafuso, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 230, -1));
@@ -1208,7 +1178,7 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		comboArruelas.setToolTipText("Defina o tipo de arruela, baseado nas normas DIN 440 R, DIN 440 V e DIN 436.");
 		comboArruelas.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ComboArruelasActionPerformed(evt);
+				comboArruelasActionPerformed(evt);
 			}
 		});
 		jPanel11.add(comboArruelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 45, 226, -1));
@@ -1246,18 +1216,13 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		buttonCalcular.setToolTipText("Clique aqui para calcular sua ligação. Fique atento! Caso haja informações faltantes ou inconsistentes, o cálculo não será realizado e aparecerá uma mensagem.");
 		buttonCalcular.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ButtonCalcularActionPerformed(evt);
+				buttonCalcularActionPerformed(evt);
 			}
 		});
 		elementosMetalicos.add(buttonCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 468, 210, 41));
 
 		figuraTipoParafuso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/tcd/Imagens/Parafuso.png"))); // NOI18N
 		figuraTipoParafuso.setContentAreaFilled(false);
-		figuraTipoParafuso.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				FiguraTipoParafusoActionPerformed(evt);
-			}
-		});
 		elementosMetalicos.add(figuraTipoParafuso, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 83, 295, 150));
 		elementosMetalicos.add(imagemTipoArruela, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 300, 150));
 
@@ -1282,11 +1247,6 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		resultado.add(resultadoFvk, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 360, 80, 20));
 
 		figuraResultadoModoFalha.setContentAreaFilled(false);
-		figuraResultadoModoFalha.addActionListener(new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				FiguraresultadoModoFalhaActionPerformed(evt);
-			}
-		});
 		resultado.add(figuraResultadoModoFalha, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, 335, 245));
 
 		jLabel74.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -2086,7 +2046,12 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 	}// </editor-fold>//GEN-END:initComponents
 
 	private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-		relatorio.setVisible(false);
+		try {
+			relatorio.setVisible(false);
+		} catch (Exception e) {
+			e.printStackTrace();
+			jProgressBarStatus.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
 	}//GEN-LAST:event_formWindowActivated
 
 	private void coniferasButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ConiferasButtonActionPerformed
@@ -2265,60 +2230,66 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 	}//GEN-LAST:event_jTabbedPane1FocusGained
 
 	private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-		TelaInicial telainicial = new TelaInicial();
-		telainicial.setVisible(true);
-		this.dispose();
+		try {
+			TelaInicial telainicial = new TelaInicial();
+			telainicial.setVisible(true);
+			this.dispose();
+		} catch (Exception e) {
+			e.printStackTrace();
+			jProgressBarStatus.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
 	}//GEN-LAST:event_jButton3ActionPerformed
 
 	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-		TelaParafuso telaPrincipal = new TelaParafuso();
-		telaPrincipal.setVisible(true);
-		this.dispose();
+		try {
+			TelaParafuso telaPrincipal = new TelaParafuso();
+			telaPrincipal.setVisible(true);
+			this.dispose();
+		} catch (Exception e) {
+			e.printStackTrace();
+			jProgressBarStatus.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
 	}//GEN-LAST:event_jButton2ActionPerformed
 
 	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-		// TODO add your handling code here:
-		Printable p = new Printable(){
+		try {
+			Printable p = new Printable(){
 
-			public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-				if(pageIndex > 0) { /* We have only one page, and 'page' is zero-based */
-					return NO_SUCH_PAGE;
+				public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+					if(pageIndex > 0) { /* We have only one page, and 'page' is zero-based */
+						return NO_SUCH_PAGE;
+					}
+
+					//        pageFormat.setOrientation(pageIndex);
+					Graphics2D g2d = (Graphics2D)graphics;
+					g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+
+					g2d.transform(AffineTransform.getScaleInstance(0.9, 0.9)); //Reduz a forma em 90% para dar certo no tamanho da página
+					relatorioFinal.printAll(g2d);
+					//        jPanel1.printComponents(g2d);
+					return PAGE_EXISTS;
 				}
+			};
 
-				//        pageFormat.setOrientation(pageIndex);
-				Graphics2D g2d = (Graphics2D)graphics;
-				g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+			PrinterJob job = PrinterJob.getPrinterJob();
+			job.setPrintable(p);
 
-				g2d.transform(AffineTransform.getScaleInstance(0.9, 0.9)); //Reduz a forma em 90% para dar certo no tamanho da página
-				relatorioFinal.printAll(g2d);
-				//        jPanel1.printComponents(g2d);
-				return PAGE_EXISTS;
+			boolean ok = job.printDialog();
+
+			if(ok) {
+				try {
+					job.print();
+				} catch (PrinterException ex) {
+					/* The job did not successfully complete */
+				}
 			}
-		};
-
-		PrinterJob job = PrinterJob.getPrinterJob();
-		job.setPrintable(p);
-
-		boolean ok = job.printDialog();
-
-		if(ok) {
-			try {
-				job.print();
-			} catch (PrinterException ex) {
-				/* The job did not successfully complete */
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			jProgressBarStatus.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}//GEN-LAST:event_jButton1ActionPerformed
 
-	private void FiguraresultadoModoFalhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FiguraresultadoModoFalhaActionPerformed
-		// TODO add your handling code here:
-	}//GEN-LAST:event_FiguraresultadoModoFalhaActionPerformed
-
-	private void FiguraTipoParafusoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FiguraTipoParafusoActionPerformed
-		// TODO add your handling code here:
-	}//GEN-LAST:event_FiguraTipoParafusoActionPerformed
-
-	private void ButtonCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCalcularActionPerformed
+	private void buttonCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCalcularActionPerformed
 		try {
 			if(buttonCalcular.hasFocus()) {
 				figuraArruela.setIcon(new ImageIcon(((ImageIcon)imagemTipoArruela.getIcon()).getImage().getScaledInstance(100, 50, Image.SCALE_SMOOTH)));
@@ -2351,7 +2322,7 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 				relatorioRd.setText(String.format("%.0f", calculoModeloLigacao.getRvd()));
 				resultadoRd.setText(String.format("%.0f", calculoModeloLigacao.getRvd()));
 				teste.setText(calculoModeloLigacao.getTipo());
-
+				
 				if(modeloLigacao == ModeloLigacao.CORTE_SIMPLES && modeloLigacao.getAngulo().getTipoAngulo() == Angulo.TipoAngulo.PARALELO) {
 					jScrollPane2.setVisible(true);
 					inclinado1.setVisible(false);
@@ -2446,7 +2417,7 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		}
 	}//GEN-LAST:event_ButtonCalcularActionPerformed
 
-	private void ComboArruelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboArruelasActionPerformed
+	private void comboArruelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboArruelasActionPerformed
 		try {
 			if(((Verificador)comboArruelas.getInputVerifier()).verify(comboArruelas)) {
 				valorD1Arruelas.setText("" + modeloLigacao.getConectores().getTipoArruela().getD1());
@@ -2481,7 +2452,7 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		}
 	}//GEN-LAST:event_ComboArruelasActionPerformed
 
-	private void ComboQuantParafusoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboQuantParafusoActionPerformed
+	private void comboQuantParafusoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboQuantParafusoActionPerformed
 		try {
 			if(((Verificador)comboQuantParafuso.getInputVerifier()).verify(comboQuantParafuso)) {
 				relatorioNParafusos.setText(modeloLigacao.getConectores().getQuantidadeParafuso().getNome());
@@ -2494,21 +2465,30 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		}
 	}//GEN-LAST:event_ComboQuantParafusoActionPerformed
 
-	private void TesteParafusoNaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TesteParafusoNaoActionPerformed
-		// TODO add your handling code here:
-		relatoriofaxrk.setText("Não");
+	private void testeParafusoNaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TesteParafusoNaoActionPerformed
+		try {
+			relatoriofaxrk.setText("Não");
+		} catch (Exception e) {
+			e.printStackTrace();
+			jProgressBarStatus.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
 	}//GEN-LAST:event_TesteParafusoNaoActionPerformed
 
-	private void TesteParafusoSimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TesteParafusoSimActionPerformed
-		JOptionPane
-		        .showMessageDialog(this,
-		                           "Será considerado no cálculo o efeito não linear de compressão provocado pela arruela devido a rotação\n do pino metálico e de tração do pino metálico, conhecido como efeito de corda (Fax,rk). ");
-		// TODO add your handling code here:
-		m = true;
-		relatoriofaxrk.setText("Sim");
+	private void testeParafusoSimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TesteParafusoSimActionPerformed
+		try {
+			JOptionPane
+			        .showMessageDialog(this,
+			                           "Será considerado no cálculo o efeito não linear de compressão provocado pela arruela devido a rotação\n do pino metálico e de tração do pino metálico, conhecido como efeito de corda (Fax,rk). ");
+			// TODO add your handling code here:
+			m = true;
+			relatoriofaxrk.setText("Sim");
+		} catch (Exception e) {
+			e.printStackTrace();
+			jProgressBarStatus.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
 	}//GEN-LAST:event_TesteParafusoSimActionPerformed
 
-	private void ComboAcoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboAcoActionPerformed
+	private void comboAcoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboAcoActionPerformed
 		try {
 			if(((Verificador)comboAco.getInputVerifier()).verify(comboAco)) {
 				valorFyk.setText(modeloLigacao.getConectores().getClasseAcoParafuso().getFyk() + "");
@@ -2525,7 +2505,7 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		}
 	}//GEN-LAST:event_ComboAcoActionPerformed
 
-	private void ComboTipoParafusoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboTipoParafusoActionPerformed
+	private void comboTipoParafusoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboTipoParafusoActionPerformed
 		try {
 			if(((Verificador)comboTipoParafuso.getInputVerifier()).verify(comboTipoParafuso)) {
 				valorDiametro.setText(modeloLigacao.getConectores().getTipoParafuso().getDiametro().toString());
@@ -2539,21 +2519,26 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		}
 	}//GEN-LAST:event_ComboTipoParafusoActionPerformed
 
-	private void ComboTipoParafusoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ComboTipoParafusoFocusLost
-		if(((Verificador)comboTipoParafuso.getInputVerifier()).verify(comboTipoParafuso)) {
-			while(comboArruelas.getModel().getSize() > 1) {
-				comboArruelas.removeItemAt(1);
-			}
+	private void comboTipoParafusoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ComboTipoParafusoFocusLost
+		try {
+			if(((Verificador)comboTipoParafuso.getInputVerifier()).verify(comboTipoParafuso)) {
+				while(comboArruelas.getModel().getSize() > 1) {
+					comboArruelas.removeItemAt(1);
+				}
 
-			for(TipoArruela tipoArruela : TipoArruela.values()) {
-				if(modeloLigacao.getConectores().getTipoParafuso().equals(tipoArruela.getTipoParafuso())) {
-					comboArruelas.addItem(tipoArruela);
+				for(TipoArruela tipoArruela : TipoArruela.values()) {
+					if(modeloLigacao.getConectores().getTipoParafuso().equals(tipoArruela.getTipoParafuso())) {
+						comboArruelas.addItem(tipoArruela);
+					}
 				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			jProgressBarStatus.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}//GEN-LAST:event_ComboTipoParafusoFocusLost
 
-	private void ComboKmod2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboKmod2ActionPerformed
+	private void comboKmod2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboKmod2ActionPerformed
 		try {
 			if(((Verificador)comboKmod2.getInputVerifier()).verify(comboKmod2)) {
 				if(modeloLigacao.getKmod2() == Kmod2.OUTRO) {
@@ -2584,7 +2569,7 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		}
 	}//GEN-LAST:event_ComboKmod2ActionPerformed
 
-	private void ComboKmod3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboKmod3ActionPerformed
+	private void comboKmod3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboKmod3ActionPerformed
 		try {
 			if(((Verificador)comboKmod3.getInputVerifier()).verify(comboKmod3)) {
 				if(modeloLigacao.getKmod3() == Kmod3.OUTRO) {
@@ -2615,7 +2600,7 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		}
 	}//GEN-LAST:event_ComboKmod3ActionPerformed
 
-	private void ComboKmod1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboKmod1ActionPerformed
+	private void comboKmod1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboKmod1ActionPerformed
 		try {
 			if(((Verificador)comboKmod1.getInputVerifier()).verify(comboKmod1)) {
 				if(modeloLigacao.getKmod1() == Kmod1.OUTRO) {
@@ -2646,7 +2631,7 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		}
 	}//GEN-LAST:event_ComboKmod1ActionPerformed
 
-	private void InclinacaoSim2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InclinacaoSim2ActionPerformed
+	private void inclinacaoSim2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InclinacaoSim2ActionPerformed
 		try {
 			incSim1 = true;
 			incSim2 = false;
@@ -2699,12 +2684,16 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		}
 	}//GEN-LAST:event_InclinacaoSim2ActionPerformed
 
-	private void Espessura2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Espessura2KeyTyped
-		// TODO add your handling code here:
-		if((evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') || evt.getKeyChar() == ',') {
-			return;
+	private void espessura2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Espessura2KeyTyped
+		try {
+			if((evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') || evt.getKeyChar() == ',') {
+				return;
+			}
+			evt.consume();
+		} catch (Exception e) {
+			e.printStackTrace();
+			jProgressBarStatus.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
-		evt.consume();
 	}//GEN-LAST:event_Espessura2KeyTyped
 
 	private void espessura2FocusLost(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_Espessura2FocusLost
@@ -2742,10 +2731,14 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		}
 	}// GEN-LAST:event_Espessura2FocusLost
 
-	private void LimparExpessura2(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_LimparExpessura2
-		// TODO add your handling code here:
-		if(espessura2.getText().length() > 4) {
-			espessura2.setText("");
+	private void limparExpessura2(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_LimparExpessura2
+		try {
+			if(espessura2.getText().length() > 4) {
+				espessura2.setText("");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			jProgressBarStatus.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}//GEN-LAST:event_LimparExpessura2
 
@@ -2770,27 +2763,18 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 		}
 	}// GEN-LAST:event_comboElem2ClasseMadeiraActionPerformed
 
-	private void Espessura1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Espessura1KeyTyped
-		// TODO add your handling code here:
-	}//GEN-LAST:event_Espessura1KeyTyped
-
-	private void Espessura1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_Espessura1PropertyChange
-		// TODO add your handling code here:
-	}//GEN-LAST:event_Espessura1PropertyChange
-
-	private void Espessura1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Espessura1ActionPerformed
-		// TODO add your handling code here:
-
-	}//GEN-LAST:event_Espessura1ActionPerformed
-
-	private void Espessura1(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Espessura1
-		// TODO add your handling code here:
-		if(espessura1.getText().length() > 4) {
-			espessura1.setText("");
+	private void espessura1(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Espessura1
+		try {
+			if(espessura1.getText().length() > 4) {
+				espessura1.setText("");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			jProgressBarStatus.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}//GEN-LAST:event_Espessura1
 
-	private void InclinacaoSim1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InclinacaoSim1ActionPerformed
+	private void inclinacaoSim1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InclinacaoSim1ActionPerformed
 		try {
 			incSim1 = true;
 			incSim2 = false;
@@ -2844,30 +2828,29 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 	}//GEN-LAST:event_InclinacaoSim1ActionPerformed
 
 	private void valorAnguloKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_valorAnguloKeyTyped
-		// TODO add your handling code here:
-		if((evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') || evt.getKeyChar() == ',') {
-			return;
+		try {
+			if((evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9') || evt.getKeyChar() == ',') {
+				return;
+			}
+			evt.consume();
+		} catch (Exception e) {
+			e.printStackTrace();
+			jProgressBarStatus.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
-		evt.consume();
 	}//GEN-LAST:event_valorAnguloKeyTyped
 
-	private void valorAnguloPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_valorAnguloPropertyChange
-		// TODO add your handling code here:
-	}//GEN-LAST:event_valorAnguloPropertyChange
-
-	private void valorAnguloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valorAnguloActionPerformed
-		// TODO add your handling code here:
-
-	}//GEN-LAST:event_valorAnguloActionPerformed
-
 	private void valorAngulo(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_valorAngulo
-		// TODO add your handling code here:
-		inclinacaoSim1.setEnabled(false);
-		inclinacaoSim2.setEnabled(false);
+		try {
+			inclinacaoSim1.setEnabled(false);
+			inclinacaoSim2.setEnabled(false);
 
-		if(valorAngulo.getText().length() > 4) {
-			valorAngulo.setText("0");
+			if(valorAngulo.getText().length() > 4) {
+				valorAngulo.setText("0");
 
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			jProgressBarStatus.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
 		}
 	}//GEN-LAST:event_valorAngulo
 
@@ -3063,15 +3046,25 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 	}//GEN-LAST:event_next3ActionPerformed
 
 	private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-		jTabbedPane1.setEnabledAt(1, true);
-		jTabbedPane1.setSelectedComponent(secoesCorte);
-		jProgressBarStatus.setString("Escolha a quantidade de seções de corte no parafuso.");
+		try {
+			jTabbedPane1.setEnabledAt(1, true);
+			jTabbedPane1.setSelectedComponent(secoesCorte);
+			jProgressBarStatus.setString("Escolha a quantidade de seções de corte no parafuso.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			jProgressBarStatus.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
 	}//GEN-LAST:event_jButton4ActionPerformed
 
 	private void VoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VoltarActionPerformed
-		this.dispose();
-		TelaInicial telainicial = new TelaInicial();
-		telainicial.setVisible(true);
+		try {
+			this.dispose();
+			TelaInicial telainicial = new TelaInicial();
+			telainicial.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			jProgressBarStatus.setString("Erro ao " + Thread.currentThread().getStackTrace()[1].getMethodName());
+		}
 	}//GEN-LAST:event_VoltarActionPerformed
 	/**/
 
@@ -3079,12 +3072,7 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 	 * @param args the command line arguments
 	 */
 	public static void main(String args[]) {
-
-		/* Set the Nimbus look and feel */
 		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-		/* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-		 * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-		 */
 		try {
 			for(javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 				if("Nimbus".equals(info.getName())) {
@@ -3109,11 +3097,6 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 				new TelaParafuso().setVisible(true);
 			}
 		});
-
-		//        Date sysDate = new Date();
-		//SimpleDateFormat dt = new SimpleDateFormat("dd/mm/yyyy hh:mm:ss");
-		//dateFormat.format(sysDate);
-
 	}
 
 	public ModeloLigacao getModeloLigacao() {
@@ -3135,7 +3118,6 @@ public class TelaParafuso extends javax.swing.JFrame implements ModeloLigacaoPro
 	}
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
-	private javax.swing.ButtonGroup groupAngulacao;
 	private javax.swing.ButtonGroup groupInclinacaoSim;
 	private javax.swing.ButtonGroup groupSecoesCorte;
 	private javax.swing.ButtonGroup groupTesteParafuso;

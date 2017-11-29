@@ -6,6 +6,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JProgressBar;
 
+import br.com.tcd.enumeration.ClasseAco;
 import br.com.tcd.interfaces.ModeloLigacaoProvider;
 
 public class VerificadorComboClasseElemAco extends Verificador {
@@ -24,6 +25,7 @@ public class VerificadorComboClasseElemAco extends Verificador {
 			status.setString("Escolha a classe da chapa de aço utilizada.");
 			this.verified = false;
 		} else {
+			modeloLigacaoProvider.getModeloLigacao().getChapaAco().setClasseAco((ClasseAco)box.getSelectedItem());
 			this.validateSuccess(input);
 		}
 

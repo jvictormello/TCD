@@ -6,8 +6,8 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JProgressBar;
 
-import br.com.tcd.interfaces.ModeloLigacaoProvider;
 import br.com.tcd.enumeration.TipoPrego;
+import br.com.tcd.interfaces.ModeloLigacaoProvider;
 
 public class VerificadorComboTipoPrego extends Verificador {
 

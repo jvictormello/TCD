@@ -9,18 +9,16 @@ package br.com.tcd.enumeration;
  *
  * @author Gabriela Mello
  */
-public enum ClasseAcoParafuso {
+public enum ClasseAco {
 
-	ESCOLHA_CLASSE_ACO("Escolha a Classe de Aço", 0, 0),
-	CLASSE_4_6("ISO 898-1 - Classe 4.6", 235, 400),
-	CLASSE_8_8("ISO 898-1 - Classe 8.8", 640, 800),
-	CLASSE_10_9("ISO 898-1 - Classe 10.9", 900, 1000);
+	ESCOLHA_CLASSE_ACO("Escolha a Classe do Aço", 0, 0),
+	ASTM_A36("ASTM A36", 250, 500);
 
 	private String nome;
 	private Integer fyk;
 	private Integer fuk;
 
-	private ClasseAcoParafuso(String nome, Integer fyk, Integer fuk) {
+	private ClasseAco(String nome, Integer fyk, Integer fuk) {
 		this.nome = nome;
 		this.fyk = fyk;
 		this.fuk = fuk;

@@ -6,6 +6,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JProgressBar;
 
+import br.com.tcd.enumeration.TipoArruelaAco;
 import br.com.tcd.interfaces.ModeloLigacaoProvider;
 
 public class VerificadorComboArruelaAco extends Verificador {
@@ -25,6 +26,7 @@ public class VerificadorComboArruelaAco extends Verificador {
 			this.verified = false;
 		} else {
 			validateSuccess(input);
+			modeloLigacaoProvider.getModeloLigacao().getConectores().setTipoArruelaAco((TipoArruelaAco)box.getSelectedItem());
 			status.setString("Clique em \"Calcular Ligação\".");
 		}
 
